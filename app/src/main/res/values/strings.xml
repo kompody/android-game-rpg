@@ -1,0 +1,24 @@
+<resources>
+    <string name="button_ok">ОК</string>
+    <string name="button_yes">Да</string>
+    <string name="button_no">Нет</string>
+    <string name="button_cancel">Отмена</string>
+
+    <string name="error">Ошибка</string>
+    <string name="error_mandatory_field">Поле обязательно для заполнения</string>
+    <string name="error_invalid_phone">Неверный формат телефона</string>
+
+    <string name="main_navigation_profile">Профиль</string>
+    <string name="main_navigation_inventory">Инвентарь</string>
+    <string name="main_navigation_map">Карта</string>
+    <string name="main_navigation_quest_list">Задания</string>
+    <string name="main_navigation_setting">Настройки</string>
+
+    <string name="sign_in_proceed_button">Войти</string>
+
+    <string name="no_internet">Отсутствует интернет-соединение</string>
+    <string name="check_internet">Проверьте подключение к интернету</string>
+    <string name="something_went_wrong">Что-то пошло не так</string>
+
+    <string name="unexpected_error">Непредвиденная ошибка</string>
+</resources>

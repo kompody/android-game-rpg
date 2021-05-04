@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="16dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/labelTextView"
+            style="@style/PrimaryTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:letterSpacing="-0.02"
+            android:textSize="16sp"
+            tools:text="Телефон" />
+
+        <ru.kompod.moonlike.presentation.custom.StatelessEditText
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end|center_vertical"
+            android:background="@null"
+            android:letterSpacing="-0.02"
+            android:textAlignment="viewEnd"
+            android:textSize="16sp"
+            tools:text="+79851321654" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/passwordToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="19dp"
+            android:background="@null"
+            android:button="@drawable/ic_password_toggle_white"
+            android:buttonTint="@color/password_toggle_color"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/errorTextView"
+        style="@style/PrimaryTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_error"
+        android:letterSpacing="-0.02"
+        android:paddingStart="20dp"
+        android:paddingTop="17dp"
+        android:paddingEnd="20dp"
+        android:textSize="12sp"
+        android:visibility="gone" />
+</merge>

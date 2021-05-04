@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <dimen name="padding_default_vertical">18dp</dimen>
+    <dimen name="padding_default_horizontal">16dp</dimen>
+
+    <dimen name="divider_height">1dp</dimen>
+
+    <dimen name="action_bar_height">56dp</dimen>
+    <dimen name="fab_margin_bottom">16dp</dimen>
+    <dimen name="fab_margin_end">13dp</dimen>
+
+    <dimen name="progress_bar_size">44dp</dimen>
+    <dimen name="progress_view_elevation">10dp</dimen>
+
+    <dimen name="selectable_item_corner_radius">10dp</dimen>
+
+    <!-- Toolbar -->
+    <dimen name="appbar_elevation">1dp</dimen>
+    <dimen name="toolbar_title_text_size">20sp</dimen>
+    <dimen name="toolbar_padding_end">4dp</dimen>
+
+    <!-- Action Button -->
+    <dimen name="action_button_padding">12dp</dimen>
+    <dimen name="navigation_button_margin">4dp</dimen>
+
+    <!-- Button -->
+    <dimen name="button_padding_top">11dp</dimen>
+    <dimen name="button_padding_bottom">11dp</dimen>
+    <dimen name="button_text_size">14sp</dimen>
+
+    <!-- Text -->
+    <dimen name="text_size_primary">15sp</dimen>
+    <dimen name="text_size_secondary">12sp</dimen>
+    <dimen name="text_size_hint">14sp</dimen>
+    <dimen name="text_size_header">28sp</dimen>
+    <dimen name="text_size_content">16sp</dimen>
+
+    <dimen name="pager_indicator_dot_size">5dp</dimen>
+    <dimen name="pager_indicator_selected_dot_size">7dp</dimen>
+
+    <!-- Bottom Sheet -->
+    <dimen name="bottom_sheet_corner_radius">20dp</dimen>
+    <dimen name="bottom_sheet_drag_line_width">48dp</dimen>
+    <dimen name="bottom_sheet_drag_line_height">4dp</dimen>
+    <dimen name="bottom_sheet_drag_line_corner_radius">2.5dp</dimen>
+    <dimen name="bottom_sheet_drag_line_margin_top">10dp</dimen>
+    <dimen name="bottom_sheet_padding_top">35dp</dimen>
+    <dimen name="bottom_sheet_padding_bottom">22dp</dimen>
+    <dimen name="bottom_sheet_padding_horizontal">16dp</dimen>
+    <dimen name="bottom_sheet_dialog_title_text_size">24sp</dimen>
+    <dimen name="bottom_sheet_dialog_title_margin_horizontal">16dp</dimen>
+    <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
+    <dimen name="design_bottom_navigation_active_text_size" tools:override="true">10sp</dimen>
+
+    <!-- Single Selection List -->
+    <dimen name="single_selection_list_item_text_size">@dimen/text_size_primary</dimen>
+    <dimen name="single_selection_list_item_text_margin_start">16dp</dimen>
+    <dimen name="single_selection_list_item_text_margin_vertical">14dp</dimen>
+
+    <!-- Complex List -->
+    <dimen name="complex_item_padding">16dp</dimen>
+    <dimen name="complex_item_image_height">268dp</dimen>
+    <dimen name="complex_item_image_corner_radius">10dp</dimen>
+    <dimen name="complex_item_transport_margin_top">12dp</dimen>
+    <dimen name="complex_item_transport_margin_start">14dp</dimen>
+    <dimen name="complex_item_transport_color_size">8dp</dimen>
+    <dimen name="complex_item_transport_text_margin_start">8dp</dimen>
+    <dimen name="complex_item_transport_text_size">13sp</dimen>
+    <dimen name="complex_item_promo_margin">12dp</dimen>
+    <dimen name="complex_item_promo_text_size">12sp</dimen>
+    <dimen name="complex_item_promo_text_padding_horizontal">10dp</dimen>
+    <dimen name="complex_item_promo_text_padding_vertical">8dp</dimen>
+    <dimen name="complex_item_title_text_size">20sp</dimen>
+    <dimen name="complex_item_subtitle_text_size">12sp</dimen>
+    <dimen name="complex_item_title_margin_horizontal">10dp</dimen>
+
+    <!-- Complex -->
+    <dimen name="complex_section_elevation">6dp</dimen>
+    <dimen name="complex_section_padding_top">36dp</dimen>
+    <dimen name="complex_section_padding_bottom">40dp</dimen>
+    <dimen name="complex_title_text_size">28sp</dimen>
+    <dimen name="complex_advantages_item_margin_boundary">16dp</dimen>
+    <dimen name="complex_advantages_item_margin">12dp</dimen>
+    <dimen name="complex_advantages_item_width">186dp</dimen>
+    <dimen name="complex_advantages_item_height">212dp</dimen>
+    <dimen name="complex_advantages_item_text_size">16sp</dimen>
+    <dimen name="complex_gallery_padding_horizontal">11dp</dimen>
+    <dimen name="complex_gallery_item_margin">5dp</dimen>
+    <dimen name="complex_rooms_count_item_margin">6dp</dimen>
+    <dimen name="complex_rooms_count_item_margin_boundary">16dp</dimen>
+
+    <dimen name="advantages_item_margin">8dp</dimen>
+    <dimen name="advantages_item_boundary_margin">16dp</dimen>
+    <dimen name="advantages_item_text_size">14sp</dimen>
+
+    <dimen name="flat_list_header_margin">20dp</dimen>
+    <dimen name="flat_list_small_item_margin">1dp</dimen>
+    <dimen name="flat_list_big_item_margin">12dp</dimen>
+
+    <!-- Chip Group -->
+    <dimen name="chip_spacing">8dp</dimen>
+    <dimen name="chip_stroke_width">1dp</dimen>
+    <dimen name="chip_corner_radius">6dp</dimen>
+
+    <!-- Range Filter -->
+    <dimen name="filter_range_thumb_size">24dp</dimen>
+    <dimen name="filter_range_hint_text_size">12sp</dimen>
+
+    <dimen name="map_pin_image_radius">55dp</dimen>
+    <dimen name="map_pin_shadow_size" tools:ignore="PxUsage">8px</dimen>
+
+    <dimen name="complex_preview_corners_radius">10dp</dimen>
+    <dimen name="loading_progress_bar_size">48dp</dimen>
+    <dimen name="map_filter_item_margin">11dp</dimen>
+    <dimen name="complex_object_filter_height">100dp</dimen>
+
+    <!-- Gallery -->
+    <dimen name="gallery_item_height">202.5dp</dimen>
+    <dimen name="gallery_item_margin">4dp</dimen>
+
+    <!-- MapObject Annotation -->
+    <dimen name="map_object_annotation_padding">14dp</dimen>
+    <dimen name="map_object_annotation_title_and_content_space">2dp</dimen>
+    <dimen name="map_object_annotation_title_text_size">12sp</dimen>
+    <dimen name="map_object_annotation_content_text_size">11sp</dimen>
+    <dimen name="map_object_annotation_screen_padding">30dp</dimen>
+    <dimen name="map_object_annotation_shadow_radius" tools:ignore="PxUsage">10px</dimen>
+    <dimen name="map_object_annotation_leg_width">6dp</dimen>
+    <dimen name="map_object_annotation_leg_height">3dp</dimen>
+    <dimen name="map_object_annotation_corners_radius">5sp</dimen>
+
+    <!-- Request -->
+    <dimen name="request_edit_text_size">16sp</dimen>
+    <dimen name="request_edit_text_margin_top">30dp</dimen>
+
+    <!-- Custom Snack Bar -->
+    <dimen name="snack_bar_margin_vertical_top">8dp</dimen>
+    <dimen name="snack_bar_margin_vertical_bottom">32dp</dimen>
+
+    <dimen name="sign_in_edit_layout_margin_horizontal">20dp</dimen>
+    <dimen name="sign_in_button_margin_horizontal">20dp</dimen>
+
+    <!-- Mortgage -->
+    <dimen name="mortgage_list_padding">16dp</dimen>
+
+    <!-- taken from https://material.io/components/tabs/#specs -->
+    <dimen name="scrollable_tab_content_start">52dp</dimen>
+
+    <dimen name="promotions_item_decorator_size">16dp</dimen>
+    <dimen name="promotions_hashtag_corners_radius">7dp</dimen>
+
+    <dimen name="code_height">60dp</dimen>
+    <dimen name="code_unit_width">48dp</dimen>
+    <dimen name="code_unit_margin">11dp</dimen>
+    <dimen name="code_text_size">32sp</dimen>
+    <dimen name="code_text_margin_vertical">11dp</dimen>
+    <dimen name="code_cursor_height">2dp</dimen>
+    <dimen name="code_padding_bottom">6dp</dimen>
+    <dimen name="code_background_radius">10dp</dimen>
+
+    <dimen name="hashtag_view_height">24dp</dimen>
+    <dimen name="hashtag_text_size" tools:ignore="PxUsage">12px</dimen>
+
+    <dimen name="profile_avatar_size">57dp</dimen>
+    <dimen name="profile_text_size">35sp</dimen>
+</resources>

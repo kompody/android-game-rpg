@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomToolbarLayout">
+        <attr name="state_toolbar_layout_collapsed" format="boolean" />
+        <attr name="state_toolbar_layout_expanded" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="CollapsingToolbarButton">
+        <attr name="state_toolbar_button_collapsed" format="boolean" />
+        <attr name="state_toolbar_button_expanded" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="DoubleStateButton">
+        <attr name="state_button_active" format="boolean" />
+        <attr name="state_button_inactive" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="InfoItemView">
+        <attr name="icon_info" format="reference" />
+    </declare-styleable>
+
+
+    <declare-styleable name="ParamItemView">
+        <attr name="paramLabelText" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomEditText">
+        <attr name="errorEnabled" format="boolean"/>
+        <attr name="errorText" format="string"/>
+        <attr name="errorColor" format="color"/>
+
+        <attr name="hintText" format="string"/>
+        <attr name="hintTextColor" format="color"/>
+
+        <attr name="labelText" format="string"/>
+        <attr name="labelTextColor" format="color"/>
+        <attr name="labelErrorTextColor" format="color"/>
+
+        <attr name="inputType" format="flags">
+            <flag name="email" value="0"/>
+            <flag name="password" value="1"/>
+            <flag name="phone" value="2"/>
+            <flag name="text" value="3"/>
+            <flag name="digitPassword" value="4"/>
+            <flag name="noInput" value="5"/>
+        </attr>
+
+        <attr name="maxLength" format="integer"/>
+        <attr name="text" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="BulletTextView" >
+        <attr name="bulletText" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="DropDownView">
+        <attr name="drop_down_title" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="PreloaderButton">
+        <attr name="pb_text" format="string" />
+        <attr name="pb_textColor" format="color" />
+    </declare-styleable>
+</resources>

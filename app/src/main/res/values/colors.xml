@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#e94200</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="selectionColor">#0D4a4a4a</color>
+    <color name="dividerColor">#38383A</color>
+    <color name="placeholderColor">#504947</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="textPrimary">@color/black</color>
+    <color name="textSecondary">#8a000000</color>
+    <color name="textHint">#61000000</color>
+    <color name="textHintLight">#c1c1c1</color>
+    <color name="textSeekBarLabel">#b34a4a4a</color>
+
+    <color name="textDisabled">#42000000</color>
+    <color name="textError">#ff4444</color>
+
+    <color name="textStrokeColor">#66ffffff</color>
+    <color name="strokeColor">#b1adad</color>
+    <color name="pagerDotColor">#d8d8d8</color>
+
+    <color name="snack_bg_color">#f2df1b1b</color>
+
+    <color name="dragLineColor">#90b1adad</color>
+
+    <color name="shadow_gradient_start">#80000000</color>
+    <color name="shadow_gradient_end">#00000000</color>
+
+    <color name="complex_info_title_text">#cc4a4a4a</color>
+    <color name="complex_info_value_text">#cc000000</color>
+    <color name="map_small_circle_color">#66e94200</color>
+    <color name="map_big_circle_color">#664a90e2</color>
+
+    <color name="map_object_label_shadow_color">#1d000000</color>
+
+    <color name="map_category_filter_inactive">#ccb1adad</color>
+
+    <color name="password_toggle_inactive">#8c8c8c</color>
+    <color name="custom_edit_text_label_error_text_color">#d0021b</color>
+
+    <color name="mortgage_grey">#8e8e93</color>
+
+    <color name="info_dialog_text">#8a000000</color>
+    <color name="info_dialog_text_title">#de000000</color>
+
+    <color name="promotions_item_decorator_color">#f2f2f2</color>
+
+    <color name="code_input_background">#f0f0f0</color>
+
+    <color name="flat_list_indicator_dot_color">#b2b2b2</color>
+    <color name="flat_list_indicator_dot_selected_color">#d50000</color>
+
+    <color name="profile_avatar_bg_color">#ffffff</color>
+    <color name="profile_avatar_text_color">#a5a5a5</color>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners
+                android:topLeftRadius="@dimen/bottom_sheet_corner_radius"
+                android:topRightRadius="@dimen/bottom_sheet_corner_radius" />
+            <solid android:color="@color/colorPrimary" />
+        </shape>
+    </item>
+
+    <item
+        android:width="@dimen/bottom_sheet_drag_line_width"
+        android:height="@dimen/bottom_sheet_drag_line_height"
+        android:gravity="center_horizontal"
+        android:top="@dimen/bottom_sheet_drag_line_margin_top">
+
+        <shape>
+            <solid android:color="@color/dragLineColor" />
+            <corners android:radius="@dimen/bottom_sheet_drag_line_corner_radius" />
+        </shape>
+    </item>
+</layer-list>
