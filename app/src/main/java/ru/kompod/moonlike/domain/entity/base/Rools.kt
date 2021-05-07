@@ -62,6 +62,7 @@ class MapObject(
     val id: Short,
     val label: String,
     val path: String,
+    val delay: Int,
     val travels: List<TravelObject>
 )
 
@@ -69,8 +70,7 @@ class TravelObject(
     val id: Short,
     val label: String,
     val from: Short,
-    val to: Short,
-    val delay: Short
+    val to: Short
 )
 
 //npc

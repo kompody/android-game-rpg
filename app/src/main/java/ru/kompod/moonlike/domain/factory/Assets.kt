@@ -36,7 +36,9 @@ class Assets @Inject constructor(
         const val RACE_STRONGHOLD: Short = 5
         const val RACE_TOWER: Short = 6
 
-        const val MAP_TEST: Short = 0
+        const val MAP_TEST_0: Short = 0
+        const val MAP_TEST_1: Short = 1
+        const val MAP_TEST_2: Short = 2
     }
 
     private enum class Paths(val path: String) {
@@ -233,17 +235,51 @@ class Assets @Inject constructor(
     )
 
     //maps
-    val testMap = MapObject(
-        MAP_TEST,
-        "test_level",
+    val testMap0 = MapObject(
+        MAP_TEST_0,
+        "test_level_0",
         Paths.MAP_TEST.path,
+        15000,
         listOf(
             TravelObject(
                 0,
-                "test to test",
-                MAP_TEST,
-                MAP_TEST,
-                60
+                "test0 to test1",
+                MAP_TEST_0,
+                MAP_TEST_1
+            ),
+            TravelObject(
+                1,
+                "test0 to test2",
+                MAP_TEST_0,
+                MAP_TEST_2
+            )
+        )
+    )
+    val testMap1 = MapObject(
+        MAP_TEST_1,
+        "test_level_1",
+        Paths.MAP_TEST.path,
+        15000,
+        listOf(
+            TravelObject(
+                0,
+                "test1 to test0",
+                MAP_TEST_1,
+                MAP_TEST_0
+            )
+        )
+    )
+    val testMap2 = MapObject(
+        MAP_TEST_2,
+        "test_level_2",
+        Paths.MAP_TEST.path,
+        15000,
+        listOf(
+            TravelObject(
+                0,
+                "test2 to test1",
+                MAP_TEST_2,
+                MAP_TEST_1
             )
         )
     )

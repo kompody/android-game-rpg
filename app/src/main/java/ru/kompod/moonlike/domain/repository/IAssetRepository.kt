@@ -17,5 +17,6 @@ interface IAssetRepository {
     fun getCharacterPortraitById(raceId: Short, genderId: Short, portraitId: Short): PortraitObject
     fun getCharacterRoleById(id: Short): RoleObject
 
+    fun getMaps(): List<MapObject>
     fun getMapById(id: Short): MapObject
 }

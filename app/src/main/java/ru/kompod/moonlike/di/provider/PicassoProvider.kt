@@ -17,7 +17,7 @@ class PicassoProvider @Inject constructor(
     @OkHttpForPicasso private val okHttpClient: OkHttpClient
 ) : Provider<Picasso> {
     override fun get(): Picasso = Picasso.Builder(context)
-        .downloader(OkHttp3Downloader(okHttpClient))
+//        .downloader(OkHttp3Downloader(okHttpClient))
         .indicatorsEnabled(BuildConfig.DEBUG)
         .build()
 }

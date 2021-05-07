@@ -8,7 +8,13 @@ import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 
-class PixelTargetAdapter(private val targetView: ImageView) : TargetAdapter() {
+class PixelTargetAdapter(
+    private val targetView: ImageView,
+    private val isNeedResize: Boolean = true,
+    private val width: Int = 128,
+    private val height: Int = 128
+) : TargetAdapter() {
+
     override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
         targetView.setImageDrawable(placeHolderDrawable)
     }
@@ -19,7 +25,16 @@ class PixelTargetAdapter(private val targetView: ImageView) : TargetAdapter() {
 
     override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
         bitmap?.let {
-            targetView.setImageBitmap(Bitmap.createScaledBitmap(it, 128, 128, false))
+            if (isNeedResize) {
+                targetView.setImageBitmap(
+                    Bitmap.createScaledBitmap(it, width, height, false)
+                )
+            } else {
+                targetView.setImageBitmap(
+                    Bitmap.createScaledBitmap(it, bitmap.width, bitmap.height, false)
+                )
+            }
+            targetView.clipToOutline = true
         }
     }
 }

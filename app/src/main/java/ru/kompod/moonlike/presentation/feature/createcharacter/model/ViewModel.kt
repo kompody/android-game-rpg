@@ -6,7 +6,7 @@ package ru.kompod.moonlike.presentation.feature.createcharacter.model
 import ru.kompod.moonlike.domain.entity.base.*
 import ru.kompod.moonlike.presentation.base.recyclerview.model.IListItem
 
-class CacheModel(
+class ViewModel(
     val raceItem: RaceItem,
     val genderItem: GenderItem,
     val portraitItem: PortraitItem,

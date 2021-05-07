@@ -14,6 +14,15 @@
     <string name="main_navigation_quests_list">Задания</string>
     <string name="main_navigation_settings">Настройки</string>
 
+    <string name="sign_in_proceed_button">Войти</string>
+
+    <string name="no_internet">Отсутствует интернет-соединение</string>
+    <string name="check_internet">Проверьте подключение к интернету</string>
+    <string name="something_went_wrong">Что-то пошло не так</string>
+
+    <string name="unexpected_error">Непредвиденная ошибка</string>
+
+    <!--character-->
     <string name="screen_characters_list_title">Список персонажей</string>
     <string name="screen_characters_list_create_character">Создать персонажа</string>
     <string name="screen_characters_list_remove_character_dialog_title">Удалить персонажа?</string>
@@ -87,11 +96,9 @@
     <string name="asset_role_sorcerer">Sorcerer</string>
     <string name="asset_role_sorcerer_description"></string>
 
-    <string name="sign_in_proceed_button">Войти</string>
-
-    <string name="no_internet">Отсутствует интернет-соединение</string>
-    <string name="check_internet">Проверьте подключение к интернету</string>
-    <string name="something_went_wrong">Что-то пошло не так</string>
-
-    <string name="unexpected_error">Непредвиденная ошибка</string>
+    <!--map-->
+    <string name="screen_map_travels_title">Локации</string>
+    <string name="screen_map_objects_title">Объекты</string>
+    <string name="screen_map_npc_title">Персонажи</string>
+    <string name="screen_map_monsters_title">Монстры</string>
 </resources>

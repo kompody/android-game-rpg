@@ -7,9 +7,9 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.schedulers.Schedulers
 import ru.kompod.moonlike.data.sharedpreferences.ObservableSharedPreferences
 import ru.kompod.moonlike.domain.repository.IPreferencesRepository
+import ru.kompod.moonlike.utils.extensions.rxjava.io
 import javax.inject.Inject
 
 class PreferencesRepository @Inject constructor(
@@ -39,5 +39,5 @@ class PreferencesRepository @Inject constructor(
     override fun isUseTestHost(): Observable<Boolean> =
         observableSharedPreferences.observeString(USE_TEST_HOST)
             .map(String::toBoolean)
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(io())
 }

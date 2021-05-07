@@ -18,6 +18,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.view.visibility
 import kotlinx.android.synthetic.main.progress_fullscreen.*
@@ -37,6 +38,7 @@ import ru.kompod.moonlike.utils.extensions.rxpm.accept
 import toothpick.Scope
 import toothpick.Toothpick
 import toothpick.config.Module
+import java.lang.reflect.Method
 import javax.inject.Inject
 
 abstract class BaseFragment<PresentationModel : BasePresentationModel>(
@@ -59,6 +61,12 @@ abstract class BaseFragment<PresentationModel : BasePresentationModel>(
 
     protected open val parentScopeName: String by lazy {
         parentFragment.castTo<IScopeHolder>()?.scope?.name?.toString() ?: DI.UI_SCOPE
+    }
+
+    protected open val consumePendingUpdateOperationsMethod: Method? by lazy {
+        RecyclerView::class.java.getDeclaredMethod("consumePendingUpdateOperations").apply {
+            isAccessible = true
+        }
     }
 
     protected lateinit var scopeName: String

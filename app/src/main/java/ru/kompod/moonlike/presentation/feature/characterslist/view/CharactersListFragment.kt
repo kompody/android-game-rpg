@@ -90,11 +90,6 @@ class CharactersListFragment :
     }
 
     override fun bindStates(presentationModel: CharactersListPresentationModel) {
-        val consumePendingUpdateOperationsMethod =
-            RecyclerView::class.java.getDeclaredMethod("consumePendingUpdateOperations").apply {
-                isAccessible = true
-            }
-
         presentationModel
             .charactersListState
             .observable
@@ -102,7 +97,7 @@ class CharactersListFragment :
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext {
                 charactersRecyclerView?.let {
-                    consumePendingUpdateOperationsMethod.invoke(
+                    consumePendingUpdateOperationsMethod?.invoke(
                         charactersRecyclerView
                     )
                 }

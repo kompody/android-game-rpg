@@ -21,6 +21,7 @@ import ru.kompod.moonlike.presentation.feature.createcharacter.adapter.RoleAdapt
 import ru.kompod.moonlike.presentation.feature.createcharacter.mapper.toEntity
 import ru.kompod.moonlike.presentation.feature.createcharacter.model.*
 import ru.kompod.moonlike.utils.ResourceDelegate
+import ru.kompod.moonlike.utils.extensions.rxjava.main
 import ru.kompod.moonlike.utils.navigation.BottomTabRouter
 import javax.inject.Inject
 
@@ -46,7 +47,7 @@ class CreateRacePresentationModel @Inject constructor(
 
     val menuListState = state<List<IListItem>>()
 
-    private val viewModelState = state<CacheModel>()
+    private val viewModelState = state<ViewModel>()
 
     override fun onCreate() {
         super.onCreate()
@@ -118,8 +119,10 @@ class CreateRacePresentationModel @Inject constructor(
             .untilDestroy()
 
         getCharacterRacesUseCase.getRaces()
-            .doOnSuccess { races ->
-                handleRaces(races)
+            .map { races -> racesToViewModel(races) }
+            .observeOn(main())
+            .doOnSuccess { model ->
+                viewModelState.accept(model)
             }
             .subscribeBy()
             .untilDestroy()
@@ -177,16 +180,7 @@ class CreateRacePresentationModel @Inject constructor(
         handleViewModel(model)
     }
 
-    private fun handleRaces(races: List<RaceInfoObject>) {
-        CacheModel(
-            RaceItem(races, 0),
-            GenderItem(races[0].genders, 0),
-            PortraitItem(races[0].portraits[0], 0),
-            RoleItem(races[0].roles, 0)
-        ).also { viewModelState.accept(it) }
-    }
-
-    private fun handleViewModel(model: CacheModel) {
+    private fun handleViewModel(model: ViewModel) {
         listOf(
             RaceItem(model.raceItem.races, model.raceItem.selectedIndex),
             GenderItem(model.genderItem.genders, model.genderItem.selectedIndex),
@@ -198,4 +192,11 @@ class CreateRacePresentationModel @Inject constructor(
             )
         ).also { menuListState.accept(it) }
     }
+
+    private fun racesToViewModel(races: List<RaceInfoObject>): ViewModel = ViewModel(
+        RaceItem(races, 0),
+        GenderItem(races[0].genders, 0),
+        PortraitItem(races[0].portraits[0], 0),
+        RoleItem(races[0].roles, 0)
+    )
 }

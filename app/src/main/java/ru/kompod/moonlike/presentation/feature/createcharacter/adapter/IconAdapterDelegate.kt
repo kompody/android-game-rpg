@@ -14,6 +14,7 @@ import me.dmdev.rxpm.Action
 import ru.kompod.moonlike.R
 import ru.kompod.moonlike.presentation.base.recyclerview.model.IListItem
 import ru.kompod.moonlike.presentation.feature.createcharacter.model.PortraitItem
+import ru.kompod.moonlike.utils.extensions.picasso.loadFromAsset
 import ru.kompod.moonlike.utils.picasso.PixelTargetAdapter
 import ru.kompod.moonlike.utils.tools.AssetProvider
 import javax.inject.Provider
@@ -29,20 +30,19 @@ class IconAdapterDelegate(
     private fun createAdapterDelegate(
         listener: IconItemListener,
         picasso: Picasso
-    ) = adapterDelegateLayoutContainer<PortraitItem, IListItem>(R.layout.item_create_character_icon) {
+    ) =
+        adapterDelegateLayoutContainer<PortraitItem, IListItem>(R.layout.item_create_character_icon) {
 
-        bind {
-            val file = assetProvider.fileFromAsset(item.portraits[item.selectedIndex].path)
-            picasso.load(file)
-                .into(PixelTargetAdapter(iconImageView))
-            iconImageView.clipToOutline = true
+            bind {
+                picasso.loadFromAsset(assetProvider, item.portraits[item.selectedIndex].path)
+                    .into(PixelTargetAdapter(iconImageView))
 
-            menuLeftImageView.clicks().map { item.selectedIndex - 1 }
-                .subscribe(listener.onChangeIconClickObserver.consumer)
-            menuRightImageView.clicks().map { item.selectedIndex + 1 }
-                .subscribe(listener.onChangeIconClickObserver.consumer)
+                menuLeftImageView.clicks().map { item.selectedIndex - 1 }
+                    .subscribe(listener.onChangeIconClickObserver.consumer)
+                menuRightImageView.clicks().map { item.selectedIndex + 1 }
+                    .subscribe(listener.onChangeIconClickObserver.consumer)
+            }
         }
-    }
 
     interface IconItemListener {
         val onChangeIconClickObserver: Action<Int>

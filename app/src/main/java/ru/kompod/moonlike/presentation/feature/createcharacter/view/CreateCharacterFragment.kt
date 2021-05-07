@@ -65,11 +65,6 @@ class CreateCharacterFragment :
     }
 
     override fun bindStates(presentationModel: CreateRacePresentationModel) {
-        val consumePendingUpdateOperationsMethod =
-            RecyclerView::class.java.getDeclaredMethod("consumePendingUpdateOperations").apply {
-                isAccessible = true
-            }
-
         presentationModel
             .menuListState
             .observable
@@ -77,7 +72,7 @@ class CreateCharacterFragment :
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext {
                 creatorMenuRecyclerView?.let {
-                    consumePendingUpdateOperationsMethod.invoke(
+                    consumePendingUpdateOperationsMethod?.invoke(
                         creatorMenuRecyclerView
                     )
                 }
