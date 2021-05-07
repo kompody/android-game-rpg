@@ -4,15 +4,15 @@
 package ru.kompod.moonlike.data.database.mapper
 
 import ru.kompod.moonlike.data.database.model.character.CharacterDbModel
-import ru.kompod.moonlike.domain.entity.base.Character
+import ru.kompod.moonlike.domain.entity.base.CharacterObject
 import ru.kompod.moonlike.domain.repository.IAssetRepository
 import javax.inject.Inject
 
 class CharacterMapper @Inject constructor(
     private val assetRepository: IAssetRepository
 ) {
-    fun mapDbModelToEntity(model: CharacterDbModel): Character =
-        Character(
+    fun mapDbModelToEntity(model: CharacterDbModel): CharacterObject =
+        CharacterObject(
             id = model.id,
             label = model.label,
             race = assetRepository.getCharacterRaceById(model.raceId),
@@ -25,7 +25,7 @@ class CharacterMapper @Inject constructor(
             role = assetRepository.getCharacterRoleById(model.roleId)
         )
 
-    fun mapEntityToDbModel(model: Character): CharacterDbModel =
+    fun mapEntityToDbModel(model: CharacterObject): CharacterDbModel =
         CharacterDbModel(
             id = model.id,
             label = model.label,

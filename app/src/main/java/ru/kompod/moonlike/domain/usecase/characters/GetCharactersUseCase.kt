@@ -4,12 +4,12 @@
 package ru.kompod.moonlike.domain.usecase.characters
 
 import io.reactivex.Single
-import ru.kompod.moonlike.domain.entity.base.Character
+import ru.kompod.moonlike.domain.entity.base.CharacterObject
 import ru.kompod.moonlike.domain.repository.character.ICharacterRepository
 import javax.inject.Inject
 
 class GetCharactersUseCase @Inject constructor(
     private val characterRepository: ICharacterRepository
 ) {
-    fun execute(): Single<List<Character>> = characterRepository.loadCharacters()
+    fun execute(): Single<List<CharacterObject>> = characterRepository.loadCharacters()
 }

@@ -3,18 +3,19 @@
 
 package ru.kompod.moonlike.domain.repository
 
-import io.reactivex.Single
 import ru.kompod.moonlike.domain.entity.base.*
 
 interface IAssetRepository {
-    fun getCharacterRacesInfo(): List<RaceInfo>
-    fun getCharacterRaces(): List<Race>
-    fun getCharacterGenders(): List<Gender>
-    fun getCharacterPortraits(raceId: Short, genderId: Short): List<Portrait>
-    fun getCharacterRoles(): List<Role>
+    fun getCharacterRacesInfo(): List<RaceInfoObject>
+    fun getCharacterRaces(): List<RaceObject>
+    fun getCharacterGenders(): List<GenderObject>
+    fun getCharacterPortraits(raceId: Short, genderId: Short): List<PortraitObject>
+    fun getCharacterRoles(): List<RoleObject>
 
-    fun getCharacterRaceById(id: Short): Race
-    fun getCharacterGenderById(id: Short): Gender
-    fun getCharacterPortraitById(raceId: Short, genderId: Short, portraitId: Short): Portrait
-    fun getCharacterRoleById(id: Short): Role
+    fun getCharacterRaceById(id: Short): RaceObject
+    fun getCharacterGenderById(id: Short): GenderObject
+    fun getCharacterPortraitById(raceId: Short, genderId: Short, portraitId: Short): PortraitObject
+    fun getCharacterRoleById(id: Short): RoleObject
+
+    fun getMapById(id: Short): MapObject
 }

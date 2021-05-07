@@ -3,53 +3,76 @@
 
 package ru.kompod.moonlike.domain.entity.base
 
-class Character(
+//character
+class CharacterObject(
     val id: Short,
     val label: String,
-    val race: Race,
-    val gender: Gender,
-    val portrait: Portrait,
-    val role: Role
+    val race: RaceObject,
+    val gender: GenderObject,
+    val portrait: PortraitObject,
+    val role: RoleObject
 )
 
-class RaceInfo(
-    val race: Race,
-    val genders: List<Gender>,
-    val portraits: List<List<Portrait>>,
-    val roles: List<Role>
+class RaceInfoObject(
+    val race: RaceObject,
+    val genders: List<GenderObject>,
+    val portraits: List<List<PortraitObject>>,
+    val roles: List<RoleObject>
 )
 
-class Race(
+class RaceObject(
     val id: Short,
     val label: String,
     val description: String
 )
 
-class Gender(
+class GenderObject(
     val id: Short,
     val label: String
 )
 
-class Portrait(
+class PortraitObject(
     val id: Short,
     val path: String
 )
 
-class Role(
+class RoleObject(
     val id: Short,
     val label: String,
     val description: String,
     val states: States
 )
 
-open class State(val value: Short)
+open class StateObject(val value: Short)
 
-class STR(value: Short) : State(value)
-class AGI(value: Short) : State(value)
-class INT(value: Short) : State(value)
+class STR(value: Short) : StateObject(value)
+class AGI(value: Short) : StateObject(value)
+class INT(value: Short) : StateObject(value)
 
 class States(val str: STR, val agi: AGI, val int: INT) {
     companion object {
         fun fromRaw(str: Short, agi: Short, int: Short) = States(STR(str), AGI(agi), INT(int))
     }
 }
+
+//loot item
+
+//map
+class MapObject(
+    val id: Short,
+    val label: String,
+    val path: String,
+    val travels: List<TravelObject>
+)
+
+class TravelObject(
+    val id: Short,
+    val label: String,
+    val from: Short,
+    val to: Short,
+    val delay: Short
+)
+
+//npc
+
+//quest

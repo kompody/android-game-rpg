@@ -11,7 +11,7 @@ import javax.inject.Inject
 class AssetRepository @Inject constructor(
     private val assets: Assets
 ) : IAssetRepository {
-    override fun getCharacterRacesInfo(): List<RaceInfo> = listOf(
+    override fun getCharacterRacesInfo(): List<RaceInfoObject> = listOf(
         assets.castleRaceInfo,
         assets.infernoRaceInfo,
         assets.necromancersRaceInfo,
@@ -20,7 +20,7 @@ class AssetRepository @Inject constructor(
         assets.towerRaceInfo
     )
 
-    override fun getCharacterRaces(): List<Race> = listOf(
+    override fun getCharacterRaces(): List<RaceObject> = listOf(
         assets.castleRace,
         assets.infernoRace,
         assets.necromancersRace,
@@ -29,19 +29,19 @@ class AssetRepository @Inject constructor(
         assets.towerRace
     )
 
-    override fun getCharacterGenders(): List<Gender> = listOf(
+    override fun getCharacterGenders(): List<GenderObject> = listOf(
         assets.male,
         assets.female
     )
 
-    override fun getCharacterPortraits(raceId: Short, genderId: Short): List<Portrait> =
+    override fun getCharacterPortraits(raceId: Short, genderId: Short): List<PortraitObject> =
         when (genderId) {
             Assets.GENDER_MALE_ID -> getCharacterMalePortraits(raceId)
             Assets.GENDER_FEMALE_ID -> getCharacterFemalePortraits(raceId)
             else -> getCharacterMalePortraits(raceId)
         }
 
-    private fun getCharacterMalePortraits(raceId: Short): List<Portrait> = when (raceId) {
+    private fun getCharacterMalePortraits(raceId: Short): List<PortraitObject> = when (raceId) {
         Assets.RACE_CASTLE -> assets.castleIconMale
         Assets.RACE_INFERNO -> assets.infernoIconMale
         Assets.RACE_NECROMANCERS -> assets.necromancersIconMale
@@ -51,7 +51,7 @@ class AssetRepository @Inject constructor(
         else -> assets.castleIconMale
     }
 
-    private fun getCharacterFemalePortraits(raceId: Short): List<Portrait> = when (raceId) {
+    private fun getCharacterFemalePortraits(raceId: Short): List<PortraitObject> = when (raceId) {
         Assets.RACE_CASTLE -> assets.castleIconFemale
         Assets.RACE_INFERNO -> assets.infernoIconFemale
         Assets.RACE_NECROMANCERS -> assets.necromancersIconFemale
@@ -61,7 +61,7 @@ class AssetRepository @Inject constructor(
         else -> assets.castleIconFemale
     }
 
-    override fun getCharacterRoles(): List<Role> = listOf(
+    override fun getCharacterRoles(): List<RoleObject> = listOf(
         assets.knight,
         assets.priest,
         assets.demonLord,
@@ -76,19 +76,21 @@ class AssetRepository @Inject constructor(
         assets.sorcerer
     )
 
-    override fun getCharacterRaceById(id: Short): Race =
+    override fun getCharacterRaceById(id: Short): RaceObject =
         getCharacterRaces().first { it.id == id }
 
-    override fun getCharacterGenderById(id: Short): Gender =
+    override fun getCharacterGenderById(id: Short): GenderObject =
         getCharacterGenders().first { it.id == id }
 
     override fun getCharacterPortraitById(
         raceId: Short,
         genderId: Short,
         portraitId: Short
-    ): Portrait =
+    ): PortraitObject =
         getCharacterPortraits(raceId, genderId).first { it.id == portraitId }
 
-    override fun getCharacterRoleById(id: Short): Role =
+    override fun getCharacterRoleById(id: Short): RoleObject =
         getCharacterRoles().first { it.id == id }
+
+    override fun getMapById(id: Short): MapObject = assets.testMap
 }

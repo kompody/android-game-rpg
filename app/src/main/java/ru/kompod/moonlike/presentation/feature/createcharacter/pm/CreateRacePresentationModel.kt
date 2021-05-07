@@ -9,7 +9,7 @@ import me.dmdev.rxpm.action
 import me.dmdev.rxpm.state
 import ru.kompod.moonlike.data.analytics.AnalyticsDelegate
 import ru.kompod.moonlike.domain.AppScreen
-import ru.kompod.moonlike.domain.entity.base.RaceInfo
+import ru.kompod.moonlike.domain.entity.base.RaceInfoObject
 import ru.kompod.moonlike.domain.usecase.createcharacter.CreateCharacterUseCase
 import ru.kompod.moonlike.domain.usecase.createcharacter.GetCharacterRacesUseCase
 import ru.kompod.moonlike.presentation.base.BasePresentationModel
@@ -177,7 +177,7 @@ class CreateRacePresentationModel @Inject constructor(
         handleViewModel(model)
     }
 
-    private fun handleRaces(races: List<RaceInfo>) {
+    private fun handleRaces(races: List<RaceInfoObject>) {
         CacheModel(
             RaceItem(races, 0),
             GenderItem(races[0].genders, 0),

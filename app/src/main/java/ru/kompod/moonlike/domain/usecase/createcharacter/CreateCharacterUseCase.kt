@@ -3,14 +3,13 @@
 
 package ru.kompod.moonlike.domain.usecase.createcharacter
 
-import io.reactivex.Completable
 import io.reactivex.Single
-import ru.kompod.moonlike.domain.entity.base.Character
+import ru.kompod.moonlike.domain.entity.base.CharacterObject
 import ru.kompod.moonlike.domain.repository.character.ICharacterRepository
 import javax.inject.Inject
 
 class CreateCharacterUseCase @Inject constructor(
     private val characterRepository: ICharacterRepository
 ) {
-    fun execute(model: Character): Single<Unit> = characterRepository.saveCharacter(model)
+    fun execute(model: CharacterObject): Single<Unit> = characterRepository.saveCharacter(model)
 }

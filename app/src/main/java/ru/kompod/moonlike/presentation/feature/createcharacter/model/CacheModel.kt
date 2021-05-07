@@ -13,8 +13,8 @@ class CacheModel(
     val roleItem: RoleItem
 )
 
-class RaceItem(val races: List<RaceInfo>, var selectedIndex: Int) : IListItem
-class GenderItem(var genders: List<Gender>, var selectedIndex: Int) : IListItem
-class PortraitItem(var portraits: List<Portrait>, var selectedIndex: Int) : IListItem
-class RoleItem(var roles: List<Role>, var selectedIndex: Int) : IListItem
-class CharacterAboutItem(var race: Race, var role: Role) : IListItem
+class RaceItem(val races: List<RaceInfoObject>, var selectedIndex: Int) : IListItem
+class GenderItem(var genders: List<GenderObject>, var selectedIndex: Int) : IListItem
+class PortraitItem(var portraits: List<PortraitObject>, var selectedIndex: Int) : IListItem
+class RoleItem(var roles: List<RoleObject>, var selectedIndex: Int) : IListItem
+class CharacterAboutItem(var race: RaceObject, var role: RoleObject) : IListItem

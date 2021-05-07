@@ -3,11 +3,11 @@
 
 package ru.kompod.moonlike.presentation.feature.createcharacter.mapper
 
-import ru.kompod.moonlike.domain.entity.base.Character
+import ru.kompod.moonlike.domain.entity.base.CharacterObject
 import ru.kompod.moonlike.presentation.feature.createcharacter.model.CacheModel
 
-fun CacheModel.toEntity(): Character =
-    Character(
+fun CacheModel.toEntity(): CharacterObject =
+    CharacterObject(
         0,
         "",
         raceItem.races[raceItem.selectedIndex].race,
