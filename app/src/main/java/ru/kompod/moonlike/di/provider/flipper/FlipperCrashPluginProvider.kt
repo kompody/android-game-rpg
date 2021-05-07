@@ -4,10 +4,11 @@
 package ru.kompod.moonlike.di.provider.flipper
 
 import com.facebook.flipper.plugins.crashreporter.CrashReporterPlugin
-import javax.inject.Inject
+import toothpick.InjectConstructor
 import javax.inject.Provider
 
-class FlipperCrashPluginProvider @Inject constructor() : Provider<CrashReporterPlugin> {
+@InjectConstructor
+class FlipperCrashPluginProvider : Provider<CrashReporterPlugin> {
     override fun get(): CrashReporterPlugin {
         return CrashReporterPlugin.getInstance()
     }

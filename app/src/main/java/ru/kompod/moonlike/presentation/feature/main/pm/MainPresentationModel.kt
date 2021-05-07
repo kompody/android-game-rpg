@@ -76,10 +76,10 @@ class MainPresentationModel @Inject constructor(
             is Screens.MapContainer -> {
                 selectBottomTab.accept(R.id.item_map)
             }
-            is Screens.QuestListContainer -> {
+            is Screens.QuestsListContainer -> {
                 selectBottomTab.accept(R.id.item_quest_list)
             }
-            is Screens.SettingContainer -> {
+            is Screens.SettingsContainer -> {
                 selectBottomTab.accept(R.id.item_setting)
             }
         }
@@ -101,8 +101,8 @@ class MainPresentationModel @Inject constructor(
             R.id.item_profile -> Screens.ProfileContainer
             R.id.item_inventory -> Screens.InventoryContainer
             R.id.item_map -> Screens.MapContainer
-            R.id.item_quest_list -> Screens.QuestListContainer
-            R.id.item_setting -> Screens.SettingContainer
+            R.id.item_quest_list -> Screens.QuestsListContainer
+            R.id.item_setting -> Screens.SettingsContainer
             else -> null
         }
     }

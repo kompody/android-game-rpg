@@ -7,6 +7,7 @@ enum class AppScreen {
     SPLASH,
 
     PROFILE,
+    CHARACTERS_LIST,
     CREATE_CHARACTER,
 
     INVENTORY,

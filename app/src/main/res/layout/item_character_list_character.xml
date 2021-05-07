@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/textHintLight"
+    app:cardCornerRadius="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/iconImageView"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            tools:background="@color/placeholderColor" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/labelTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_sans_cyrl_500"
+                android:textSize="16sp"
+                tools:text="name" />
+
+            <TextView
+                android:id="@+id/valueStrTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                tools:text="@string/asset_stats_str" />
+
+            <TextView
+                android:id="@+id/valueAgiTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                tools:text="@string/asset_stats_agi" />
+
+            <TextView
+                android:id="@+id/valueIntTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                tools:text="@string/asset_stats_int" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/removeImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/ic_window_close" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

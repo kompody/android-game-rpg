@@ -60,5 +60,8 @@
     <declare-styleable name="PreloaderButton">
         <attr name="pb_text" format="string" />
         <attr name="pb_textColor" format="color" />
+        <attr name="pb_progressColor" format="color" />
+        <attr name="pb_isDark" format="boolean" />
+        <attr name="pb_Background" format="reference" />
     </declare-styleable>
 </resources>

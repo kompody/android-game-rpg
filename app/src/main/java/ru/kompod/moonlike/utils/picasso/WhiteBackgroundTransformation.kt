@@ -8,9 +8,10 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import com.squareup.picasso.Transformation
-import javax.inject.Inject
+import toothpick.InjectConstructor
 
-class WhiteBackgroundTransformation @Inject constructor() : Transformation {
+@InjectConstructor
+class WhiteBackgroundTransformation : Transformation {
     override fun key(): String = "RGB565"
 
     override fun transform(source: Bitmap): Bitmap {

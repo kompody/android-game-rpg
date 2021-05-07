@@ -4,10 +4,11 @@
 package ru.kompod.moonlike.di.provider.flipper
 
 import com.facebook.flipper.plugins.navigation.NavigationFlipperPlugin
-import javax.inject.Inject
+import toothpick.InjectConstructor
 import javax.inject.Provider
 
-class FlipperNavigationPluginProvider @Inject constructor(): Provider<NavigationFlipperPlugin> {
+@InjectConstructor
+class FlipperNavigationPluginProvider : Provider<NavigationFlipperPlugin> {
     override fun get(): NavigationFlipperPlugin {
         return NavigationFlipperPlugin.getInstance()
     }

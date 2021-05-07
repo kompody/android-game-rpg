@@ -6,9 +6,10 @@ package ru.kompod.moonlike.presentation
 import io.reactivex.Observable
 import io.reactivex.functions.Action
 import io.reactivex.subjects.PublishSubject
-import javax.inject.Inject
+import toothpick.InjectConstructor
 
-class ScrollToStartEventBus @Inject constructor() : Action {
+@InjectConstructor
+class ScrollToStartEventBus : Action {
     private val publisher = PublishSubject.create<Unit>()
 
     val observable: Observable<Unit> = publisher.share()

@@ -5,6 +5,7 @@ package ru.kompod.moonlike.presentation.custom
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -33,6 +34,12 @@ class PreloaderButton @JvmOverloads constructor(
             textView.setTextColor(value)
         }
 
+    var backgroundButton = R.drawable.button_primary_light
+        set(value) {
+            field = value
+            frameLayoutBackground.setBackgroundResource(value)
+        }
+
     init {
         View.inflate(context, R.layout.custom_edit_text_with_progress, this)
         orientation = VERTICAL
@@ -40,6 +47,10 @@ class PreloaderButton @JvmOverloads constructor(
         context.withStyledAttributes(attrs, R.styleable.PreloaderButton) {
             labelText = getString(R.styleable.PreloaderButton_pb_text) ?: String.empty
             textColor = getColor(R.styleable.PreloaderButton_pb_textColor, Color.BLACK)
+            backgroundButton = getResourceId(
+                R.styleable.PreloaderButton_pb_Background,
+                R.drawable.button_primary_light
+            )
         }
     }
 
@@ -49,7 +60,6 @@ class PreloaderButton @JvmOverloads constructor(
     }
 
     fun hideProgress() {
-        progressBar.setVisibleOrGone(false)
         textView.setVisibleOrGone(true)
     }
 }

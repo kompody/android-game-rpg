@@ -4,13 +4,15 @@
 package ru.kompod.moonlike
 
 import androidx.fragment.app.Fragment
+import ru.kompod.moonlike.presentation.feature.characterslist.view.CharactersListFragment
+import ru.kompod.moonlike.presentation.feature.createcharacter.view.CreateCharacterFragment
 import ru.kompod.moonlike.presentation.feature.main.view.*
 import ru.kompod.moonlike.presentation.feature.splash.view.SplashFragment
 import ru.kompod.moonlike.presentation.feature.profile.view.ProfileFragment
 import ru.kompod.moonlike.presentation.feature.inventory.view.InventoryFragment
 import ru.kompod.moonlike.presentation.feature.map.view.MapFragment
-import ru.kompod.moonlike.presentation.feature.questlist.view.QuestListFragment
-import ru.kompod.moonlike.presentation.feature.setting.view.SettingFragment
+import ru.kompod.moonlike.presentation.feature.questslist.view.QuestsListFragment
+import ru.kompod.moonlike.presentation.feature.settings.view.SettingsFragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 object Screens {
@@ -26,6 +28,7 @@ object Screens {
         }
     }
 
+    //PROFILE TAB
     object ProfileContainer : SupportAppScreen() {
         override fun getFragment(): Fragment? {
             return ProfileBottomTabContainerFragment()
@@ -38,6 +41,19 @@ object Screens {
         }
     }
 
+    object CharactersList : SupportAppScreen() {
+        override fun getFragment(): Fragment? {
+            return CharactersListFragment()
+        }
+    }
+
+    object CreateCharacter : SupportAppScreen() {
+        override fun getFragment(): Fragment? {
+            return CreateCharacterFragment()
+        }
+    }
+
+    //INVENTORY TAB
     object InventoryContainer : SupportAppScreen() {
         override fun getFragment(): Fragment? {
             return InventoryBottomTabContainerFragment()
@@ -50,6 +66,7 @@ object Screens {
         }
     }
 
+    //MAP TAB
     object MapContainer : SupportAppScreen() {
         override fun getFragment(): Fragment? {
             return MapBottomTabContainerFragment()
@@ -62,33 +79,29 @@ object Screens {
         }
     }
 
-    object QuestListContainer : SupportAppScreen() {
+    //QUESTS TAB
+    object QuestsListContainer : SupportAppScreen() {
         override fun getFragment(): Fragment? {
-            return QuestListBottomTabContainerFragment()
+            return QuestsListBottomTabContainerFragment()
         }
     }
 
-    object QuestList : SupportAppScreen() {
+    object QuestsList : SupportAppScreen() {
         override fun getFragment(): Fragment? {
-            return QuestListFragment()
+            return QuestsListFragment()
         }
     }
 
-    object SettingContainer : SupportAppScreen() {
+    //SETTINGS TAB
+    object SettingsContainer : SupportAppScreen() {
         override fun getFragment(): Fragment? {
-            return SettingBottomTabContainerFragment()
+            return SettingsBottomTabContainerFragment()
         }
     }
 
-    object Setting : SupportAppScreen() {
+    object Settings : SupportAppScreen() {
         override fun getFragment(): Fragment? {
-            return SettingFragment()
-        }
-    }
-
-    object Test : SupportAppScreen() {
-        override fun getFragment(): Fragment? {
-            return InventoryFragment()
+            return SettingsFragment()
         }
     }
 }

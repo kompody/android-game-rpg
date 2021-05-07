@@ -11,8 +11,81 @@
     <string name="main_navigation_profile">Профиль</string>
     <string name="main_navigation_inventory">Инвентарь</string>
     <string name="main_navigation_map">Карта</string>
-    <string name="main_navigation_quest_list">Задания</string>
-    <string name="main_navigation_setting">Настройки</string>
+    <string name="main_navigation_quests_list">Задания</string>
+    <string name="main_navigation_settings">Настройки</string>
+
+    <string name="screen_characters_list_title">Список персонажей</string>
+    <string name="screen_characters_list_create_character">Создать персонажа</string>
+    <string name="screen_characters_list_remove_character_dialog_title">Удалить персонажа?</string>
+    <string name="screen_characters_list_remove_character_dialog_message"></string>
+
+    <string name="screen_create_character_title">Создание персонажа</string>
+    <string name="screen_create_character_race_title">Раса</string>
+    <string name="screen_create_character_gender_title">Пол</string>
+    <string name="screen_create_character_icon_title">Портрет</string>
+    <string name="screen_create_character_role_title">Класс</string>
+    <string name="screen_create_character_about_race_title">Описание расы</string>
+    <string name="screen_create_character_about_role_title">Описание класса</string>
+    <string name="screen_create_character_about_stats_title">Характеристики</string>
+    <string name="screen_create_character_apply_button">Создать</string>
+
+    <string name="asset_stats_str">str: %d</string>
+    <string name="asset_stats_agi">agi: %d</string>
+    <string name="asset_stats_int">int: %d</string>
+
+    <string name="asset_race_castle">Castle</string>
+    <string name="asset_race_castle_description"></string>
+    <string name="asset_race_inferno">Inferno</string>
+    <string name="asset_race_inferno_description"></string>
+    <string name="asset_race_necromancers">Necromancers</string>
+    <string name="asset_race_necromancers_description"></string>
+    <string name="asset_race_rampart">Rampart</string>
+    <string name="asset_race_rampart_description"></string>
+    <string name="asset_race_stronghold">Stronghold</string>
+    <string name="asset_race_stronghold_description"></string>
+    <string name="asset_race_tower">Tower</string>
+    <string name="asset_race_tower_description"></string>
+
+<!--    <string name="asset_race_demon">Demon</string>-->
+<!--    <string name="asset_race_demon_description"></string>-->
+<!--    <string name="asset_race_undead">Undead</string>-->
+<!--    <string name="asset_race_undead_description"></string>-->
+<!--    <string name="asset_race_orc">Orc</string>-->
+<!--    <string name="asset_race_orc_description"></string>-->
+<!--    <string name="asset_race_magical">Magical creature</string>-->
+<!--    <string name="asset_race_magical_description"></string>-->
+<!--    <string name="asset_race_elf">Elf</string>-->
+<!--    <string name="asset_race_elf_description"></string>-->
+<!--    <string name="asset_race_elemental">Elemental</string>-->
+<!--    <string name="asset_race_elemental_description"></string>-->
+
+    <string name="asset_gender_male">male</string>
+    <string name="asset_gender_female">female</string>
+
+    <string name="asset_role_knight">Knight</string>
+    <string name="asset_role_knight_description"></string>
+    <string name="asset_role_priest">Priest</string>
+    <string name="asset_role_priest_description"></string>
+    <string name="asset_role_demon_lord">Demon Lord</string>
+    <string name="asset_role_demon_lord_description"></string>
+    <string name="asset_role_demonologist">Demonologist</string>
+    <string name="asset_role_demonologist_description"></string>
+    <string name="asset_role_necromancer">Necromancer</string>
+    <string name="asset_role_necromancer_description"></string>
+    <string name="asset_role_witch">Witch</string>
+    <string name="asset_role_witch_description"></string>
+    <string name="asset_role_ranger">Ranger</string>
+    <string name="asset_role_ranger_description"></string>
+    <string name="asset_role_druid">Druid</string>
+    <string name="asset_role_druid_description"></string>
+    <string name="asset_role_barbarian">Barbarian</string>
+    <string name="asset_role_barbarian_description"></string>
+    <string name="asset_role_beastmaster">Beast Master</string>
+    <string name="asset_role_beastmaster_description"></string>
+    <string name="asset_role_wizard">Wizard</string>
+    <string name="asset_role_wizard_description"></string>
+    <string name="asset_role_sorcerer">Sorcerer</string>
+    <string name="asset_role_sorcerer_description"></string>
 
     <string name="sign_in_proceed_button">Войти</string>
 

@@ -4,4 +4,5 @@
 package ru.kompod.moonlike.data.database
 
 object Tables {
+    const val CHARACTER_TABLE = "character_table"
 }

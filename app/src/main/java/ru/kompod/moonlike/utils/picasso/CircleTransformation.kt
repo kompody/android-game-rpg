@@ -5,10 +5,11 @@ package ru.kompod.moonlike.utils.picasso
 
 import android.graphics.*
 import com.squareup.picasso.Transformation
-import javax.inject.Inject
+import toothpick.InjectConstructor
 import kotlin.math.min
 
-class CircleTransformation @Inject constructor() : Transformation {
+@InjectConstructor
+class CircleTransformation : Transformation {
     override fun key() = "circle"
 
     override fun transform(source: Bitmap): Bitmap {

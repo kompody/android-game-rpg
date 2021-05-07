@@ -6,10 +6,11 @@ package ru.kompod.moonlike.utils.eventbus
 import io.reactivex.Observable
 import io.reactivex.functions.Consumer
 import io.reactivex.subjects.PublishSubject
-import javax.inject.Inject
+import toothpick.InjectConstructor
 import kotlin.reflect.KClass
 
-class AppEventBus @Inject constructor(): Consumer<Event> {
+@InjectConstructor
+class AppEventBus : Consumer<Event> {
 
     private val publisher = PublishSubject.create<Event>()
 
@@ -18,7 +19,7 @@ class AppEventBus @Inject constructor(): Consumer<Event> {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun<T: Event> registerForEvent(requiredEvent: KClass<out T>): Observable<out T> {
+    fun <T : Event> registerForEvent(requiredEvent: KClass<out T>): Observable<out T> {
         return publisher
             .filter { event -> event::class == requiredEvent }
             .map { event -> event as T }

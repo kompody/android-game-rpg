@@ -22,20 +22,40 @@
                 android:layout_weight="1"
                 android:paddingStart="@dimen/padding_default_horizontal"
                 android:paddingEnd="@dimen/padding_default_horizontal"
-                android:text="@string/main_navigation_profile"
+                android:text="@string/screen_create_character_title"
                 tools:ignore="InefficientWeight" />
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
+        style="@style/ContentView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        android:orientation="vertical">
 
-        <ImageView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/creatorMenuRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#88f" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:clipToPadding="false"
+            android:elevation="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_create_character_race" />
+
+        <ru.kompod.moonlike.presentation.custom.PreloaderButton
+            android:id="@+id/createButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:pb_Background="@drawable/button_primary_dark"
+            app:pb_text="@string/screen_create_character_apply_button"
+            app:pb_textColor="@color/white" />
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

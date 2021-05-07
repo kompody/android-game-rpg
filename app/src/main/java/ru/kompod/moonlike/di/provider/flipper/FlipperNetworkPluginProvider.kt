@@ -4,10 +4,11 @@
 package ru.kompod.moonlike.di.provider.flipper
 
 import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
-import javax.inject.Inject
+import toothpick.InjectConstructor
 import javax.inject.Provider
 
-class FlipperNetworkPluginProvider @Inject constructor() : Provider<NetworkFlipperPlugin> {
+@InjectConstructor
+class FlipperNetworkPluginProvider : Provider<NetworkFlipperPlugin> {
     override fun get(): NetworkFlipperPlugin {
         return NetworkFlipperPlugin()
     }

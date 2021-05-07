@@ -8,9 +8,10 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import io.reactivex.Observable
-import javax.inject.Inject
+import toothpick.InjectConstructor
 
-class AppLifecycleObservable @Inject constructor() {
+@InjectConstructor
+class AppLifecycleObservable {
     val observable: Observable<Lifecycle.State> = Observable.create<Lifecycle.State> { emitter ->
         val lifecycle = ProcessLifecycleOwner.get().lifecycle
         val lifecycleObserver = object : LifecycleObserver {

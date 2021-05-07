@@ -5,9 +5,10 @@ package ru.kompod.moonlike.presentation.feature
 
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import javax.inject.Inject
+import toothpick.InjectConstructor
 
-class BottomTabSelectionsEventBus @Inject constructor() {
+@InjectConstructor
+class BottomTabSelectionsEventBus {
     private val publisher = PublishSubject.create<Int>()
 
     val observable: Observable<Int> = publisher.share()

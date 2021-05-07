@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/item_profile"
+        android:icon="@drawable/ic_account"
         android:title="@string/main_navigation_profile" />
 
     <item
@@ -10,13 +11,15 @@
 
     <item
         android:id="@+id/item_map"
+        android:icon="@drawable/ic_map"
         android:title="@string/main_navigation_map"/>
 
     <item
         android:id="@+id/item_quest_list"
-        android:title="@string/main_navigation_quest_list" />
+        android:title="@string/main_navigation_quests_list" />
 
     <item
         android:id="@+id/item_setting"
-        android:title="@string/main_navigation_setting" />
+        android:icon="@drawable/ic_cog"
+        android:title="@string/main_navigation_settings" />
 </menu>

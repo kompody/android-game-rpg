@@ -4,9 +4,10 @@
 package ru.kompod.moonlike.data.analytics
 
 import timber.log.Timber
-import javax.inject.Inject
+import toothpick.InjectConstructor
 
-class LoggingAnalyticsDelegate @Inject constructor() : IAnalyticsService {
+@InjectConstructor
+class LoggingAnalyticsDelegate : IAnalyticsService {
     override fun sendEvent(event: AnalyticsEvent) {
         Timber.d("Send event: $event")
     }

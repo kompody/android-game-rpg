@@ -4,9 +4,10 @@
 package ru.kompod.moonlike.di.provider
 
 import io.reactivex.disposables.CompositeDisposable
-import javax.inject.Inject
+import toothpick.InjectConstructor
 import javax.inject.Provider
 
-class CompositeDisposableProvider @Inject constructor(): Provider<CompositeDisposable> {
+@InjectConstructor
+class CompositeDisposableProvider : Provider<CompositeDisposable> {
     override fun get() = CompositeDisposable()
 }

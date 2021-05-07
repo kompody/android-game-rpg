@@ -8,11 +8,15 @@ import android.content.res.Resources
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import io.reactivex.disposables.CompositeDisposable
+import ru.kompod.moonlike.data.repository.AssetRepository
 import ru.kompod.moonlike.data.repository.PreferencesRepository
+import ru.kompod.moonlike.data.repository.character.CharacterRepository
 import ru.kompod.moonlike.di.provider.CompositeDisposableProvider
 import ru.kompod.moonlike.di.provider.GsonProvider
 import ru.kompod.moonlike.di.provider.PicassoProvider
+import ru.kompod.moonlike.domain.repository.IAssetRepository
 import ru.kompod.moonlike.domain.repository.IPreferencesRepository
+import ru.kompod.moonlike.domain.repository.character.ICharacterRepository
 import ru.kompod.moonlike.utils.ResourceDelegate
 import ru.kompod.moonlike.utils.eventbus.AppEventBus
 import ru.kompod.moonlike.utils.extensions.toothpick.bind
@@ -25,12 +29,12 @@ class AppModule(appContext: Context) : Module() {
         bind<ResourceDelegate>().singleton()
         bind<AppEventBus>().singleton()
         bind<CompositeDisposable>().toProvider(CompositeDisposableProvider::class.java)
-        bind<Gson>().toProvider(GsonProvider::class.java)
-            .providesSingleton()
-        bind<Picasso>().toProvider(PicassoProvider::class.java)
-            .providesSingleton()
+        bind<Gson>().toProvider(GsonProvider::class.java).providesSingleton()
+        bind<Picasso>().toProvider(PicassoProvider::class.java).providesSingleton()
 
-        bind<IPreferencesRepository>().to(PreferencesRepository::class.java)
-            .singleton()
+        bind<IPreferencesRepository>().to(PreferencesRepository::class.java).singleton()
+        bind<IAssetRepository>().to(AssetRepository::class.java).singleton()
+
+        bind<ICharacterRepository>().to(CharacterRepository::class.java).singleton()
     }
 }
