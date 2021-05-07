@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
         style="@style/AppBarStyle"
@@ -28,14 +28,48 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
+        style="@style/ContentView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/characterInfoContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/item_character_list_character" />
+        </FrameLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginHorizontal="@dimen/padding_default_horizontal"
+            android:layout_marginVertical="4dp"
+            android:max="15000"
+            android:progressDrawable="@drawable/progress_preview_background" />
 
         <ImageView
+            android:id="@+id/mapImageView"
             android:layout_width="match_parent"
-            android:background="#8ff"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            tools:background="#8ff"
+            tools:layout_height="810px" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            tools:background="#88f">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/objectRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
