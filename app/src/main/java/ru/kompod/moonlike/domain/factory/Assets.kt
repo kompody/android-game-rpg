@@ -7,6 +7,7 @@ import ru.kompod.moonlike.R
 import ru.kompod.moonlike.domain.entity.base.*
 import ru.kompod.moonlike.domain.entity.base.MapObject
 import ru.kompod.moonlike.utils.ResourceDelegate
+import ru.kompod.moonlike.utils.extensions.kotlin.mergeLists
 import javax.inject.Inject
 
 class Assets @Inject constructor(
@@ -17,24 +18,10 @@ class Assets @Inject constructor(
         const val GENDER_FEMALE_ID: Short = 1
 
         const val ROLE_KNIGHT: Short = 1
-        const val ROLE_PRIEST: Short = 2
-        const val ROLE_DEMON_LORD: Short = 3
-        const val ROLE_DEMONOLOGIST: Short = 4
-        const val ROLE_NECROMANCER: Short = 5
-        const val ROLE_WITCH: Short = 6
-        const val ROLE_RANGER: Short = 7
-        const val ROLE_DRUID: Short = 8
-        const val ROLE_BARBARIAN: Short = 9
-        const val ROLE_BEAST_MASTER: Short = 10
-        const val ROLE_WIZARD: Short = 11
-        const val ROLE_SORCERER: Short = 12
+        const val ROLE_RANGER: Short = 2
+        const val ROLE_WIZARD: Short = 3
 
-        const val RACE_CASTLE: Short = 1
-        const val RACE_INFERNO: Short = 2
-        const val RACE_NECROMANCERS: Short = 3
-        const val RACE_RAMPART: Short = 4
-        const val RACE_STRONGHOLD: Short = 5
-        const val RACE_TOWER: Short = 6
+        const val RACE_HUMAN: Short = 1
 
         const val MAP_01: Short = 1
         const val MAP_02: Short = 2
@@ -56,18 +43,24 @@ class Assets @Inject constructor(
 
     private enum class Paths(val path: String) {
         //portrait
-        CASTLE_MALE("character/portrait/castle/male/castle_icon_male_%d.png"),
-        CASTLE_FEMALE("character/portrait/castle/female/castle_icon_female_%d.png"),
-        INFERNO_MALE("character/portrait/inferno/male/inferno_icon_male_%d.png"),
-        INFERNO_FEMALE("character/portrait/inferno/female/inferno_icon_female_%d.png"),
-        NECROMANCERS_MALE("character/portrait/necromancers/male/necromancers_icon_male_%d.png"),
-        NECROMANCERS_FEMALE("character/portrait/necromancers/female/necromancers_icon_female_%d.png"),
-        RAMPART_MALE("character/portrait/rampart/male/rampart_icon_male_%d.png"),
-        RAMPART_FEMALE("character/portrait/rampart/female/rampart_icon_female_%d.png"),
-        STRONGHOLD_MALE("character/portrait/stronghold/male/stronghold_icon_male_%d.png"),
-        STRONGHOLD_FEMALE("character/portrait/stronghold/female/stronghold_icon_female_%d.png"),
-        TOWER_MALE("character/portrait/tower/male/tower_icon_male_%d.png"),
-        TOWER_FEMALE("character/portrait/tower/female/tower_icon_female_%d.png"),
+        PLAYER_A("character/player/player_a_%d.png"),
+        PLAYER_B("character/player/player_b_%d.png"),
+        PLAYER_C("character/player/player_c_%d.png"),
+        VILLAGER("character/villager/villager_%d.png"),
+        ANIMAL("character/animal/animal_%d.png"),
+        MOUNT("character/mount/mount_%d.png"),
+        DESERT("character/desert/enemy_%d.png"),
+        DESERT_BOSS("character/desert/boss_%d.png"),
+        FIELD("character/field/enemy_%d.png"),
+        FIELD_BOSS("character/field/boss_%d.png"),
+        MINE("character/mine/enemy_%d.png"),
+        MINE_BOSS("character/mine/boss_%d.png"),
+        RUIN("character/ruin/enemy_%d.png"),
+        RUIN_BOSS("character/ruin/boss_%d.png"),
+        SNOW("character/ruin/enemy_%d.png"),
+        SNOW_BOSS("character/ruin/boss_%d.png"),
+        SWAMP("character/swamp/enemy_%d.png"),
+        SWAMP_BOSS("character/swamp/boss_%d.png"),
 
         //maps
         MAP_01("map/map_01.png"),
@@ -93,66 +86,40 @@ class Assets @Inject constructor(
     val female = GenderObject(GENDER_FEMALE_ID, resources.getString(R.string.asset_gender_female))
 
     //portrait
-    val castleIconMale = getIconsByPath(Paths.CASTLE_MALE)
-    val castleIconFemale = getIconsByPath(Paths.CASTLE_FEMALE)
-    val infernoIconMale = getIconsByPath(Paths.INFERNO_MALE)
-    val infernoIconFemale = getIconsByPath(Paths.INFERNO_FEMALE)
-    val necromancersIconMale = getIconsByPath(Paths.NECROMANCERS_MALE)
-    val necromancersIconFemale = getIconsByPath(Paths.NECROMANCERS_FEMALE)
-    val rampartIconMale = getIconsByPath(Paths.RAMPART_MALE)
-    val rampartIconFemale = getIconsByPath(Paths.RAMPART_FEMALE)
-    val strongholdIconMale = getIconsByPath(Paths.STRONGHOLD_MALE)
-    val strongholdIconFemale = getIconsByPath(Paths.STRONGHOLD_FEMALE)
-    val towerIconMale = getIconsByPath(Paths.TOWER_MALE)
-    val towerIconFemale = getIconsByPath(Paths.TOWER_FEMALE)
+    //portrait player
+    val playerA = getIconsByPath(Paths.PLAYER_A, 1, 2)
+    val playerB = getIconsByPath(Paths.PLAYER_B, 1, 2)
+    val playerC = getIconsByPath(Paths.PLAYER_C, 1, 2)
+    //portrait npc
+    val villager = getIconsByPath(Paths.VILLAGER, 1, 6)
+    val animal = getIconsByPath(Paths.ANIMAL, 1, 8)
+    val mount = getIconsByPath(Paths.MOUNT, 1, 6)
+    //portrait enemy
+    val desert = getIconsByPath(Paths.DESERT, 1, 6)
+    val desertBoss = getIconsByPath(Paths.DESERT_BOSS, 1, 3)
+    val field = getIconsByPath(Paths.FIELD, 1, 6)
+    val fieldBoss = getIconsByPath(Paths.FIELD_BOSS, 1, 3)
+    val mine = getIconsByPath(Paths.MINE, 1, 6)
+    val mineBoss = getIconsByPath(Paths.MINE_BOSS, 1, 3)
+    val ruin = getIconsByPath(Paths.RUIN, 1, 6)
+    val ruinBoss = getIconsByPath(Paths.RUIN_BOSS, 1, 3)
+    val snow = getIconsByPath(Paths.SNOW, 1, 6)
+    val snowBoss = getIconsByPath(Paths.SNOW_BOSS, 1, 3)
+    val swamp = getIconsByPath(Paths.SWAMP, 1, 6)
+    val swampBoss = getIconsByPath(Paths.SWAMP_BOSS, 1, 3)
 
-    private fun getIconsByPath(path: Paths): List<PortraitObject> = (1..10).toList()
+    private fun getIconsByPath(path: Paths, from: Short, to: Short): List<PortraitObject> = (from..to).toList()
         .mapIndexed { index, it ->
             PortraitObject(index.toShort(), String.format(path.path, it))
         }
 
-    val castleIcons = listOf(castleIconMale, castleIconFemale)
-    val infernoIcons = listOf(infernoIconMale, infernoIconFemale)
-    val necromancersIcons = listOf(necromancersIconMale, necromancersIconFemale)
-    val rampartIcons = listOf(rampartIconMale, rampartIconFemale)
-    val strongholdIcons = listOf(strongholdIconMale, strongholdIconFemale)
-    val towerIcons = listOf(towerIconMale, towerIconFemale)
+    val humanIcons = listOf(mergeLists(playerA, playerC), playerB)
 
-    //roles
+        //roles
     val knight = RoleObject(
         ROLE_KNIGHT,
         resources.getString(R.string.asset_role_knight),
         resources.getString(R.string.asset_role_knight_description),
-        States.fromRaw(10, 10, 10)
-    )
-    val priest = RoleObject(
-        ROLE_PRIEST,
-        resources.getString(R.string.asset_role_priest),
-        resources.getString(R.string.asset_role_priest_description),
-        States.fromRaw(10, 10, 10)
-    )
-    val demonLord = RoleObject(
-        ROLE_DEMON_LORD,
-        resources.getString(R.string.asset_role_demon_lord),
-        resources.getString(R.string.asset_role_demon_lord_description),
-        States.fromRaw(10, 10, 10)
-    )
-    val demonologist = RoleObject(
-        ROLE_DEMONOLOGIST,
-        resources.getString(R.string.asset_role_demonologist),
-        resources.getString(R.string.asset_role_demonologist_description),
-        States.fromRaw(10, 10, 10)
-    )
-    val necromancer = RoleObject(
-        ROLE_NECROMANCER,
-        resources.getString(R.string.asset_role_necromancer),
-        resources.getString(R.string.asset_role_necromancer_description),
-        States.fromRaw(10, 10, 10)
-    )
-    val witch = RoleObject(
-        ROLE_WITCH,
-        resources.getString(R.string.asset_role_witch),
-        resources.getString(R.string.asset_role_witch_description),
         States.fromRaw(10, 10, 10)
     )
     val ranger = RoleObject(
@@ -161,105 +128,26 @@ class Assets @Inject constructor(
         resources.getString(R.string.asset_role_ranger_description),
         States.fromRaw(10, 10, 10)
     )
-    val druid = RoleObject(
-        ROLE_DRUID,
-        resources.getString(R.string.asset_role_druid),
-        resources.getString(R.string.asset_role_druid_description),
-        States.fromRaw(10, 10, 10)
-    )
-    val barbarian = RoleObject(
-        ROLE_BARBARIAN,
-        resources.getString(R.string.asset_role_barbarian),
-        resources.getString(R.string.asset_role_barbarian_description),
-        States.fromRaw(10, 10, 10)
-    )
-    val beastMaster = RoleObject(
-        ROLE_BEAST_MASTER,
-        resources.getString(R.string.asset_role_beastmaster),
-        resources.getString(R.string.asset_role_beastmaster_description),
-        States.fromRaw(10, 10, 10)
-    )
     val wizard = RoleObject(
         ROLE_WIZARD,
         resources.getString(R.string.asset_role_wizard),
         resources.getString(R.string.asset_role_wizard_description),
         States.fromRaw(10, 10, 10)
     )
-    val sorcerer = RoleObject(
-        ROLE_SORCERER,
-        resources.getString(R.string.asset_role_sorcerer),
-        resources.getString(R.string.asset_role_sorcerer_description),
-        States.fromRaw(10, 10, 10)
-    )
 
     //races
-    val castleRace = RaceObject(
-        RACE_CASTLE,
-        resources.getString(R.string.asset_race_castle),
-        resources.getString(R.string.asset_race_castle_description)
-    )
-    val infernoRace = RaceObject(
-        RACE_INFERNO,
-        resources.getString(R.string.asset_race_inferno),
-        resources.getString(R.string.asset_race_inferno_description)
-    )
-    val necromancersRace = RaceObject(
-        RACE_NECROMANCERS,
-        resources.getString(R.string.asset_race_necromancers),
-        resources.getString(R.string.asset_race_necromancers_description)
-    )
-    val rampartRace = RaceObject(
-        RACE_RAMPART,
-        resources.getString(R.string.asset_race_rampart),
-        resources.getString(R.string.asset_race_rampart_description)
-    )
-    val strongholdRace = RaceObject(
-        RACE_STRONGHOLD,
-        resources.getString(R.string.asset_race_stronghold),
-        resources.getString(R.string.asset_race_stronghold_description)
-    )
-    val towerRace = RaceObject(
-        RACE_TOWER,
-        resources.getString(R.string.asset_race_tower),
-        resources.getString(R.string.asset_race_tower_description)
+    val humanRace = RaceObject(
+        RACE_HUMAN,
+        resources.getString(R.string.asset_race_human),
+        resources.getString(R.string.asset_race_human_description)
     )
 
     //racesInfo
-    val castleRaceInfo = RaceInfoObject(
-        castleRace,
+    val humanRaceInfo = RaceInfoObject(
+        humanRace,
         listOf(male, female),
-        castleIcons,
-        listOf(knight, priest)
-    )
-    val infernoRaceInfo = RaceInfoObject(
-        infernoRace,
-        listOf(male, female),
-        infernoIcons,
-        listOf(demonLord, demonologist)
-    )
-    val necromancersRaceInfo = RaceInfoObject(
-        necromancersRace,
-        listOf(male, female),
-        necromancersIcons,
-        listOf(necromancer, witch)
-    )
-    val rampartRaceInfo = RaceInfoObject(
-        rampartRace,
-        listOf(male, female),
-        rampartIcons,
-        listOf(ranger, druid)
-    )
-    val strongholdRaceInfo = RaceInfoObject(
-        strongholdRace,
-        listOf(male, female),
-        strongholdIcons,
-        listOf(barbarian, beastMaster)
-    )
-    val towerRaceInfo = RaceInfoObject(
-        towerRace,
-        listOf(male, female),
-        towerIcons,
-        listOf(wizard, sorcerer)
+        humanIcons,
+        listOf(knight, ranger, wizard)
     )
 
     //maps

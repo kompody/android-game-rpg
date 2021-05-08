@@ -78,5 +78,31 @@ class TravelObject(
 )
 
 //npc
+open class NPCObject(
+    val id: Short,
+    val label: String,
+    val race: RaceObject,
+    val gender: GenderObject,
+    val portrait: PortraitObject,
+    val role: RoleObject
+)
+
+class Peaceful(
+    id: Short,
+    label: String,
+    race: RaceObject,
+    gender: GenderObject,
+    portrait: PortraitObject,
+    role: RoleObject
+) : NPCObject(id, label, race, gender, portrait, role)
+
+class Monster(
+    id: Short,
+    label: String,
+    race: RaceObject,
+    gender: GenderObject,
+    portrait: PortraitObject,
+    role: RoleObject
+) : NPCObject(id, label, race, gender, portrait, role)
 
 //quest

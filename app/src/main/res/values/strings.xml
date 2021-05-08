@@ -42,31 +42,8 @@
     <string name="asset_stats_agi">agi: %d</string>
     <string name="asset_stats_int">int: %d</string>
 
-    <string name="asset_race_castle">Castle</string>
-    <string name="asset_race_castle_description"></string>
-    <string name="asset_race_inferno">Inferno</string>
-    <string name="asset_race_inferno_description"></string>
-    <string name="asset_race_necromancers">Necromancers</string>
-    <string name="asset_race_necromancers_description"></string>
-    <string name="asset_race_rampart">Rampart</string>
-    <string name="asset_race_rampart_description"></string>
-    <string name="asset_race_stronghold">Stronghold</string>
-    <string name="asset_race_stronghold_description"></string>
-    <string name="asset_race_tower">Tower</string>
-    <string name="asset_race_tower_description"></string>
-
-<!--    <string name="asset_race_demon">Demon</string>-->
-<!--    <string name="asset_race_demon_description"></string>-->
-<!--    <string name="asset_race_undead">Undead</string>-->
-<!--    <string name="asset_race_undead_description"></string>-->
-<!--    <string name="asset_race_orc">Orc</string>-->
-<!--    <string name="asset_race_orc_description"></string>-->
-<!--    <string name="asset_race_magical">Magical creature</string>-->
-<!--    <string name="asset_race_magical_description"></string>-->
-<!--    <string name="asset_race_elf">Elf</string>-->
-<!--    <string name="asset_race_elf_description"></string>-->
-<!--    <string name="asset_race_elemental">Elemental</string>-->
-<!--    <string name="asset_race_elemental_description"></string>-->
+    <string name="asset_race_human">Human</string>
+    <string name="asset_race_human_description"></string>
 
     <string name="asset_gender_male">male</string>
     <string name="asset_gender_female">female</string>
