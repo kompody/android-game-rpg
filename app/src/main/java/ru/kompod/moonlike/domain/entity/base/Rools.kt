@@ -67,6 +67,7 @@ class MapObject(
     val id: Short,
     val label: String,
     val path: String,
+    val biome: Short,
     val delay: Int,
     val travels: List<TravelObject>
 )

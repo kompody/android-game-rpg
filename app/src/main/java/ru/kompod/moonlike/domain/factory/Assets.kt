@@ -23,6 +23,13 @@ class Assets @Inject constructor(
 
         const val RACE_HUMAN: Short = 1
 
+        const val BIOME_FIELD: Short = 1
+        const val BIOME_SWAMP: Short = 2
+        const val BIOME_MINE: Short = 3
+        const val BIOME_RUIN: Short = 4
+        const val BIOME_DESERT: Short = 5
+        const val BIOME_SNOW: Short = 6
+
         const val MAP_01: Short = 1
         const val MAP_02: Short = 2
         const val MAP_03: Short = 3
@@ -155,6 +162,7 @@ class Assets @Inject constructor(
         MAP_01,
         resources.getString(R.string.asset_map_01_label),
         Paths.MAP_01.path,
+        BIOME_SNOW,
         15000,
         listOf(
             TravelObject(0, "travel to MAP_05", MAP_05)
@@ -164,6 +172,7 @@ class Assets @Inject constructor(
         MAP_02,
         resources.getString(R.string.asset_map_02_label),
         Paths.MAP_02.path,
+        BIOME_SNOW,
         15000,
         listOf(
         )
@@ -172,6 +181,7 @@ class Assets @Inject constructor(
         MAP_03,
         resources.getString(R.string.asset_map_03_label),
         Paths.MAP_03.path,
+        BIOME_SNOW,
         15000,
         listOf(
             TravelObject(0, "travel to MAP_04", MAP_04),
@@ -182,6 +192,7 @@ class Assets @Inject constructor(
         MAP_04,
         resources.getString(R.string.asset_map_04_label),
         Paths.MAP_04.path,
+        BIOME_SNOW,
         15000,
         listOf(
             TravelObject(1, "travel to MAP_03", MAP_03)
@@ -191,6 +202,7 @@ class Assets @Inject constructor(
         MAP_05,
         resources.getString(R.string.asset_map_05_label),
         Paths.MAP_05.path,
+        BIOME_SWAMP,
         15000,
         listOf(
             TravelObject(0, "travel to MAP_01", MAP_01),
@@ -202,6 +214,7 @@ class Assets @Inject constructor(
         MAP_06,
         resources.getString(R.string.asset_map_06_label),
         Paths.MAP_06.path,
+        BIOME_FIELD,
         15000,
         listOf(
             TravelObject(0, "travel to MAP_05", MAP_05),
@@ -213,6 +226,7 @@ class Assets @Inject constructor(
         MAP_07,
         resources.getString(R.string.asset_map_07_label),
         Paths.MAP_07.path,
+        BIOME_FIELD,
         15000,
         listOf(
             TravelObject(0, "travel to MAP_03", MAP_03),
@@ -225,6 +239,7 @@ class Assets @Inject constructor(
         MAP_08,
         resources.getString(R.string.asset_map_08_label),
         Paths.MAP_08.path,
+        BIOME_RUIN,
         15000,
         listOf(
             TravelObject(0, "travel to MAP_07", MAP_07)
@@ -234,6 +249,7 @@ class Assets @Inject constructor(
         MAP_09,
         resources.getString(R.string.asset_map_09_label),
         Paths.MAP_09.path,
+        BIOME_DESERT,
         15000,
         listOf(
             TravelObject(0, "travel to MAP_05", MAP_05),
@@ -244,6 +260,7 @@ class Assets @Inject constructor(
         MAP_10,
         resources.getString(R.string.asset_map_10_label),
         Paths.MAP_10.path,
+        BIOME_FIELD,
         15000,
         listOf(
             TravelObject(0, "travel to MAP_06", MAP_06),
@@ -254,6 +271,7 @@ class Assets @Inject constructor(
         MAP_11,
         resources.getString(R.string.asset_map_11_label),
         Paths.MAP_11.path,
+        BIOME_FIELD,
         15000,
         listOf(
             TravelObject(0, "travel to MAP_07", MAP_07),
@@ -265,6 +283,7 @@ class Assets @Inject constructor(
         MAP_12,
         resources.getString(R.string.asset_map_12_label),
         Paths.MAP_12.path,
+        BIOME_MINE,
         15000,
         listOf(
             TravelObject(0, "travel to MAP_16", MAP_16)
@@ -274,6 +293,7 @@ class Assets @Inject constructor(
         MAP_13,
         resources.getString(R.string.asset_map_13_label),
         Paths.MAP_13.path,
+        BIOME_DESERT,
         15000,
         listOf(
             TravelObject(0, "travel to MAP_09", MAP_09),
@@ -284,6 +304,7 @@ class Assets @Inject constructor(
         MAP_14,
         resources.getString(R.string.asset_map_14_label),
         Paths.MAP_14.path,
+        BIOME_DESERT,
         15000,
         listOf(
             TravelObject(0, "travel to MAP_13", MAP_13),
@@ -294,6 +315,7 @@ class Assets @Inject constructor(
         MAP_15,
         resources.getString(R.string.asset_map_15_label),
         Paths.MAP_15.path,
+        BIOME_SWAMP,
         15000,
         listOf(
             TravelObject(0, "travel to MAP_11", MAP_11),
@@ -305,6 +327,7 @@ class Assets @Inject constructor(
         MAP_16,
         resources.getString(R.string.asset_map_16_label),
         Paths.MAP_02.path,
+        BIOME_MINE,
         15000,
         listOf(
             TravelObject(0, "travel to MAP_12", MAP_12),
