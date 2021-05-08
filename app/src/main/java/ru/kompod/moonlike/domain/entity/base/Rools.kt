@@ -49,6 +49,11 @@ class STR(value: Short) : StateObject(value)
 class AGI(value: Short) : StateObject(value)
 class INT(value: Short) : StateObject(value)
 
+class Attack(value: Short) : StateObject(value)
+class Magic(value: Short) : StateObject(value)
+class PhysicalDefense(value: Short) : StateObject(value)
+class MagicalDefense(value: Short) : StateObject(value)
+
 class States(val str: STR, val agi: AGI, val int: INT) {
     companion object {
         fun fromRaw(str: Short, agi: Short, int: Short) = States(STR(str), AGI(agi), INT(int))
@@ -69,7 +74,6 @@ class MapObject(
 class TravelObject(
     val id: Short,
     val label: String,
-    val from: Short,
     val to: Short
 )
 

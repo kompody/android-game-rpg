@@ -12,7 +12,7 @@ class SharedPreferencesProvider @Inject constructor(
     private val context: Context
 ): Provider<SharedPreferences> {
     override fun get(): SharedPreferences {
-        val name = context.packageName + "_prefs"
+        val name = context.packageName + "_preferences"
         return context.getSharedPreferences(name, Context.MODE_PRIVATE)
     }
 }

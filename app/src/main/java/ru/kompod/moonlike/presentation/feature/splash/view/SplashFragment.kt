@@ -28,9 +28,6 @@ class SplashFragment : BaseFragment<SplashPresentationModel>(R.layout.fragment_s
     @Inject
     lateinit var picasso: Picasso
 
-    @Inject
-    lateinit var resourceDelegate: ResourceDelegate
-
     override fun providePresentationModel(): SplashPresentationModel = scope.getInstance()
 
     override fun bindCommands(presentationModel: SplashPresentationModel) {

@@ -101,4 +101,21 @@
     <string name="screen_map_objects_title">Объекты</string>
     <string name="screen_map_npc_title">Персонажи</string>
     <string name="screen_map_monsters_title">Монстры</string>
+
+    <string name="asset_map_01_label">map_01</string>
+    <string name="asset_map_02_label">map_02</string>
+    <string name="asset_map_03_label">map_03</string>
+    <string name="asset_map_04_label">map_04</string>
+    <string name="asset_map_05_label">map_05</string>
+    <string name="asset_map_06_label">map_06</string>
+    <string name="asset_map_07_label">map_07</string>
+    <string name="asset_map_08_label">map_08</string>
+    <string name="asset_map_09_label">map_09</string>
+    <string name="asset_map_10_label">map_10</string>
+    <string name="asset_map_11_label">map_11</string>
+    <string name="asset_map_12_label">map_12</string>
+    <string name="asset_map_13_label">map_13</string>
+    <string name="asset_map_14_label">map_14</string>
+    <string name="asset_map_15_label">map_15</string>
+    <string name="asset_map_16_label">map_16</string>
 </resources>

@@ -15,7 +15,7 @@ import ru.kompod.moonlike.domain.usecase.map.GetMapUseCase
 import ru.kompod.moonlike.presentation.base.BasePresentationModel
 import ru.kompod.moonlike.presentation.base.recyclerview.model.IListItem
 import ru.kompod.moonlike.presentation.feature.map.adapter.TravelAdapterDelegate
-import ru.kompod.moonlike.presentation.feature.map.mapper.ViewModelMapper
+import ru.kompod.moonlike.presentation.feature.map.mapper.MapViewModelMapper
 import ru.kompod.moonlike.presentation.feature.map.model.TravelItem
 import ru.kompod.moonlike.utils.ResourceDelegate
 import ru.kompod.moonlike.utils.extensions.rxjava.main
@@ -27,7 +27,7 @@ class MapPresentationModel @Inject constructor(
     override val router: BottomTabRouter,
     resources: ResourceDelegate,
     analytics: AnalyticsDelegate,
-    private val viewModelMapper: ViewModelMapper,
+    private val mapper: MapViewModelMapper,
     private val getMapUseCase: GetMapUseCase
 ) : BasePresentationModel(router, resources, analytics),
     TravelAdapterDelegate.TravelItemListener {
@@ -98,8 +98,8 @@ class MapPresentationModel @Inject constructor(
     private fun initCommands() {
         loadMapByIdCommand
             .observable
-            .flatMapSingle { getMapUseCase.getMapById(it) }
-            .map { it to viewModelMapper.mapEntityToViewModel(it) }
+            .flatMapSingle { getMapUseCase.execute(it) }
+            .map { it to mapper.mapEntityToViewModel(it) }
             .observeOn(main())
             .doOnNext { (map, objects) ->
                 cacheMap = map
@@ -116,7 +116,7 @@ class MapPresentationModel @Inject constructor(
     }
 
     private fun initData() {
-        loadMapByIdCommand.accept(0)
+        loadMapByIdCommand.accept(6)
     }
 
     private fun startTimer(seconds: Int) {

@@ -4,6 +4,8 @@
 package ru.kompod.moonlike.domain.usecase.characters
 
 import io.reactivex.Single
+import ru.kompod.moonlike.data.repository.PreferencesRepository
+import ru.kompod.moonlike.domain.repository.IPreferencesRepository
 import ru.kompod.moonlike.domain.repository.character.ICharacterRepository
 import javax.inject.Inject
 

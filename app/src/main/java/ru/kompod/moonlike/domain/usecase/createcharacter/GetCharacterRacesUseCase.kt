@@ -13,7 +13,7 @@ import javax.inject.Inject
 class GetCharacterRacesUseCase @Inject constructor(
     private val assetRepository: IAssetRepository
 ) {
-    fun getRaces(): Single<List<RaceInfoObject>> =
+    fun execute(): Single<List<RaceInfoObject>> =
         assetRepository.getCharacterRacesInfo().toSingle()
             .subscribeOn(io())
 }

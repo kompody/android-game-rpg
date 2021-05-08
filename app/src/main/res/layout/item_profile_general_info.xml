@@ -34,45 +34,26 @@
                 android:textSize="16sp"
                 tools:text="name" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/valueStrTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    tools:text="@string/asset_stats_str" />
-
-                <TextView
-                    android:id="@+id/valueAgiTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    tools:text="@string/asset_stats_agi" />
-
-                <TextView
-                    android:id="@+id/valueIntTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    tools:text="@string/asset_stats_int" />
-            </LinearLayout>
-
             <TextView
-                android:id="@+id/selectedTextView"
+                android:id="@+id/valueStrTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textError"
-                android:text="Выбран" />
-        </LinearLayout>
+                android:textSize="16sp"
+                tools:text="@string/asset_stats_str" />
 
-        <ImageView
-            android:id="@+id/removeImageView"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:background="@drawable/ic_window_close" />
+            <TextView
+                android:id="@+id/valueAgiTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                tools:text="@string/asset_stats_agi" />
+
+            <TextView
+                android:id="@+id/valueIntTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                tools:text="@string/asset_stats_int" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

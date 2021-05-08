@@ -11,7 +11,7 @@ import ru.kompod.moonlike.presentation.feature.map.model.TravelItem
 import ru.kompod.moonlike.utils.ResourceDelegate
 import javax.inject.Inject
 
-class ViewModelMapper @Inject constructor(
+class MapViewModelMapper @Inject constructor(
     private val resources: ResourceDelegate
 ) {
     fun mapEntityToViewModel(model: MapObject): List<IListItem> = listOf(

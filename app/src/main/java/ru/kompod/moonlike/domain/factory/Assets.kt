@@ -36,9 +36,22 @@ class Assets @Inject constructor(
         const val RACE_STRONGHOLD: Short = 5
         const val RACE_TOWER: Short = 6
 
-        const val MAP_TEST_0: Short = 0
-        const val MAP_TEST_1: Short = 1
-        const val MAP_TEST_2: Short = 2
+        const val MAP_01: Short = 1
+        const val MAP_02: Short = 2
+        const val MAP_03: Short = 3
+        const val MAP_04: Short = 4
+        const val MAP_05: Short = 5
+        const val MAP_06: Short = 6
+        const val MAP_07: Short = 7
+        const val MAP_08: Short = 8
+        const val MAP_09: Short = 9
+        const val MAP_10: Short = 10
+        const val MAP_11: Short = 11
+        const val MAP_12: Short = 12
+        const val MAP_13: Short = 13
+        const val MAP_14: Short = 14
+        const val MAP_15: Short = 15
+        const val MAP_16: Short = 16
     }
 
     private enum class Paths(val path: String) {
@@ -57,7 +70,22 @@ class Assets @Inject constructor(
         TOWER_FEMALE("character/portrait/tower/female/tower_icon_female_%d.png"),
 
         //maps
-        MAP_TEST("map/test.png")
+        MAP_01("map/map_01.png"),
+        MAP_02("map/map_02.png"),
+        MAP_03("map/map_03.png"),
+        MAP_04("map/map_04.png"),
+        MAP_05("map/map_05.png"),
+        MAP_06("map/map_06.png"),
+        MAP_07("map/map_07.png"),
+        MAP_08("map/map_08.png"),
+        MAP_09("map/map_09.png"),
+        MAP_10("map/map_10.png"),
+        MAP_11("map/map_11.png"),
+        MAP_12("map/map_12.png"),
+        MAP_13("map/map_13.png"),
+        MAP_14("map/map_14.png"),
+        MAP_15("map/map_15.png"),
+        MAP_16("map/map_16.png")
     }
 
     //genders
@@ -235,52 +263,164 @@ class Assets @Inject constructor(
     )
 
     //maps
-    val testMap0 = MapObject(
-        MAP_TEST_0,
-        "test_level_0",
-        Paths.MAP_TEST.path,
+    val map_01 = MapObject(
+        MAP_01,
+        resources.getString(R.string.asset_map_01_label),
+        Paths.MAP_01.path,
         15000,
         listOf(
-            TravelObject(
-                0,
-                "test0 to test1",
-                MAP_TEST_0,
-                MAP_TEST_1
-            ),
-            TravelObject(
-                1,
-                "test0 to test2",
-                MAP_TEST_0,
-                MAP_TEST_2
-            )
+            TravelObject(0, "travel to MAP_05", MAP_05)
         )
     )
-    val testMap1 = MapObject(
-        MAP_TEST_1,
-        "test_level_1",
-        Paths.MAP_TEST.path,
+    val map_02 = MapObject(
+        MAP_02,
+        resources.getString(R.string.asset_map_02_label),
+        Paths.MAP_02.path,
         15000,
         listOf(
-            TravelObject(
-                0,
-                "test1 to test0",
-                MAP_TEST_1,
-                MAP_TEST_0
-            )
         )
     )
-    val testMap2 = MapObject(
-        MAP_TEST_2,
-        "test_level_2",
-        Paths.MAP_TEST.path,
+    val map_03 = MapObject(
+        MAP_03,
+        resources.getString(R.string.asset_map_03_label),
+        Paths.MAP_03.path,
         15000,
         listOf(
-            TravelObject(
-                0,
-                "test2 to test1",
-                MAP_TEST_2,
-                MAP_TEST_1
-            )
+            TravelObject(0, "travel to MAP_04", MAP_04),
+            TravelObject(1, "travel to MAP_07", MAP_07)
+        )
+    )
+    val map_04 = MapObject(
+        MAP_04,
+        resources.getString(R.string.asset_map_04_label),
+        Paths.MAP_04.path,
+        15000,
+        listOf(
+            TravelObject(1, "travel to MAP_03", MAP_03)
+        )
+    )
+    val map_05 = MapObject(
+        MAP_05,
+        resources.getString(R.string.asset_map_05_label),
+        Paths.MAP_05.path,
+        15000,
+        listOf(
+            TravelObject(0, "travel to MAP_01", MAP_01),
+            TravelObject(1, "travel to MAP_06", MAP_06),
+            TravelObject(2, "travel to MAP_09", MAP_09)
+        )
+    )
+    val map_06 = MapObject(
+        MAP_06,
+        resources.getString(R.string.asset_map_06_label),
+        Paths.MAP_06.path,
+        15000,
+        listOf(
+            TravelObject(0, "travel to MAP_05", MAP_05),
+            TravelObject(1, "travel to MAP_07", MAP_07),
+            TravelObject(2, "travel to MAP_10", MAP_10)
+        )
+    )
+    val map_07 = MapObject(
+        MAP_07,
+        resources.getString(R.string.asset_map_07_label),
+        Paths.MAP_07.path,
+        15000,
+        listOf(
+            TravelObject(0, "travel to MAP_03", MAP_03),
+            TravelObject(1, "travel to MAP_06", MAP_06),
+            TravelObject(2, "travel to MAP_08", MAP_08),
+            TravelObject(3, "travel to MAP_11", MAP_11)
+        )
+    )
+    val map_08 = MapObject(
+        MAP_08,
+        resources.getString(R.string.asset_map_08_label),
+        Paths.MAP_08.path,
+        15000,
+        listOf(
+            TravelObject(0, "travel to MAP_07", MAP_07)
+        )
+    )
+    val map_09 = MapObject(
+        MAP_09,
+        resources.getString(R.string.asset_map_09_label),
+        Paths.MAP_09.path,
+        15000,
+        listOf(
+            TravelObject(0, "travel to MAP_05", MAP_05),
+            TravelObject(1, "travel to MAP_13", MAP_13)
+        )
+    )
+    val map_10 = MapObject(
+        MAP_10,
+        resources.getString(R.string.asset_map_10_label),
+        Paths.MAP_10.path,
+        15000,
+        listOf(
+            TravelObject(0, "travel to MAP_06", MAP_06),
+            TravelObject(1, "travel to MAP_11", MAP_11)
+        )
+    )
+    val map_11 = MapObject(
+        MAP_11,
+        resources.getString(R.string.asset_map_11_label),
+        Paths.MAP_11.path,
+        15000,
+        listOf(
+            TravelObject(0, "travel to MAP_07", MAP_07),
+            TravelObject(1, "travel to MAP_10", MAP_10),
+            TravelObject(2, "travel to MAP_15", MAP_15)
+        )
+    )
+    val map_12 = MapObject(
+        MAP_12,
+        resources.getString(R.string.asset_map_12_label),
+        Paths.MAP_12.path,
+        15000,
+        listOf(
+            TravelObject(0, "travel to MAP_16", MAP_16)
+        )
+    )
+    val map_13 = MapObject(
+        MAP_13,
+        resources.getString(R.string.asset_map_13_label),
+        Paths.MAP_13.path,
+        15000,
+        listOf(
+            TravelObject(0, "travel to MAP_09", MAP_09),
+            TravelObject(1, "travel to MAP_14", MAP_14)
+        )
+    )
+    val map_14 = MapObject(
+        MAP_14,
+        resources.getString(R.string.asset_map_14_label),
+        Paths.MAP_14.path,
+        15000,
+        listOf(
+            TravelObject(0, "travel to MAP_13", MAP_13),
+            TravelObject(1, "travel to MAP_15", MAP_15)
+        )
+    )
+    val map_15 = MapObject(
+        MAP_15,
+        resources.getString(R.string.asset_map_15_label),
+        Paths.MAP_15.path,
+        15000,
+        listOf(
+            TravelObject(0, "travel to MAP_11", MAP_11),
+            TravelObject(1, "travel to MAP_14", MAP_14),
+            TravelObject(2, "travel to MAP_16", MAP_16)
+        )
+    )
+    val map_16 = MapObject(
+        MAP_16,
+        resources.getString(R.string.asset_map_16_label),
+        Paths.MAP_02.path,
+        15000,
+        listOf(
+            TravelObject(0, "travel to MAP_12", MAP_12),
+            TravelObject(1, "travel to MAP_15", MAP_15)
         )
     )
 }

@@ -7,8 +7,11 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import ru.kompod.moonlike.data.sharedpreferences.ObservableSharedPreferences
 import ru.kompod.moonlike.domain.repository.IPreferencesRepository
+import ru.kompod.moonlike.utils.extensions.kotlin.castTo
+import ru.kompod.moonlike.utils.extensions.kotlin.unsafeCastTo
 import ru.kompod.moonlike.utils.extensions.rxjava.io
 import javax.inject.Inject
 
@@ -17,27 +20,31 @@ class PreferencesRepository @Inject constructor(
     private val observableSharedPreferences: ObservableSharedPreferences
 ) : IPreferencesRepository {
     companion object {
-        const val USE_TEST_HOST = "use_test_host"
+        const val SELECTED_CHARACTER_ID = "selected_character_id"
     }
 
-    private fun putParams(params: Map<String, Any>): Completable =
-        Completable.fromCallable {
+    private fun putParams(params: Map<String, Any>): Single<Unit> =
+        Single.fromCallable {
             sharedPreferences.edit {
                 for (param in params) {
-                    putString(param.key, param.value.toString())
+                    when (param.value) {
+                        is Int -> putInt(param.key, param.value as Int)
+                        is Short -> putInt(param.key, (param.value as Short).toInt())
+                        is Boolean -> putBoolean(param.key, param.value as Boolean)
+                        else -> putString(param.key, param.value.toString())
+                    }
                 }
             }
         }
 
-    override fun putUseTestHost(isUseTestHost: Boolean): Completable =
+    override fun putSelectedCharacter(id: Short): Single<Unit> =
         putParams(
             mapOf(
-                USE_TEST_HOST to isUseTestHost
+                SELECTED_CHARACTER_ID to id
             )
         )
 
-    override fun isUseTestHost(): Observable<Boolean> =
-        observableSharedPreferences.observeString(USE_TEST_HOST)
-            .map(String::toBoolean)
+    override fun getSelectedCharacter(): Observable<Short> =
+        observableSharedPreferences.observeShort(SELECTED_CHARACTER_ID)
             .subscribeOn(io())
 }

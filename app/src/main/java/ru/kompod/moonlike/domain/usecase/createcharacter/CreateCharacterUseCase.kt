@@ -4,7 +4,9 @@
 package ru.kompod.moonlike.domain.usecase.createcharacter
 
 import io.reactivex.Single
+import ru.kompod.moonlike.data.repository.PreferencesRepository
 import ru.kompod.moonlike.domain.entity.base.CharacterObject
+import ru.kompod.moonlike.domain.repository.IPreferencesRepository
 import ru.kompod.moonlike.domain.repository.character.ICharacterRepository
 import javax.inject.Inject
 

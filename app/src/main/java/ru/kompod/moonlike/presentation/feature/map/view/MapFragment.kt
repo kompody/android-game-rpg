@@ -90,7 +90,7 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
             .mapPathState
             .observable
             .doOnNext {path ->
-                picasso.load(path) { rc -> picasso.resize(rc, 1080, 810)}
+                picasso.load(path) { rc -> picasso.resize(rc, 540, 540)}
                     .into(PixelTargetAdapter(mapImageView, false))
             }
             .subscribe()

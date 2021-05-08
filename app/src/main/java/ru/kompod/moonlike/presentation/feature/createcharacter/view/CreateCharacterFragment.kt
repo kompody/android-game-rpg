@@ -4,7 +4,6 @@
 package ru.kompod.moonlike.presentation.feature.createcharacter.view
 
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.jakewharton.rxbinding3.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,7 +18,7 @@ import ru.kompod.moonlike.presentation.base.recyclerview.decorator.VerticalListM
 import ru.kompod.moonlike.presentation.base.recyclerview.model.IListItem
 import ru.kompod.moonlike.presentation.feature.createcharacter.adapter.*
 import ru.kompod.moonlike.presentation.feature.createcharacter.model.*
-import ru.kompod.moonlike.presentation.feature.createcharacter.pm.CreateRacePresentationModel
+import ru.kompod.moonlike.presentation.feature.createcharacter.pm.CreateCharacterPresentationModel
 import ru.kompod.moonlike.utils.extensions.kotlin.dp
 import ru.kompod.moonlike.utils.extensions.toothpick.bind
 import ru.kompod.moonlike.utils.extensions.toothpick.getInstance
@@ -28,7 +27,7 @@ import toothpick.config.Module
 import javax.inject.Inject
 
 class CreateCharacterFragment :
-    BaseFragment<CreateRacePresentationModel>(R.layout.fragment_create_character) {
+    BaseFragment<CreateCharacterPresentationModel>(R.layout.fragment_create_character) {
     override val isFabRequired: Boolean = false
 
     @Inject
@@ -37,7 +36,7 @@ class CreateCharacterFragment :
     @Inject
     lateinit var creatorMenuAdapter: ListItemAdapter
 
-    override fun providePresentationModel(): CreateRacePresentationModel = scope.getInstance()
+    override fun providePresentationModel(): CreateCharacterPresentationModel = scope.getInstance()
 
     override fun provideViewModules(): Array<Module> = arrayOf(
         moduleOf {
@@ -60,11 +59,11 @@ class CreateCharacterFragment :
         }
     )
 
-    override fun bindActions(presentationModel: CreateRacePresentationModel) {
+    override fun bindActions(presentationModel: CreateCharacterPresentationModel) {
         createButton.clicks().bindTo(presentationModel.createButtonClickObservable)
     }
 
-    override fun bindStates(presentationModel: CreateRacePresentationModel) {
+    override fun bindStates(presentationModel: CreateCharacterPresentationModel) {
         presentationModel
             .menuListState
             .observable

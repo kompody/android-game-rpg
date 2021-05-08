@@ -146,11 +146,11 @@ abstract class BasePresentationModel(
         }
     }
 
-    private fun showNetworkErrorSnackBar(resourceDelegate: ResourceDelegate): Completable =
-        showErrorMessage(resourceDelegate.getString(R.string.no_internet))
+    private fun showNetworkErrorSnackBar(resources: ResourceDelegate): Completable =
+        showErrorMessage(resources.getString(R.string.no_internet))
 
-    private fun showUnknownErrorSnackBar(resourceDelegate: ResourceDelegate): Completable =
-        showErrorMessage(resourceDelegate.getString(R.string.something_went_wrong))
+    private fun showUnknownErrorSnackBar(resources: ResourceDelegate): Completable =
+        showErrorMessage(resources.getString(R.string.something_went_wrong))
 
     private fun showErrorSnackBar(message: String): Completable =
         showErrorMessage(message)

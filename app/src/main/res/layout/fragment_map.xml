@@ -53,10 +53,10 @@
 
         <ImageView
             android:id="@+id/mapImageView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:background="#8ff"
-            tools:layout_height="810px" />
+            tools:layout_height="405px" />
 
         <LinearLayout
             android:layout_width="match_parent"

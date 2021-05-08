@@ -50,7 +50,6 @@ class CharactersListFragment :
                 setOf(
                     CharacterAdapterDelegate(
                         presentationModel,
-                        scope.getInstance(),
                         scope.getInstance()
                     ).get(),
                     CreateCharacterAdapterDelegate(

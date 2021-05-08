@@ -3,10 +3,10 @@
 
 package ru.kompod.moonlike.domain.repository
 
-import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 
 interface IPreferencesRepository {
-    fun putUseTestHost(isUseTestHost: Boolean): Completable
-    fun isUseTestHost(): Observable<Boolean>
+    fun putSelectedCharacter(id: Short): Single<Unit>
+    fun getSelectedCharacter(): Observable<Short>
 }

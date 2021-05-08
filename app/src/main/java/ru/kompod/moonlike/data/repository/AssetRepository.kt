@@ -92,7 +92,24 @@ class AssetRepository @Inject constructor(
     override fun getCharacterRoleById(id: Short): RoleObject =
         getCharacterRoles().first { it.id == id }
 
-    override fun getMaps(): List<MapObject> = listOf(assets.testMap0, assets.testMap1, assets.testMap2)
+    override fun getMaps(): List<MapObject> = listOf(
+        assets.map_01,
+        assets.map_02,
+        assets.map_03,
+        assets.map_04,
+        assets.map_05,
+        assets.map_06,
+        assets.map_07,
+        assets.map_08,
+        assets.map_09,
+        assets.map_10,
+        assets.map_11,
+        assets.map_12,
+        assets.map_13,
+        assets.map_14,
+        assets.map_15,
+        assets.map_16
+    )
 
     override fun getMapById(id: Short): MapObject =
         getMaps().first { it.id == id }

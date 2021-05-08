@@ -25,7 +25,7 @@ import ru.kompod.moonlike.utils.extensions.rxjava.main
 import ru.kompod.moonlike.utils.navigation.BottomTabRouter
 import javax.inject.Inject
 
-class CreateRacePresentationModel @Inject constructor(
+class CreateCharacterPresentationModel @Inject constructor(
     override val router: BottomTabRouter,
     resources: ResourceDelegate,
     analytics: AnalyticsDelegate,
@@ -118,7 +118,7 @@ class CreateRacePresentationModel @Inject constructor(
             .subscribeBy()
             .untilDestroy()
 
-        getCharacterRacesUseCase.getRaces()
+        getCharacterRacesUseCase.execute()
             .map { races -> racesToViewModel(races) }
             .observeOn(main())
             .doOnSuccess { model ->

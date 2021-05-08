@@ -12,7 +12,9 @@ import ru.kompod.moonlike.Screens
 import ru.kompod.moonlike.data.analytics.AnalyticsDelegate
 import ru.kompod.moonlike.domain.AppScreen
 import ru.kompod.moonlike.domain.usecase.characters.GetCharactersUseCase
+import ru.kompod.moonlike.domain.usecase.characters.GetSelectedCharacterUseCase
 import ru.kompod.moonlike.domain.usecase.characters.RemoveCharactersUseCase
+import ru.kompod.moonlike.domain.usecase.characters.SelectCharacterUseCase
 import ru.kompod.moonlike.presentation.base.BasePresentationModel
 import ru.kompod.moonlike.presentation.base.recyclerview.model.IListItem
 import ru.kompod.moonlike.presentation.feature.characterslist.adapter.CharacterAdapterDelegate
@@ -22,6 +24,7 @@ import ru.kompod.moonlike.presentation.feature.characterslist.model.CreateCharac
 import ru.kompod.moonlike.utils.CHARACTERS_LIMIT
 import ru.kompod.moonlike.utils.ResourceDelegate
 import ru.kompod.moonlike.utils.extensions.kotlin.mergeLists
+import ru.kompod.moonlike.utils.extensions.rxjava.combineLatest
 import ru.kompod.moonlike.utils.navigation.BottomTabRouter
 import javax.inject.Inject
 
@@ -30,6 +33,8 @@ class CharactersListPresentationModel @Inject constructor(
     resources: ResourceDelegate,
     analytics: AnalyticsDelegate,
     private val getCharactersUseCase: GetCharactersUseCase,
+    private val selectedCharacterUseCase: SelectCharacterUseCase,
+    private val getSelectedCharacterUseCase: GetSelectedCharacterUseCase,
     private val removeCharactersUseCase: RemoveCharactersUseCase
 ) : BasePresentationModel(router, resources, analytics),
     CharacterAdapterDelegate.CharacterItemListener,
@@ -57,18 +62,15 @@ class CharactersListPresentationModel @Inject constructor(
     private fun initViewActions() {
         onRemoveCharacterAction
             .observable
-            .flatMapSingle {
-                removeCharactersUseCase.execute(it.character.id)
-            }
-            .doOnNext {
-                initData()
-            }
+            .map { it.character.id }
+            .flatMapSingle { removeCharactersUseCase.execute(it) }
             .subscribeBy()
             .untilDestroy()
 
         onCharacterItemClickObserver
             .observable
-            .doOnNext {  }
+            .map { it.character.id }
+            .flatMapSingle { selectedCharacterUseCase.execute(it) }
             .subscribeBy()
             .untilDestroy()
 
@@ -86,8 +88,11 @@ class CharactersListPresentationModel @Inject constructor(
     }
 
     private fun initData() {
-        getCharactersUseCase.execute()
-            .map { list -> list.map { CharacterItem(it) } }
+        combineLatest(
+            getCharactersUseCase.observe(),
+            getSelectedCharacterUseCase.observe()
+        )
+            .map { (list, selected) -> list.map { CharacterItem(it, it.id == selected.id) } }
             .map { characters ->
                 if (characters.size >= CHARACTERS_LIMIT) {
                     characters
@@ -96,10 +101,10 @@ class CharactersListPresentationModel @Inject constructor(
                 }
             }
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSuccess { list ->
+            .doOnNext { list ->
                 charactersListState.accept(list)
             }
             .subscribeBy()
-            .untilDestroy()
+            .untilPause()
     }
 }
