@@ -44,6 +44,8 @@
 
     <string name="asset_race_human">Human</string>
     <string name="asset_race_human_description"></string>
+    <string name="asset_race_enemy">Enemy</string>
+    <string name="asset_race_enemy_description"></string>
 
     <string name="asset_gender_male">male</string>
     <string name="asset_gender_female">female</string>

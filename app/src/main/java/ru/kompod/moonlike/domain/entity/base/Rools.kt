@@ -3,6 +3,8 @@
 
 package ru.kompod.moonlike.domain.entity.base
 
+import androidx.annotation.IntRange
+
 //character
 class CharacterObject(
     val id: Short,
@@ -68,8 +70,10 @@ class MapObject(
     val label: String,
     val path: String,
     val biome: Short,
-    val delay: Int,
-    val travels: List<TravelObject>
+    val monsterLimit: Int = 5,
+    val bossesLimit: Int = 1,
+    val delay: Int = 15 * 1000,
+    val travels: List<TravelObject> = listOf()
 )
 
 class TravelObject(
@@ -80,15 +84,15 @@ class TravelObject(
 
 //npc
 open class NPCObject(
-    val id: Short,
-    val label: String,
-    val race: RaceObject,
-    val gender: GenderObject,
-    val portrait: PortraitObject,
-    val role: RoleObject
+    open val id: Short,
+    open val label: String,
+    open val race: RaceObject,
+    open val gender: GenderObject,
+    open val portrait: PortraitObject,
+    open val role: RoleObject
 )
 
-class Peaceful(
+class PeacefulObject(
     id: Short,
     label: String,
     race: RaceObject,
@@ -97,13 +101,18 @@ class Peaceful(
     role: RoleObject
 ) : NPCObject(id, label, race, gender, portrait, role)
 
-class Monster(
-    id: Short,
-    label: String,
-    race: RaceObject,
-    gender: GenderObject,
-    portrait: PortraitObject,
-    role: RoleObject
+data class MonsterObject(
+    override val id: Short,
+    override val label: String,
+    override val race: RaceObject,
+    override val gender: GenderObject,
+    override val portrait: PortraitObject,
+    override val  role: RoleObject,
+    val idOnPool: Short = id,
+    val changeSpawn: Float = 1f,
+    val delay: Int = 20 * 1000,
+    var isLife: Boolean = false,
+    var timeDeath: Long = 0
 ) : NPCObject(id, label, race, gender, portrait, role)
 
 //quest

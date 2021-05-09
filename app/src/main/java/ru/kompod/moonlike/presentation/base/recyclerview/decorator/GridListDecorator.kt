@@ -13,7 +13,7 @@ import kotlin.reflect.KClass
 
 class GridListDecorator(
     private val columnCount: Int,
-    private val margin: Int,
+    private val margin: Int = 0,
     private val boundaryMargin: Int = margin,
     private val applyFor: Set<KClass<out IListItem>> = emptySet()
 ) : RecyclerView.ItemDecoration() {
@@ -39,7 +39,7 @@ class GridListDecorator(
         val gridPosition = position - offset
         outRect.left = if (gridPosition % columnCount == 0) boundaryMargin else (gridPosition % columnCount) * margin / columnCount
         outRect.right = if (gridPosition % columnCount == columnCount - 1) boundaryMargin else margin / 2
-        outRect.top = if (gridPosition / columnCount == 0) boundaryMargin else margin
-        outRect.bottom = if (gridPosition / columnCount == rowsCount - 1) boundaryMargin else 0
+        outRect.top = if (gridPosition / columnCount == 0) boundaryMargin else margin / 2
+        outRect.bottom = if (gridPosition / columnCount == rowsCount - 1) boundaryMargin else margin / 2
     }
 }

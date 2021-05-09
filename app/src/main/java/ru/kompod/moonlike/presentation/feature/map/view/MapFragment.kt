@@ -4,6 +4,7 @@
 package ru.kompod.moonlike.presentation.feature.map.view
 
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.GridLayoutManager
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -13,10 +14,13 @@ import ru.kompod.moonlike.R
 import ru.kompod.moonlike.presentation.base.BaseFragment
 import ru.kompod.moonlike.presentation.base.recyclerview.adapter.DefaultDiffCallback
 import ru.kompod.moonlike.presentation.base.recyclerview.adapter.ListItemAdapter
+import ru.kompod.moonlike.presentation.base.recyclerview.decorator.GridListDecorator
 import ru.kompod.moonlike.presentation.base.recyclerview.decorator.VerticalListMarginDecorator
 import ru.kompod.moonlike.presentation.base.recyclerview.model.IListItem
+import ru.kompod.moonlike.presentation.feature.map.adapter.MonsterAdapterDelegate
 import ru.kompod.moonlike.presentation.feature.map.adapter.TitleAdapterDelegate
 import ru.kompod.moonlike.presentation.feature.map.adapter.TravelAdapterDelegate
+import ru.kompod.moonlike.presentation.feature.map.model.MonsterItem
 import ru.kompod.moonlike.presentation.feature.map.model.TitleListItem
 import ru.kompod.moonlike.presentation.feature.map.model.TravelItem
 import ru.kompod.moonlike.presentation.feature.map.pm.MapPresentationModel
@@ -55,7 +59,8 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
             bind<Set<AdapterDelegate<List<IListItem>>>>().toInstance(
                 setOf(
                     TitleAdapterDelegate().get(),
-                    TravelAdapterDelegate(presentationModel).get()
+                    TravelAdapterDelegate(presentationModel).get(),
+                    MonsterAdapterDelegate(presentationModel, scope.getInstance()).get()
                 )
             )
         }
@@ -89,8 +94,8 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
         presentationModel
             .mapPathState
             .observable
-            .doOnNext {path ->
-                picasso.load(path) { rc -> picasso.resize(rc, 540, 540)}
+            .doOnNext { path ->
+                picasso.load(path) { rc -> picasso.resize(rc, 540, 540) }
                     .into(PixelTargetAdapter(mapImageView, false))
             }
             .subscribe()
@@ -115,14 +120,35 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
         super.setupView()
         with(objectRecyclerView) {
             adapter = objectAdapter
+
+            (objectRecyclerView.layoutManager as GridLayoutManager).apply {
+                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        return when (objectAdapter.items[position]) {
+                            is TitleListItem -> 2
+                            else -> 1
+                        }
+                    }
+                }
+            }
+            addItemDecoration(
+                GridListDecorator(
+                    applyFor = setOf(
+                        TravelItem::class,
+                        MonsterItem::class
+                    ),
+                    columnCount = 2,
+                    margin = 16.dp,
+                    boundaryMargin = 8.dp
+                )
+            )
             addItemDecoration(
                 VerticalListMarginDecorator(
                     applyFor = setOf(
-                        TitleListItem::class,
-                        TravelItem::class
+                        TitleListItem::class
                     ),
                     boundaryItemMargin = 8.dp,
-                    circleMargin = 16.dp
+                    circleMargin = 8.dp
                 )
             )
         }

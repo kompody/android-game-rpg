@@ -19,4 +19,7 @@ interface IAssetRepository {
 
     fun getMaps(): List<MapObject>
     fun getMapById(id: Short): MapObject
+
+    fun getMonstersByBiomeId(id: Short): List<MonsterObject>
+    fun getBossesByBiomeId(id: Short): List<MonsterObject>
 }

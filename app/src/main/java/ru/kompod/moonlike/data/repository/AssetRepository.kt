@@ -85,4 +85,17 @@ class AssetRepository @Inject constructor(
 
     override fun getMapById(id: Short): MapObject =
         getMaps().first { it.id == id }
+
+    override fun getMonstersByBiomeId(id: Short): List<MonsterObject> =
+        when (id) {
+            Assets.BIOME_FIELD -> assets.fieldMonsters
+            Assets.BIOME_SWAMP -> assets.swampMonsters
+            Assets.BIOME_MINE -> assets.mineMonsters
+            Assets.BIOME_RUIN -> assets.ruinMonsters
+            Assets.BIOME_DESERT -> assets.desertMonsters
+            Assets.BIOME_SNOW -> assets.snowMonsters
+            else -> assets.fieldMonsters
+        }
+
+    override fun getBossesByBiomeId(id: Short): List<MonsterObject> = assets.fieldMonsters
 }

@@ -21,7 +21,7 @@ import ru.kompod.moonlike.presentation.feature.createcharacter.adapter.RoleAdapt
 import ru.kompod.moonlike.presentation.feature.createcharacter.mapper.toEntity
 import ru.kompod.moonlike.presentation.feature.createcharacter.model.*
 import ru.kompod.moonlike.utils.ResourceDelegate
-import ru.kompod.moonlike.utils.extensions.rxjava.main
+import ru.kompod.moonlike.utils.extensions.rxjava.ui
 import ru.kompod.moonlike.utils.navigation.BottomTabRouter
 import javax.inject.Inject
 
@@ -120,7 +120,7 @@ class CreateCharacterPresentationModel @Inject constructor(
 
         getCharacterRacesUseCase.execute()
             .map { races -> racesToViewModel(races) }
-            .observeOn(main())
+            .observeOn(ui())
             .doOnSuccess { model ->
                 viewModelState.accept(model)
             }

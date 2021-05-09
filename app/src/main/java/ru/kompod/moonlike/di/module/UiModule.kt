@@ -3,6 +3,10 @@
 
 package ru.kompod.moonlike.di.module
 
+import ru.kompod.moonlike.di.provider.network.SpawnDelegateProvider
+import ru.kompod.moonlike.di.provider.network.TimerDelegateProvider
+import ru.kompod.moonlike.domain.factory.spawner.SpawnDelegate
+import ru.kompod.moonlike.domain.factory.spawner.TimerDelegate
 import ru.kompod.moonlike.presentation.BottomTabReselectionEventBus
 import ru.kompod.moonlike.utils.InternetState
 import ru.kompod.moonlike.utils.extensions.toothpick.bind
@@ -19,5 +23,8 @@ class UiModule : Module() {
 
         bind<BottomTabReselectionEventBus>().singleton()
         bind<InternetState>().singleton()
+
+        bind<TimerDelegate>().toProvider(TimerDelegateProvider::class.java).providesSingleton()
+        bind<SpawnDelegate>().toProvider(SpawnDelegateProvider::class.java).providesSingleton()
     }
 }

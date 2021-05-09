@@ -11,14 +11,18 @@ import me.dmdev.rxpm.state
 import ru.kompod.moonlike.data.analytics.AnalyticsDelegate
 import ru.kompod.moonlike.domain.AppScreen
 import ru.kompod.moonlike.domain.entity.base.MapObject
+import ru.kompod.moonlike.domain.entity.base.MonsterObject
+import ru.kompod.moonlike.domain.factory.spawner.SpawnDelegate
 import ru.kompod.moonlike.domain.usecase.map.GetMapUseCase
 import ru.kompod.moonlike.presentation.base.BasePresentationModel
 import ru.kompod.moonlike.presentation.base.recyclerview.model.IListItem
+import ru.kompod.moonlike.presentation.feature.map.adapter.MonsterAdapterDelegate
 import ru.kompod.moonlike.presentation.feature.map.adapter.TravelAdapterDelegate
 import ru.kompod.moonlike.presentation.feature.map.mapper.MapViewModelMapper
+import ru.kompod.moonlike.presentation.feature.map.model.MonsterItem
 import ru.kompod.moonlike.presentation.feature.map.model.TravelItem
 import ru.kompod.moonlike.utils.ResourceDelegate
-import ru.kompod.moonlike.utils.extensions.rxjava.main
+import ru.kompod.moonlike.utils.extensions.rxjava.*
 import ru.kompod.moonlike.utils.extensions.rxpm.accept
 import ru.kompod.moonlike.utils.navigation.BottomTabRouter
 import javax.inject.Inject
@@ -28,12 +32,15 @@ class MapPresentationModel @Inject constructor(
     resources: ResourceDelegate,
     analytics: AnalyticsDelegate,
     private val mapper: MapViewModelMapper,
-    private val getMapUseCase: GetMapUseCase
+    private val getMapUseCase: GetMapUseCase,
+    private val spawnDelegate: SpawnDelegate
 ) : BasePresentationModel(router, resources, analytics),
-    TravelAdapterDelegate.TravelItemListener {
+    TravelAdapterDelegate.TravelItemListener,
+    MonsterAdapterDelegate.MonsterItemListener {
     override val screen = AppScreen.MAP
 
     override val onTravelClickObserver = action<TravelItem>()
+    override val onMonsterClickObserver = action<MonsterItem>()
 
     val onPauseTimerAction = action<Unit>()
     val onStartTimerAction = action<Int>()
@@ -80,6 +87,15 @@ class MapPresentationModel @Inject constructor(
             .subscribeBy()
             .untilDestroy()
 
+        onMonsterClickObserver
+            .observable
+            .map { it.monster }
+            .doOnNext {
+                spawnDelegate.killMonster(cacheMap?.id ?: -1, it)
+            }
+            .subscribeBy()
+            .untilDestroy()
+
         onPauseTimerAction
             .observable
             .doOnNext { timer.cancel() }
@@ -98,17 +114,32 @@ class MapPresentationModel @Inject constructor(
     private fun initCommands() {
         loadMapByIdCommand
             .observable
-            .flatMapSingle { getMapUseCase.execute(it) }
-            .map { it to mapper.mapEntityToViewModel(it) }
-            .observeOn(main())
-            .doOnNext { (map, objects) ->
+            .flatMapSingle { id -> getMapUseCase.execute(id) }
+            .observeOn(ui())
+            .doOnNext { map ->
                 cacheMap = map
                 mapLabelState.accept(map.label)
                 mapDelayState.accept(map.delay)
                 mapPathState.accept(map.path)
-                objectListState.accept(objects)
                 canTravelState.accept(false)
                 restartTimer(map.delay)
+            }
+            .observeOn(io())
+            .flatMap { map ->
+                combineLatest(
+                    map.toObservable(),
+                    spawnDelegate.observe { it.id == map.id }
+                )
+            }
+            .flatMapSingle { (map, spawn) ->
+                mapper.mapEntityToViewModel(
+                    map,
+                    spawn.first().monsters.toList()
+                ).toSingle()
+            }
+            .observeOn(ui())
+            .doOnNext { objects ->
+                objectListState.accept(objects)
             }
             .retry()
             .subscribeBy()
@@ -121,8 +152,10 @@ class MapPresentationModel @Inject constructor(
 
     private fun startTimer(seconds: Int) {
         timer = object : CountDownTimer(seconds.toLong(), 1) {
+            val startValue = progressState.value
+
             override fun onTick(millisUntilFinished: Long) {
-                progressState.accept(seconds - millisUntilFinished.toInt() + 1)
+                progressState.accept(startValue + seconds - millisUntilFinished.toInt() + 1)
             }
 
             override fun onFinish() {
