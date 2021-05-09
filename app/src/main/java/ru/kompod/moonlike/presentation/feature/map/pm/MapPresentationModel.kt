@@ -98,7 +98,10 @@ class MapPresentationModel @Inject constructor(
 
         onPauseTimerAction
             .observable
-            .doOnNext { timer.cancel() }
+            .doOnNext {
+                timer.cancel()
+                progressState.accept(0)
+            }
             .retry()
             .subscribeBy()
             .untilDestroy()

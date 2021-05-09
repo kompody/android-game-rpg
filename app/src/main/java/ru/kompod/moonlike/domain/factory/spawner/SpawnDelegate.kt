@@ -57,9 +57,12 @@ class SpawnDelegate @Inject constructor(
                 monsterPool.shuffle()
 
                 val monsters: MutableList<MonsterObject> =
-                    monsterPool.subList(0, map.monsterLimit).map {
-                        it.apply { isLife = true }
-                    }.toMutableList()
+                    monsterPool.subList(0, map.monsterLimit)
+                        .sortedBy { it.id }
+                        .map {
+                            it.apply { isLife = true }
+                        }
+                        .toMutableList()
                 monsterPool.removeAll(monsters)
 
                 Spawner(
@@ -103,7 +106,7 @@ class SpawnDelegate @Inject constructor(
                     }
 
                     monsters.addAll(pool)
-                    monsters.sortBy { it.idOnPool }
+                    monsters.sortBy { it.id }
                 }
 
                 publisher.onNext(spawners)
