@@ -36,16 +36,14 @@ class SpawnDelegate @Inject constructor(
         class KillMonsterCommand(val mapId: Short, val monster: MonsterObject) : Command()
     }
 
-    private val publisher = BehaviorSubject.create<List<Spawner>>()
+    private var filter: (MapObject) -> Boolean = { false }
+
+    private val publisher = BehaviorSubject.create<Spawner>()
     private val commandPublisher = PublishSubject.create<Command>()
 
     private var disposable = CompositeDisposable()
 
     private var spawners: List<Spawner> = listOf()
-        set(value) {
-            field = value
-            publisher.onNext(value)
-        }
 
     init {
         spawners = assetRepository.getMaps()
@@ -97,19 +95,23 @@ class SpawnDelegate @Inject constructor(
                     val pool = monstersPool.subList(0, endIndex).filter {
                         it.timeDeath < Calendar.getInstance().timeInMillis - it.delay
                     }
-                    monstersPool.removeAll(pool)
+                    if (pool.isNotEmpty()) {
+                        monstersPool.removeAll(pool)
 
-                    pool.forEach {
-                        it.isLife = true
+                        pool.forEach {
+                            it.isLife = true
 
-                        Timber.d("${it.label} is alive")
+                            Timber.d("${it.label} is alive")
+                        }
+
+                        monsters.addAll(pool)
+                        monsters.sortBy { it.id }
+
+                        if (filter.invoke(mapObject)) {
+                            publisher.onNext(this)
+                        }
                     }
-
-                    monsters.addAll(pool)
-                    monsters.sortBy { it.id }
                 }
-
-                publisher.onNext(spawners)
             }
         }
     }
@@ -137,7 +139,9 @@ class SpawnDelegate @Inject constructor(
                         }
                     }
 
-                    publisher.onNext(spawners)
+                    if (filter.invoke(mapObject)) {
+                        publisher.onNext(this)
+                    }
                 }
             }
         }
@@ -171,8 +175,10 @@ class SpawnDelegate @Inject constructor(
         disposable.dispose()
     }
 
-    fun observe(filter: (MapObject) -> Boolean): Observable<List<Spawner>> {
-        return publisher.map { spawners.filter { filter.invoke(it.mapObject) } }
+    fun observe(filter: (MapObject) -> Boolean): Observable<Spawner> {
+        this.filter = filter
+        publisher.onNext(spawners.first { filter.invoke(it.mapObject) })
+        return publisher
     }
 
     fun killMonster(mapId: Short, monster: MonsterObject) {

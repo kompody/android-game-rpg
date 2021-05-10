@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.fragment_map.*
 import me.dmdev.rxpm.bindTo
 import ru.kompod.moonlike.R
 import ru.kompod.moonlike.presentation.base.BaseFragment
+import ru.kompod.moonlike.presentation.base.recyclerview.adapter.BaseAdapter
 import ru.kompod.moonlike.presentation.base.recyclerview.adapter.DefaultDiffCallback
 import ru.kompod.moonlike.presentation.base.recyclerview.adapter.ListItemAdapter
 import ru.kompod.moonlike.presentation.base.recyclerview.decorator.GridListDecorator
@@ -41,7 +42,7 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
     lateinit var destroyViewDisposable: CompositeDisposable
 
     @Inject
-    lateinit var objectAdapter: ListItemAdapter
+    lateinit var objectAdapter: BaseAdapter
 
     @Inject
     lateinit var assetProvider: AssetProvider
@@ -53,11 +54,19 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
 
     override fun provideViewModules(): Array<Module> = arrayOf(
         moduleOf {
-            bind<DiffUtil.ItemCallback<IListItem>>().toInstance(
-                DefaultDiffCallback()
-            )
-            bind<Set<AdapterDelegate<List<IListItem>>>>().toInstance(
-                setOf(
+            bind<DiffUtil.ItemCallback<IListItem>>().toInstance(object : DefaultDiffCallback() {
+                override fun areItemsTheSame(oldItem: IListItem, newItem: IListItem): Boolean {
+                    if (oldItem is TravelItem && newItem is TravelItem) {
+                        return oldItem.travel.id == newItem.travel.id
+                    }
+                    if (oldItem is MonsterItem && newItem is MonsterItem) {
+                        return oldItem.monster.idOnPool == newItem.monster.idOnPool
+                    }
+                    return true
+                }
+            })
+            bind<BaseAdapter>().toInstance(
+                BaseAdapter(
                     TitleAdapterDelegate().get(),
                     TravelAdapterDelegate(presentationModel).get(),
                     MonsterAdapterDelegate(presentationModel, scope.getInstance()).get()
@@ -121,31 +130,31 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
         with(objectRecyclerView) {
             adapter = objectAdapter
 
-            (objectRecyclerView.layoutManager as GridLayoutManager).apply {
-                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                    override fun getSpanSize(position: Int): Int {
-                        return when (objectAdapter.items[position]) {
-                            is TitleListItem -> 2
-                            else -> 1
-                        }
-                    }
-                }
-            }
-            addItemDecoration(
-                GridListDecorator(
-                    applyFor = setOf(
-                        TravelItem::class,
-                        MonsterItem::class
-                    ),
-                    columnCount = 2,
-                    margin = 16.dp,
-                    boundaryMargin = 8.dp
-                )
-            )
+//            (objectRecyclerView.layoutManager as GridLayoutManager).apply {
+//                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+//                    override fun getSpanSize(position: Int): Int {
+//                        return when (objectAdapter.items[position]) {
+//                            is TitleListItem -> 2
+//                            else -> 1
+//                        }
+//                    }
+//                }
+//            }
+//            addItemDecoration(
+//                GridListDecorator(
+//                    applyFor = setOf(
+//                    ),
+//                    columnCount = 2,
+//                    margin = 16.dp,
+//                    boundaryMargin = 8.dp
+//                )
+//            )
             addItemDecoration(
                 VerticalListMarginDecorator(
                     applyFor = setOf(
-                        TitleListItem::class
+                        TitleListItem::class,
+                        TravelItem::class,
+                        MonsterItem::class
                     ),
                     boundaryItemMargin = 8.dp,
                     circleMargin = 8.dp

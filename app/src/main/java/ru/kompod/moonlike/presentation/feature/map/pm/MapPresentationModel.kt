@@ -100,7 +100,6 @@ class MapPresentationModel @Inject constructor(
             .observable
             .doOnNext {
                 timer.cancel()
-                progressState.accept(0)
             }
             .retry()
             .subscribeBy()
@@ -125,6 +124,7 @@ class MapPresentationModel @Inject constructor(
                 mapDelayState.accept(map.delay)
                 mapPathState.accept(map.path)
                 canTravelState.accept(false)
+                progressState.accept(0)
                 restartTimer(map.delay)
             }
             .observeOn(io())
@@ -132,19 +132,19 @@ class MapPresentationModel @Inject constructor(
                 combineLatest(
                     map.toObservable(),
                     spawnDelegate.observe { it.id == map.id }
+                        .filter { it.mapObject.id == map.id }
                 )
             }
             .flatMapSingle { (map, spawn) ->
                 mapper.mapEntityToViewModel(
                     map,
-                    spawn.first().monsters.toList()
+                    spawn.monsters.toList()
                 ).toSingle()
             }
             .observeOn(ui())
             .doOnNext { objects ->
                 objectListState.accept(objects)
             }
-            .retry()
             .subscribeBy()
             .untilDestroy()
     }

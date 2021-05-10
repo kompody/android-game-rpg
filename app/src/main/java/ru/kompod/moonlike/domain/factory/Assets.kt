@@ -202,7 +202,7 @@ class Assets @Inject constructor(
         path = Paths.MAP_04.path,
         biome = BIOME_SNOW,
         travels = listOf(
-            TravelObject(1, "travel to MAP_03", MAP_03)
+            TravelObject(0, "travel to MAP_03", MAP_03)
         )
     )
     val map_05 = MapObject(
