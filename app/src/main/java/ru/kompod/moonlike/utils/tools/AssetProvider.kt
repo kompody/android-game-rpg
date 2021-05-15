@@ -4,18 +4,38 @@
 package ru.kompod.moonlike.utils.tools
 
 import android.content.Context
+import ru.kompod.moonlike.utils.extensions.kotlin.empty
 import java.io.*
+import java.nio.charset.Charset
 import javax.inject.Inject
 
 class AssetProvider @Inject constructor(private val context: Context) {
+    companion object {
+        private val UTF8: Charset = Charset.forName("UTF-8")
+    }
+
     @Throws(IOException::class)
-    fun fileFromAsset(assetName: String): File {
+    fun loadFileFromAsset(assetName: String): File {
         val outFile = File(context.cacheDir, assetName)
         if (assetName.contains("/")) {
             outFile.parentFile.mkdirs()
         }
         copy(context.assets.open(assetName), outFile)
         return outFile
+    }
+
+    fun loadJSONFromAsset(fileName: String): String {
+        return try {
+            val inputStream: InputStream = context.assets.open(fileName)
+            val size = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            inputStream.close()
+            String(buffer, UTF8)
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            return String.empty
+        }
     }
 
     @Throws(IOException::class)

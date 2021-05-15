@@ -10,9 +10,10 @@ import ru.kompod.moonlike.utils.extensions.kotlin.empty
 fun ViewModel.toEntity(): CharacterObject =
     CharacterObject(
         0,
-        "", //todo приделать выбор имен
-        raceItem.races[raceItem.selectedIndex].race,
-        genderItem.genders[genderItem.selectedIndex],
-        portraitItem.portraits[portraitItem.selectedIndex],
-        roleItem.roles[roleItem.selectedIndex]
+        characterItem.items[characterItem.selectedIndex].label,
+        characterItem.items[characterItem.selectedIndex].description,
+        fractionItem.items[fractionItem.selectedIndex],
+        characterItem.items[characterItem.selectedIndex].gender,
+        portraitItem.items[portraitItem.selectedIndex],
+        roleItem.items[roleItem.selectedIndex]
     )

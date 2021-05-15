@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/museo_sans_cyrl_700"
-        android:text="@string/screen_create_character_race_title" />
+        android:text="@string/screen_create_character_fraction_title" />
 
     <Space
         android:layout_width="0dp"

@@ -63,7 +63,7 @@ abstract class BaseFragment<PresentationModel : BasePresentationModel>(
         parentFragment.castTo<IScopeHolder>()?.scope?.name?.toString() ?: DI.UI_SCOPE
     }
 
-    protected open val consumePendingUpdateOperationsMethod: Method? by lazy {
+    protected open val consumePendingUpdateOperationsMethod: Method by lazy {
         RecyclerView::class.java.getDeclaredMethod("consumePendingUpdateOperations").apply {
             isAccessible = true
         }

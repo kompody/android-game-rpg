@@ -4,14 +4,17 @@
 package ru.kompod.moonlike.presentation.feature.createcharacter.view
 
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.jakewharton.rxbinding3.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.fragment_create_character.*
 import me.dmdev.rxpm.bindTo
 import ru.kompod.moonlike.R
 import ru.kompod.moonlike.presentation.base.BaseFragment
+import ru.kompod.moonlike.presentation.base.recyclerview.adapter.BaseAdapter
 import ru.kompod.moonlike.presentation.base.recyclerview.adapter.DefaultDiffCallback
 import ru.kompod.moonlike.presentation.base.recyclerview.adapter.ListItemAdapter
 import ru.kompod.moonlike.presentation.base.recyclerview.decorator.VerticalListMarginDecorator
@@ -24,6 +27,7 @@ import ru.kompod.moonlike.utils.extensions.toothpick.bind
 import ru.kompod.moonlike.utils.extensions.toothpick.getInstance
 import ru.kompod.moonlike.utils.extensions.toothpick.moduleOf
 import toothpick.config.Module
+import java.lang.reflect.Method
 import javax.inject.Inject
 
 class CreateCharacterFragment :
@@ -40,20 +44,14 @@ class CreateCharacterFragment :
 
     override fun provideViewModules(): Array<Module> = arrayOf(
         moduleOf {
-            bind<DiffUtil.ItemCallback<IListItem>>().toInstance(
-                DefaultDiffCallback()
-            )
+            bind<DiffUtil.ItemCallback<IListItem>>().toInstance(DefaultDiffCallback())
             bind<Set<AdapterDelegate<List<IListItem>>>>().toInstance(
                 setOf(
-                    RaceAdapterDelegate(presentationModel).get(),
-                    GenderAdapterDelegate(presentationModel).get(),
-                    IconAdapterDelegate(
-                        presentationModel,
-                        scope.getInstance(),
-                        scope.getInstance()
-                    ).get(),
+                    FractionAdapterDelegate(presentationModel).get(),
+                    CharacterAdapterDelegate(presentationModel).get(),
+                    PortraitAdapterDelegate(presentationModel, scope.getInstance()).get(),
                     RoleAdapterDelegate(presentationModel).get(),
-                    CharacterAboutAdapterDelegate().get()
+                    AboutAdapterDelegate().get()
                 )
             )
         }
@@ -71,12 +69,12 @@ class CreateCharacterFragment :
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext {
                 creatorMenuRecyclerView?.let {
-                    consumePendingUpdateOperationsMethod?.invoke(
+                    consumePendingUpdateOperationsMethod.invoke(
                         creatorMenuRecyclerView
                     )
                 }
             }
-            .subscribe()
+            .subscribeBy()
             .let(destroyViewDisposable::add)
     }
 
@@ -93,11 +91,11 @@ class CreateCharacterFragment :
             addItemDecoration(
                 VerticalListMarginDecorator(
                     applyFor = setOf(
-                        RaceItem::class,
-                        GenderItem::class,
+                        FractionItem::class,
+                        CharacterItem::class,
                         PortraitItem::class,
                         RoleItem::class,
-                        CharacterAboutItem::class
+                        AboutItem::class
                     ),
                     boundaryItemMargin = 8.dp,
                     circleMargin = 16.dp

@@ -33,7 +33,7 @@ class MonsterAdapterDelegate(
 
             bind {
                 with(item.monster) {
-                    picasso.load(portrait.path)
+                    picasso.load(portrait)
                         .into(PixelTargetAdapter(iconImageView))
                     travelLabelTextView.text = label
                 }

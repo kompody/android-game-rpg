@@ -66,7 +66,7 @@ class ProfileFragment : BaseFragment<ProfilePresentationModel>(R.layout.fragment
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext {
                 characterInfoRecyclerView?.let {
-                    consumePendingUpdateOperationsMethod?.invoke(
+                    consumePendingUpdateOperationsMethod.invoke(
                         characterInfoRecyclerView
                     )
                 }

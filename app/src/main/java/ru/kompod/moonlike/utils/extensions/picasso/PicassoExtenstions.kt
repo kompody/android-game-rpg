@@ -8,4 +8,4 @@ import com.squareup.picasso.RequestCreator
 import ru.kompod.moonlike.utils.tools.AssetProvider
 
 fun Picasso.loadFromAsset(assetProvider: AssetProvider, path: String): RequestCreator =
-    load(assetProvider.fileFromAsset(path))
+    load(assetProvider.loadFileFromAsset(path))

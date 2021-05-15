@@ -3,22 +3,36 @@
 
 package ru.kompod.moonlike.domain.entity.base
 
-import androidx.annotation.IntRange
-
 //character
 class CharacterObject(
     val id: Short,
     val label: String,
-    val race: RaceObject,
+    val description: String,
+    val fraction: FractionObject,
     val gender: GenderObject,
-    val portrait: PortraitObject,
+    val portrait: String,
     val role: RoleObject
 )
 
-class RaceInfoObject(
-    val race: RaceObject,
-    val genders: List<GenderObject>,
-    val portraits: List<List<PortraitObject>>,
+open class FractionObject(
+    val id: Short,
+    val label: String,
+    val description: String
+)
+
+class FractionInfoObject(
+    id: Short,
+    label: String,
+    description: String,
+    val characters: List<CharacterInfoObject>
+) : FractionObject(id, label, description)
+
+class CharacterInfoObject(
+    val id: Short,
+    val label: String,
+    val description: String,
+    val gender: GenderObject,
+    val portraits: List<String>,
     val roles: List<RoleObject>
 )
 
@@ -33,11 +47,6 @@ class GenderObject(
     val label: String
 )
 
-class PortraitObject(
-    val id: Short,
-    val path: String
-)
-
 class RoleObject(
     val id: Short,
     val label: String,
@@ -47,18 +56,29 @@ class RoleObject(
 
 open class StateObject(val value: Short)
 
-class STR(value: Short) : StateObject(value)
-class AGI(value: Short) : StateObject(value)
-class INT(value: Short) : StateObject(value)
-
-class Attack(value: Short) : StateObject(value)
-class Magic(value: Short) : StateObject(value)
+class PhysicalAttack(value: Short) : StateObject(value)
 class PhysicalDefense(value: Short) : StateObject(value)
+class MagicalAttack(value: Short) : StateObject(value)
 class MagicalDefense(value: Short) : StateObject(value)
 
-class States(val str: STR, val agi: AGI, val int: INT) {
+class States(
+    val fAtk: PhysicalAttack,
+    val fDef: PhysicalDefense,
+    val mAtk: MagicalAttack,
+    val mDef: MagicalDefense
+) {
     companion object {
-        fun fromRaw(str: Short, agi: Short, int: Short) = States(STR(str), AGI(agi), INT(int))
+        fun fromRaw(
+            fAtk: Short,
+            fDef: Short,
+            mAtk: Short,
+            mDef: Short
+        ) = States(
+            PhysicalAttack(fAtk),
+            PhysicalDefense(fDef),
+            MagicalAttack(mAtk),
+            MagicalDefense(mDef)
+        )
     }
 }
 
@@ -73,7 +93,10 @@ class MapObject(
     val monsterLimit: Int = 5,
     val bossesLimit: Int = 1,
     val delay: Int = 15 * 1000,
-    val travels: List<TravelObject> = listOf()
+    val travels: List<TravelObject> = listOf(),
+    val monsters: List<MonsterObject> = listOf(),
+    val objects: List<Short> = listOf(),
+    val actors: List<Short> = listOf()
 )
 
 class TravelObject(
@@ -86,33 +109,30 @@ class TravelObject(
 open class NPCObject(
     open val id: Short,
     open val label: String,
-    open val race: RaceObject,
     open val gender: GenderObject,
-    open val portrait: PortraitObject,
+    open val portrait: String,
     open val role: RoleObject
 )
 
 class PeacefulObject(
     id: Short,
     label: String,
-    race: RaceObject,
     gender: GenderObject,
-    portrait: PortraitObject,
+    portrait: String,
     role: RoleObject
-) : NPCObject(id, label, race, gender, portrait, role)
+) : NPCObject(id, label, gender, portrait, role)
 
 data class MonsterObject(
     override val id: Short,
     override val label: String,
-    override val race: RaceObject,
     override val gender: GenderObject,
-    override val portrait: PortraitObject,
-    override val  role: RoleObject,
+    override val portrait: String,
+    override val role: RoleObject,
     val idOnPool: Short = id,
-    val changeSpawn: Float = 1f,
+    val spawnRate: Float = 1f,
     val delay: Int = 20 * 1000,
     var isLife: Boolean = false,
     var timeDeath: Long = 0
-) : NPCObject(id, label, race, gender, portrait, role)
+) : NPCObject(id, label, gender, portrait, role)
 
 //quest

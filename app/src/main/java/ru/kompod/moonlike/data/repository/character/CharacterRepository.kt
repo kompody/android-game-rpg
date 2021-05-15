@@ -3,12 +3,12 @@
 
 package ru.kompod.moonlike.data.repository.character
 
+import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import ru.kompod.moonlike.data.database.dao.CharacterDao
 import ru.kompod.moonlike.data.database.mapper.CharacterMapper
 import ru.kompod.moonlike.domain.entity.base.CharacterObject
-import ru.kompod.moonlike.domain.entity.base.emptyCharacterObject
 import ru.kompod.moonlike.domain.repository.character.ICharacterRepository
 import ru.kompod.moonlike.utils.extensions.rxjava.io
 import ru.kompod.moonlike.utils.extensions.rxjava.toSingle
@@ -38,7 +38,7 @@ class CharacterRepository @Inject constructor(
             .map { list -> list.map(characterMapper::mapDbModelToEntity) }
             .subscribeOn(io())
 
-    override fun loadCharacterById(id: Short): Single<CharacterObject> =
+    override fun loadCharacterById(id: Short): Maybe<CharacterObject> =
         characterDao.getCharacterById(id)
             .map(characterMapper::mapDbModelToEntity)
             .subscribeOn(io())

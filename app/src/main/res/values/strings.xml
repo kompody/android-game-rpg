@@ -29,11 +29,11 @@
     <string name="screen_characters_list_remove_character_dialog_message"></string>
 
     <string name="screen_create_character_title">Создание персонажа</string>
-    <string name="screen_create_character_race_title">Раса</string>
-    <string name="screen_create_character_gender_title">Пол</string>
+    <string name="screen_create_character_fraction_title">Фракция</string>
+    <string name="screen_create_character_character_title">Персонаж</string>
     <string name="screen_create_character_icon_title">Портрет</string>
     <string name="screen_create_character_role_title">Класс</string>
-    <string name="screen_create_character_about_race_title">Описание расы</string>
+    <string name="screen_create_character_about_fraction_title">Описание Фракции</string>
     <string name="screen_create_character_about_role_title">Описание класса</string>
     <string name="screen_create_character_about_stats_title">Характеристики</string>
     <string name="screen_create_character_apply_button">Создать</string>
@@ -43,37 +43,44 @@
     <string name="asset_stats_int">int: %d</string>
 
     <string name="asset_race_human">Human</string>
-    <string name="asset_race_human_description"></string>
+    <string name="asset_race_human_description">asset_race_human_description</string>
     <string name="asset_race_enemy">Enemy</string>
-    <string name="asset_race_enemy_description"></string>
+    <string name="asset_race_enemy_description">asset_race_enemy_description</string>
+    
+    <string name="asset_character_1">Man</string>
+    <string name="asset_character_1_description">Bigman</string>
+    <string name="asset_character_2">Witch</string>
+    <string name="asset_character_2_description">nyaaaa</string>
+    <string name="asset_character_3">Blackman</string>
+    <string name="asset_character_3_description">bgg</string>
 
     <string name="asset_gender_male">male</string>
     <string name="asset_gender_female">female</string>
 
     <string name="asset_role_knight">Knight</string>
-    <string name="asset_role_knight_description"></string>
+    <string name="asset_role_knight_description">asset_role_knight_description</string>
     <string name="asset_role_priest">Priest</string>
-    <string name="asset_role_priest_description"></string>
+    <string name="asset_role_priest_description">asset_role_priest_description</string>
     <string name="asset_role_demon_lord">Demon Lord</string>
-    <string name="asset_role_demon_lord_description"></string>
+    <string name="asset_role_demon_lord_description">asset_role_demon_lord_description</string>
     <string name="asset_role_demonologist">Demonologist</string>
-    <string name="asset_role_demonologist_description"></string>
+    <string name="asset_role_demonologist_description">asset_role_demonologist_description</string>
     <string name="asset_role_necromancer">Necromancer</string>
-    <string name="asset_role_necromancer_description"></string>
+    <string name="asset_role_necromancer_description">asset_role_necromancer_description</string>
     <string name="asset_role_witch">Witch</string>
-    <string name="asset_role_witch_description"></string>
+    <string name="asset_role_witch_description">asset_role_witch_description</string>
     <string name="asset_role_ranger">Ranger</string>
-    <string name="asset_role_ranger_description"></string>
+    <string name="asset_role_ranger_description">asset_role_ranger_description</string>
     <string name="asset_role_druid">Druid</string>
-    <string name="asset_role_druid_description"></string>
+    <string name="asset_role_druid_description">asset_role_druid_description</string>
     <string name="asset_role_barbarian">Barbarian</string>
-    <string name="asset_role_barbarian_description"></string>
+    <string name="asset_role_barbarian_description">asset_role_barbarian_description</string>
     <string name="asset_role_beastmaster">Beast Master</string>
-    <string name="asset_role_beastmaster_description"></string>
+    <string name="asset_role_beastmaster_description">asset_role_beastmaster_description</string>
     <string name="asset_role_wizard">Wizard</string>
-    <string name="asset_role_wizard_description"></string>
+    <string name="asset_role_wizard_description">asset_role_wizard_description</string>
     <string name="asset_role_sorcerer">Sorcerer</string>
-    <string name="asset_role_sorcerer_description"></string>
+    <string name="asset_role_sorcerer_description">asset_role_sorcerer_description</string>
 
     <!--map-->
     <string name="screen_map_travels_title">Локации</string>

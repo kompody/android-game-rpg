@@ -96,7 +96,7 @@ class CharactersListFragment :
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext {
                 charactersRecyclerView?.let {
-                    consumePendingUpdateOperationsMethod?.invoke(
+                    consumePendingUpdateOperationsMethod.invoke(
                         charactersRecyclerView
                     )
                 }

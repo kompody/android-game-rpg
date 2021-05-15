@@ -3,99 +3,75 @@
 
 package ru.kompod.moonlike.data.repository
 
+import com.google.gson.Gson
+import ru.kompod.moonlike.data.network.mapper.MapMapper
+import ru.kompod.moonlike.data.network.mapper.CharacterMapper
+import ru.kompod.moonlike.data.network.mapper.MonsterMapper
+import ru.kompod.moonlike.data.network.model.*
 import ru.kompod.moonlike.domain.entity.base.*
 import ru.kompod.moonlike.domain.factory.Assets
 import ru.kompod.moonlike.domain.repository.IAssetRepository
-import ru.kompod.moonlike.utils.extensions.kotlin.mergeLists
+import ru.kompod.moonlike.utils.extensions.gson.fromJson
+import ru.kompod.moonlike.utils.tools.AssetProvider
 import javax.inject.Inject
 
 class AssetRepository @Inject constructor(
-    private val assets: Assets
+    private val gson: Gson,
+    private val assets: Assets,
+    private val assetProvider: AssetProvider,
+    private val characterMapper: CharacterMapper,
+    private val mapMapper: MapMapper,
+    private val monsterMapper: MonsterMapper
 ) : IAssetRepository {
-    override fun getCharacterRacesInfo(): List<RaceInfoObject> = listOf(
-        assets.humanRaceInfo
-    )
 
-    override fun getCharacterRaces(): List<RaceObject> = listOf(
-        assets.humanRace
-    )
+    override fun getCharacterFractionsInfo(): List<FractionInfoObject> =
+        gson.fromJson<List<FractionInfoApiModel>>(assetProvider.loadJSONFromAsset(Assets.FRACTION_INFO))
+            .map { characterMapper.mapApiModelToEntity(it) }
 
-    override fun getCharacterGenders(): List<GenderObject> = listOf(
-        assets.male,
-        assets.female
-    )
+    override fun getCharacterFraction(): List<FractionObject> =
+        gson.fromJson<List<FractionApiModel>>(assetProvider.loadJSONFromAsset(Assets.FRACTION))
+            .map { characterMapper.mapApiModelToEntity(it) }
 
-    override fun getCharacterPortraits(raceId: Short, genderId: Short): List<PortraitObject> =
-        when (genderId) {
-            Assets.GENDER_MALE_ID -> getCharacterMalePortraits(raceId)
-            Assets.GENDER_FEMALE_ID -> getCharacterFemalePortraits(raceId)
-            else -> getCharacterMalePortraits(raceId)
-        }
+    override fun getCharacterFractionById(id: Short): FractionObject =
+        getCharacterFraction().first { it.id == id }
 
-    private fun getCharacterMalePortraits(raceId: Short): List<PortraitObject> = when (raceId) {
-        Assets.RACE_HUMAN -> mergeLists(assets.playerA, assets.playerC)
-        else -> mergeLists(assets.playerA, assets.playerC)
-    }
-
-    private fun getCharacterFemalePortraits(raceId: Short): List<PortraitObject> = when (raceId) {
-        Assets.RACE_HUMAN -> assets.playerB
-        else -> assets.playerB
-    }
-
-    override fun getCharacterRoles(): List<RoleObject> = listOf(
-        assets.knight,
-        assets.ranger,
-        assets.wizard
-    )
-
-    override fun getCharacterRaceById(id: Short): RaceObject =
-        getCharacterRaces().first { it.id == id }
+    override fun getCharacterGenders(): List<GenderObject> =
+        gson.fromJson<List<GenderApiModel>>(assetProvider.loadJSONFromAsset(Assets.GENDER))
+            .map { characterMapper.mapGender(it) }
 
     override fun getCharacterGenderById(id: Short): GenderObject =
         getCharacterGenders().first { it.id == id }
 
-    override fun getCharacterPortraitById(
-        raceId: Short,
-        genderId: Short,
-        portraitId: Short
-    ): PortraitObject =
-        getCharacterPortraits(raceId, genderId).first { it.id == portraitId }
+    override fun getCharacterRoles(): List<RoleObject> =
+        gson.fromJson<List<RoleApiModel>>(assetProvider.loadJSONFromAsset(Assets.ROLE))
+            .map { characterMapper.mapRole(it) }
 
     override fun getCharacterRoleById(id: Short): RoleObject =
         getCharacterRoles().first { it.id == id }
 
-    override fun getMaps(): List<MapObject> = listOf(
-        assets.map_01,
-        assets.map_02,
-        assets.map_03,
-        assets.map_04,
-        assets.map_05,
-        assets.map_06,
-        assets.map_07,
-        assets.map_08,
-        assets.map_09,
-        assets.map_10,
-        assets.map_11,
-        assets.map_12,
-        assets.map_13,
-        assets.map_14,
-        assets.map_15,
-        assets.map_16
-    )
+    override fun getMaps(): List<MapObject> =
+        gson.fromJson<List<MapApiModel>>(assetProvider.loadJSONFromAsset(Assets.MAP))
+            .map { model ->
+                model to model.monsters.map {
+                    getMonsterById(it)
+                }
+            }
+            .map { (model, monsters) -> mapMapper.mapMapApiModelToEntity(model, monsters) }
 
     override fun getMapById(id: Short): MapObject =
         getMaps().first { it.id == id }
 
-    override fun getMonstersByBiomeId(id: Short): List<MonsterObject> =
-        when (id) {
-            Assets.BIOME_FIELD -> assets.fieldMonsters
-            Assets.BIOME_SWAMP -> assets.swampMonsters
-            Assets.BIOME_MINE -> assets.mineMonsters
-            Assets.BIOME_RUIN -> assets.ruinMonsters
-            Assets.BIOME_DESERT -> assets.desertMonsters
-            Assets.BIOME_SNOW -> assets.snowMonsters
-            else -> assets.fieldMonsters
-        }
+    override fun getMonsters(): List<MonsterObject> =
+        gson.fromJson<List<MonsterApiModel>>(assetProvider.loadJSONFromAsset(Assets.MONSTER))
+            .map { monsterMapper.mapApiModelToEntity(it) }
 
-    override fun getBossesByBiomeId(id: Short): List<MonsterObject> = assets.fieldMonsters
+    override fun getMonsterById(id: Short): MonsterObject =
+        getMonsters()
+            .first { it.id == id }
+
+    //    override fun getMonstersByBiomeId(id: Short): List<MonsterObject> =
+//        gson.fromJson<List<BiomeApiModel>>(assetProvider.loadJSONFromAsset(Assets.BIOME))
+//            .map {  }
+
+//    override fun getBossesByBiomeId(id: Short): List<MonsterObject> = assets.fieldMonsters
 }

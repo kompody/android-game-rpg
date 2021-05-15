@@ -3,6 +3,7 @@
 
 package ru.kompod.moonlike.presentation.feature.profile.pm
 
+import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import me.dmdev.rxpm.action
 import me.dmdev.rxpm.state
@@ -14,6 +15,9 @@ import ru.kompod.moonlike.presentation.base.BasePresentationModel
 import ru.kompod.moonlike.presentation.base.recyclerview.model.IListItem
 import ru.kompod.moonlike.presentation.feature.profile.mapper.ProfileViewModelMapper
 import ru.kompod.moonlike.utils.ResourceDelegate
+import ru.kompod.moonlike.utils.extensions.rxjava.combineLatest
+import ru.kompod.moonlike.utils.extensions.rxjava.toObservable
+import ru.kompod.moonlike.utils.extensions.rxjava.toSingle
 import ru.kompod.moonlike.utils.navigation.BottomTabRouter
 import javax.inject.Inject
 
@@ -54,8 +58,15 @@ class ProfilePresentationModel @Inject constructor(
     }
 
     private fun initData() {
-        getSelectedCharacterUseCase.observe()
-            .map { mapper.mapEntityToViewModel(it) }
+        getSelectedCharacterUseCase.observeHasSelected()
+            .flatMap { hasSelected ->
+                return@flatMap if (hasSelected) {
+                    getSelectedCharacterUseCase.observe()
+                        .map { mapper.mapEntityToViewModel(it) }
+                } else {
+                    listOf<IListItem>().toObservable()
+                }
+            }
             .doOnNext {
                 characterState.accept(it)
             }

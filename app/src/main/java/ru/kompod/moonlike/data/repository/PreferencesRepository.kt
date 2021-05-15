@@ -10,6 +10,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import ru.kompod.moonlike.data.sharedpreferences.ObservableSharedPreferences
 import ru.kompod.moonlike.domain.repository.IPreferencesRepository
+import ru.kompod.moonlike.utils.NO_ID
 import ru.kompod.moonlike.utils.extensions.kotlin.castTo
 import ru.kompod.moonlike.utils.extensions.kotlin.unsafeCastTo
 import ru.kompod.moonlike.utils.extensions.rxjava.io
@@ -46,5 +47,6 @@ class PreferencesRepository @Inject constructor(
 
     override fun getSelectedCharacter(): Observable<Short> =
         observableSharedPreferences.observeShort(SELECTED_CHARACTER_ID)
+            .onErrorReturnItem(NO_ID)
             .subscribeOn(io())
 }

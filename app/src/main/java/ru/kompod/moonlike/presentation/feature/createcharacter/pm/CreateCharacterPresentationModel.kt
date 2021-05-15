@@ -9,19 +9,18 @@ import me.dmdev.rxpm.action
 import me.dmdev.rxpm.state
 import ru.kompod.moonlike.data.analytics.AnalyticsDelegate
 import ru.kompod.moonlike.domain.AppScreen
-import ru.kompod.moonlike.domain.entity.base.RaceInfoObject
+import ru.kompod.moonlike.domain.entity.base.FractionInfoObject
 import ru.kompod.moonlike.domain.usecase.createcharacter.CreateCharacterUseCase
 import ru.kompod.moonlike.domain.usecase.createcharacter.GetCharacterRacesUseCase
 import ru.kompod.moonlike.presentation.base.BasePresentationModel
 import ru.kompod.moonlike.presentation.base.recyclerview.model.IListItem
-import ru.kompod.moonlike.presentation.feature.createcharacter.adapter.GenderAdapterDelegate
-import ru.kompod.moonlike.presentation.feature.createcharacter.adapter.IconAdapterDelegate
-import ru.kompod.moonlike.presentation.feature.createcharacter.adapter.RaceAdapterDelegate
+import ru.kompod.moonlike.presentation.feature.createcharacter.adapter.CharacterAdapterDelegate
+import ru.kompod.moonlike.presentation.feature.createcharacter.adapter.FractionAdapterDelegate
+import ru.kompod.moonlike.presentation.feature.createcharacter.adapter.PortraitAdapterDelegate
 import ru.kompod.moonlike.presentation.feature.createcharacter.adapter.RoleAdapterDelegate
 import ru.kompod.moonlike.presentation.feature.createcharacter.mapper.toEntity
 import ru.kompod.moonlike.presentation.feature.createcharacter.model.*
 import ru.kompod.moonlike.utils.ResourceDelegate
-import ru.kompod.moonlike.utils.extensions.rxjava.ui
 import ru.kompod.moonlike.utils.navigation.BottomTabRouter
 import javax.inject.Inject
 
@@ -32,22 +31,22 @@ class CreateCharacterPresentationModel @Inject constructor(
     private val getCharacterRacesUseCase: GetCharacterRacesUseCase,
     private val createCharacterUseCase: CreateCharacterUseCase
 ) : BasePresentationModel(router, resources, analytics),
-    RaceAdapterDelegate.RaceItemListener,
-    GenderAdapterDelegate.GenderItemListener,
-    IconAdapterDelegate.IconItemListener,
+    FractionAdapterDelegate.FractionItemListener,
+    CharacterAdapterDelegate.CharacterItemListener,
+    PortraitAdapterDelegate.PortraitItemListener,
     RoleAdapterDelegate.RoleItemListener {
     override val screen = AppScreen.CREATE_CHARACTER
 
-    override val onChangeRaceClickObserver = action<Int>()
-    override val onChangeGenderClickObserver = action<Int>()
-    override val onChangeIconClickObserver = action<Int>()
+    override val onChangeFractionClickObserver = action<Int>()
+    override val onChangeCharacterClickObserver = action<Int>()
+    override val onChangePortraitClickObserver = action<Int>()
     override val onChangeRoleClickObserver = action<Int>()
 
     val createButtonClickObservable = action<Unit>()
 
     val menuListState = state<List<IListItem>>()
 
-    private val viewModelState = state<ViewModel>()
+    private lateinit var cachedViewModel: ViewModel
 
     override fun onCreate() {
         super.onCreate()
@@ -59,7 +58,7 @@ class CreateCharacterPresentationModel @Inject constructor(
     private fun initCommand() {
         createButtonClickObservable
             .observable
-            .map { viewModelState.value.toEntity() }
+            .map { cachedViewModel.toEntity() }
             .flatMapSingle { model ->
                 createCharacterUseCase.execute(model)
             }
@@ -70,37 +69,126 @@ class CreateCharacterPresentationModel @Inject constructor(
     }
 
     private fun initViewActions() {
-        onChangeRaceClickObserver
+        onChangeFractionClickObserver
             .observable
-            .doOnNext { newIndex ->
-                handleChangeRaceClick(newIndex)
+            .doOnNext {
+                handleChangeFractionIndex(it)
             }
             .subscribeBy()
             .untilDestroy()
 
-        onChangeGenderClickObserver
+        onChangeCharacterClickObserver
             .observable
-            .doOnNext { newIndex ->
-                handleChangeGenderClick(newIndex)
+            .doOnNext {
+                handleChangeCharacterIndex(it)
             }
             .subscribeBy()
             .untilDestroy()
 
-        onChangeIconClickObserver
+        onChangePortraitClickObserver
             .observable
-            .doOnNext { newIndex ->
-                handleChangeIconClick(newIndex)
+            .doOnNext {
+                handleChangePortraitIndex(it)
             }
             .subscribeBy()
             .untilDestroy()
 
         onChangeRoleClickObserver
             .observable
-            .doOnNext { newIndex ->
-                handleChangeRoleClick(newIndex)
+            .doOnNext {
+                handleChangeRoleIndex(it)
             }
             .subscribeBy()
             .untilDestroy()
+    }
+
+    private fun initData() {
+        getCharacterRacesUseCase.execute()
+            .map { entity -> mapEntityToViewModel(entity) }
+            .doOnSuccess { model -> cachedViewModel = model }
+            .doOnSuccess { model -> handleChangeViewModel(model) }
+            .subscribeBy()
+            .untilDestroy()
+    }
+
+    private fun handleChangeFractionIndex(newIndex: Int) {
+        val model = cachedViewModel
+        val index = checkNewSelectedIndex(model.fractionItem.items.size, newIndex)
+
+        if (model.fractionItem.selectedIndex == index) return
+
+        with(model.fractionItem) {
+            selectedIndex = index
+        }
+        with(model.characterItem) {
+            items = model.fractionItem.items[index].characters
+            selectedIndex = 0
+        }
+        with(model.portraitItem) {
+            items = model.fractionItem.items[index].characters[0].portraits
+            selectedIndex = 0
+        }
+        with(model.roleItem) {
+            items = model.fractionItem.items[index].characters[0].roles
+            selectedIndex = 0
+        }
+        with(model.aboutItem) {
+            fraction = model.fractionItem.items[index]
+            role = model.roleItem.items[0]
+        }
+        handleChangeViewModel(model)
+    }
+
+    private fun handleChangeCharacterIndex(newIndex: Int) {
+        val model = cachedViewModel
+        val index = checkNewSelectedIndex(model.characterItem.items.size, newIndex)
+
+        if (model.characterItem.selectedIndex == index) return
+
+        with(model.characterItem) {
+            selectedIndex = index
+        }
+        with(model.portraitItem) {
+            items =
+                model.fractionItem.items[model.fractionItem.selectedIndex].characters[index].portraits
+            selectedIndex = 0
+        }
+        with(model.roleItem) {
+            items =
+                model.fractionItem.items[model.fractionItem.selectedIndex].characters[index].roles
+            selectedIndex = 0
+        }
+        with(model.aboutItem) {
+            role = model.roleItem.items[0]
+        }
+        handleChangeViewModel(model)
+    }
+
+    private fun handleChangePortraitIndex(newIndex: Int) {
+        val model = cachedViewModel
+        val index = checkNewSelectedIndex(model.portraitItem.items.size, newIndex)
+
+        if (model.portraitItem.selectedIndex == index) return
+
+        with(model.portraitItem) {
+            selectedIndex = index
+        }
+        handleChangeViewModel(model)
+    }
+
+    private fun handleChangeRoleIndex(newIndex: Int) {
+        val model = cachedViewModel
+        val index = checkNewSelectedIndex(model.roleItem.items.size, newIndex)
+
+        if (model.roleItem.selectedIndex == index) return
+
+        with(model.roleItem) {
+            selectedIndex = index
+        }
+        with(model.aboutItem) {
+            role = model.roleItem.items[index]
+        }
+        handleChangeViewModel(model)
     }
 
     private fun checkNewSelectedIndex(count: Int, selectedIndex: Int): Int = when {
@@ -109,94 +197,21 @@ class CreateCharacterPresentationModel @Inject constructor(
         else -> selectedIndex
     }
 
-    private fun initData() {
-        viewModelState
-            .observable
-            .doOnNext {
-                handleViewModel(it)
-            }
-            .subscribeBy()
-            .untilDestroy()
-
-        getCharacterRacesUseCase.execute()
-            .map { races -> racesToViewModel(races) }
-            .observeOn(ui())
-            .doOnSuccess { model ->
-                viewModelState.accept(model)
-            }
-            .subscribeBy()
-            .untilDestroy()
-    }
-
-    private fun handleChangeRaceClick(newIndex: Int) {
-        val model = viewModelState.value
-        val index = checkNewSelectedIndex(model.raceItem.races.size, newIndex)
-        with(model.raceItem) {
-            selectedIndex = index
-        }
-        with(model.genderItem) {
-            genders = model.raceItem.races[index].genders
-            selectedIndex = 0
-        }
-        with(model.portraitItem) {
-            portraits = model.raceItem.races[index].portraits[0]
-            selectedIndex = 0
-        }
-        with(model.roleItem) {
-            roles = model.raceItem.races[index].roles
-            selectedIndex = 0
-        }
-        handleViewModel(model)
-    }
-
-    private fun handleChangeGenderClick(newIndex: Int) {
-        val model = viewModelState.value
-        val index = checkNewSelectedIndex(model.genderItem.genders.size, newIndex)
-        with(model.genderItem) {
-            selectedIndex = index
-        }
-        with(model.portraitItem) {
-            portraits = model.raceItem.races[model.raceItem.selectedIndex].portraits[index]
-            selectedIndex = 0
-        }
-        handleViewModel(model)
-    }
-
-    private fun handleChangeIconClick(newIndex: Int) {
-        val model = viewModelState.value
-        val index = checkNewSelectedIndex(model.portraitItem.portraits.size, newIndex)
-        with(model.portraitItem) {
-            selectedIndex = index
-        }
-        handleViewModel(model)
-    }
-
-    private fun handleChangeRoleClick(newIndex: Int) {
-        val model = viewModelState.value
-        val index = checkNewSelectedIndex(model.roleItem.roles.size, newIndex)
-        with(model.roleItem) {
-            selectedIndex = index
-        }
-        handleViewModel(model)
-    }
-
-    private fun handleViewModel(model: ViewModel) {
+    private fun handleChangeViewModel(model: ViewModel) {
         listOf(
-            RaceItem(model.raceItem.races, model.raceItem.selectedIndex),
-            GenderItem(model.genderItem.genders, model.genderItem.selectedIndex),
-            PortraitItem(model.portraitItem.portraits, model.portraitItem.selectedIndex),
-            RoleItem(model.roleItem.roles, model.roleItem.selectedIndex),
-            CharacterAboutItem(
-                model.raceItem.races[model.raceItem.selectedIndex].race,
-                model.roleItem.roles[model.roleItem.selectedIndex]
-            )
-        ).also { menuListState.accept(it) }
+            model.fractionItem.copy(),
+            model.characterItem.copy(),
+            model.portraitItem.copy(),
+            model.roleItem.copy(),
+            model.aboutItem.copy()
+        ).also { list -> menuListState.accept(list) }
     }
 
-    private fun racesToViewModel(races: List<RaceInfoObject>): ViewModel = ViewModel(
-        RaceItem(races, 0),
-        GenderItem(races[0].genders, 0),
-        PortraitItem(races[0].portraits[0], 0),
-        RoleItem(races[0].roles, 0)
+    private fun mapEntityToViewModel(model: List<FractionInfoObject>): ViewModel = ViewModel(
+        fractionItem = FractionItem(model, 0),
+        characterItem = CharacterItem(model[0].characters, 0),
+        portraitItem = PortraitItem(model[0].characters[0].portraits, 0),
+        roleItem = RoleItem(model[0].characters[0].roles, 0),
+        aboutItem = AboutItem(model[0], model[0].characters[0].roles[0])
     )
 }

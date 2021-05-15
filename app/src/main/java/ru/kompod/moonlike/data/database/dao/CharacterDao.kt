@@ -8,6 +8,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import ru.kompod.moonlike.data.database.Tables
@@ -28,5 +29,5 @@ interface CharacterDao {
     fun observeCharacters(): Observable<List<CharacterDbModel>>
 
     @Query("SELECT * FROM ${Tables.CHARACTER_TABLE} WHERE id = :id")
-    fun getCharacterById(id: Short): Single<CharacterDbModel>
+    fun getCharacterById(id: Short): Maybe<CharacterDbModel>
 }

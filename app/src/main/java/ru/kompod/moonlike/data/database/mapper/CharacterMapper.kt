@@ -5,6 +5,8 @@ package ru.kompod.moonlike.data.database.mapper
 
 import ru.kompod.moonlike.data.database.model.character.CharacterDbModel
 import ru.kompod.moonlike.domain.entity.base.CharacterObject
+import ru.kompod.moonlike.domain.entity.base.FractionObject
+import ru.kompod.moonlike.domain.entity.base.GenderObject
 import ru.kompod.moonlike.domain.repository.IAssetRepository
 import javax.inject.Inject
 
@@ -15,13 +17,10 @@ class CharacterMapper @Inject constructor(
         CharacterObject(
             id = model.id,
             label = model.label,
-            race = assetRepository.getCharacterRaceById(model.raceId),
+            description = model.description,
+            fraction = assetRepository.getCharacterFractionById(model.fractionId),
             gender = assetRepository.getCharacterGenderById(model.genderId),
-            portrait = assetRepository.getCharacterPortraitById(
-                model.raceId,
-                model.genderId,
-                model.portraitId
-            ),
+            portrait = model.portrait,
             role = assetRepository.getCharacterRoleById(model.roleId)
         )
 
@@ -29,9 +28,10 @@ class CharacterMapper @Inject constructor(
         CharacterDbModel(
             id = model.id,
             label = model.label,
-            raceId = model.race.id,
+            description = model.description,
+            fractionId = model.fraction.id,
             genderId = model.gender.id,
-            portraitId = model.portrait.id,
+            portrait = model.portrait,
             roleId = model.role.id
         )
 }

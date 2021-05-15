@@ -21,6 +21,7 @@ import ru.kompod.moonlike.presentation.feature.map.adapter.TravelAdapterDelegate
 import ru.kompod.moonlike.presentation.feature.map.mapper.MapViewModelMapper
 import ru.kompod.moonlike.presentation.feature.map.model.MonsterItem
 import ru.kompod.moonlike.presentation.feature.map.model.TravelItem
+import ru.kompod.moonlike.utils.NO_ID
 import ru.kompod.moonlike.utils.ResourceDelegate
 import ru.kompod.moonlike.utils.extensions.rxjava.*
 import ru.kompod.moonlike.utils.extensions.rxpm.accept
@@ -91,7 +92,7 @@ class MapPresentationModel @Inject constructor(
             .observable
             .map { it.monster }
             .doOnNext {
-                spawnDelegate.killMonster(cacheMap?.id ?: -1, it)
+                spawnDelegate.killMonster(cacheMap?.id ?: NO_ID, it)
             }
             .subscribeBy()
             .untilDestroy()

@@ -6,20 +6,21 @@ package ru.kompod.moonlike.domain.repository
 import ru.kompod.moonlike.domain.entity.base.*
 
 interface IAssetRepository {
-    fun getCharacterRacesInfo(): List<RaceInfoObject>
-    fun getCharacterRaces(): List<RaceObject>
-    fun getCharacterGenders(): List<GenderObject>
-    fun getCharacterPortraits(raceId: Short, genderId: Short): List<PortraitObject>
-    fun getCharacterRoles(): List<RoleObject>
+    fun getCharacterFractionsInfo(): List<FractionInfoObject>
 
-    fun getCharacterRaceById(id: Short): RaceObject
+    fun getCharacterFraction(): List<FractionObject>
+    fun getCharacterFractionById(id: Short): FractionObject
+
+    fun getCharacterGenders(): List<GenderObject>
     fun getCharacterGenderById(id: Short): GenderObject
-    fun getCharacterPortraitById(raceId: Short, genderId: Short, portraitId: Short): PortraitObject
+
+    fun getCharacterRoles(): List<RoleObject>
     fun getCharacterRoleById(id: Short): RoleObject
 
     fun getMaps(): List<MapObject>
     fun getMapById(id: Short): MapObject
 
-    fun getMonstersByBiomeId(id: Short): List<MonsterObject>
-    fun getBossesByBiomeId(id: Short): List<MonsterObject>
+    fun getMonsters(): List<MonsterObject>
+    fun getMonsterById(id: Short): MonsterObject
+//    fun getBossesByBiomeId(id: Short): List<MonsterObject>
 }

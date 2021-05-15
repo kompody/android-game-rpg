@@ -4,21 +4,19 @@
 package ru.kompod.moonlike.domain.factory.spawner
 
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import ru.kompod.moonlike.domain.entity.base.MapObject
 import ru.kompod.moonlike.domain.entity.base.MonsterObject
 import ru.kompod.moonlike.domain.repository.IAssetRepository
-import ru.kompod.moonlike.utils.extensions.rxjava.io
-import ru.kompod.moonlike.utils.extensions.rxjava.ui
+import ru.kompod.moonlike.utils.NO_ID
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.math.min
 import kotlin.math.roundToInt
-import kotlin.reflect.KClass
 
 class SpawnDelegate @Inject constructor(
     private val timerDelegate: TimerDelegate,
@@ -50,12 +48,12 @@ class SpawnDelegate @Inject constructor(
             .map { map ->
                 val monsterPool: MutableList<MonsterObject> = generateMonsterPool(
                     map.monsterLimit * 2,
-                    assetRepository.getMonstersByBiomeId(map.biome)
+                    map.monsters
                 )
                 monsterPool.shuffle()
 
                 val monsters: MutableList<MonsterObject> =
-                    monsterPool.subList(0, map.monsterLimit)
+                    monsterPool.subList(0, min(map.monsters.size, map.monsterLimit))
                         .sortedBy { it.id }
                         .map {
                             it.apply { isLife = true }
@@ -121,7 +119,7 @@ class SpawnDelegate @Inject constructor(
             spawners.firstOrNull { it.mapObject.id == mapId }?.apply {
                 val index = monsters.indexOf(monster)
 
-                if (index != -1) {
+                if (index >= 0) {
                     val oldMonster = monsters.removeAt(index)
                     oldMonster.isLife = false
 
@@ -156,7 +154,7 @@ class SpawnDelegate @Inject constructor(
         original.forEach { obj ->
             monstersPool.addAll(
                 arrayOf(
-                    *Array((poolSize * obj.changeSpawn).roundToInt()) {
+                    *Array((poolSize * obj.spawnRate).roundToInt()) {
                         obj.copy(idOnPool = it.toShort())
                     })
             )

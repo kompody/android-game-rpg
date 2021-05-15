@@ -15,12 +15,13 @@ data class CharacterDbModel(
     @PrimaryKey(autoGenerate = true)
     val id: Short,
     val label: String,
-    @ColumnInfo(name = "race_id")
-    val raceId: Short,
+    val description: String,
+    @ColumnInfo(name = "fraction_id")
+    val fractionId: Short,
     @ColumnInfo(name = "gender_id")
     val genderId: Short,
-    @ColumnInfo(name = "portrait_id")
-    val portraitId: Short,
+    @ColumnInfo(name = "portrait")
+    val portrait: String,
     @ColumnInfo(name = "role_id")
     val roleId: Short
 )

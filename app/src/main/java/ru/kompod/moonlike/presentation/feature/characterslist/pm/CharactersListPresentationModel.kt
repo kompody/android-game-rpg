@@ -3,7 +3,6 @@
 
 package ru.kompod.moonlike.presentation.feature.characterslist.pm
 
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import me.dmdev.rxpm.action
 import me.dmdev.rxpm.command
@@ -25,6 +24,7 @@ import ru.kompod.moonlike.utils.CHARACTERS_LIMIT
 import ru.kompod.moonlike.utils.ResourceDelegate
 import ru.kompod.moonlike.utils.extensions.kotlin.mergeLists
 import ru.kompod.moonlike.utils.extensions.rxjava.combineLatest
+import ru.kompod.moonlike.utils.extensions.rxjava.ui
 import ru.kompod.moonlike.utils.navigation.BottomTabRouter
 import javax.inject.Inject
 
@@ -90,9 +90,9 @@ class CharactersListPresentationModel @Inject constructor(
     private fun initData() {
         combineLatest(
             getCharactersUseCase.observe(),
-            getSelectedCharacterUseCase.observe()
+            getSelectedCharacterUseCase.observeId()
         )
-            .map { (list, selected) -> list.map { CharacterItem(it, it.id == selected.id) } }
+            .map { (list, selectedId) -> list.map { CharacterItem(it, it.id == selectedId) } }
             .map { characters ->
                 if (characters.size >= CHARACTERS_LIMIT) {
                     characters
@@ -100,11 +100,13 @@ class CharactersListPresentationModel @Inject constructor(
                     mergeLists(characters, listOf(CreateCharacterItem))
                 }
             }
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(ui())
             .doOnNext { list ->
                 charactersListState.accept(list)
             }
             .subscribeBy()
             .untilPause()
+
+        charactersListState.accept(listOf(CreateCharacterItem))
     }
 }

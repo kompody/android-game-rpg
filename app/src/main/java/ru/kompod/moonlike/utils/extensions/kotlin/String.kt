@@ -3,6 +3,7 @@
 
 package ru.kompod.moonlike.utils.extensions.kotlin
 
+import android.content.Context
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.BulletSpan
@@ -52,4 +53,11 @@ fun String.parseHtmlToBullet() : SpannableStringBuilder{
     }
 
     return spannableBuilder
+}
+
+fun String.getResource(context: Context): String {
+    if (isEmpty()) return String.empty
+
+    val resId = context.resources.getIdentifier(this, "string", context.packageName)
+    return context.getString(resId)
 }

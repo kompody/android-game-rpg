@@ -116,7 +116,7 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
             .doOnNext(objectAdapter::setItems)
             .doOnNext {
                 objectRecyclerView?.let {
-                    consumePendingUpdateOperationsMethod?.invoke(
+                    consumePendingUpdateOperationsMethod.invoke(
                         objectRecyclerView
                     )
                 }

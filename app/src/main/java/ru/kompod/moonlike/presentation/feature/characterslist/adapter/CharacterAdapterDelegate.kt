@@ -35,14 +35,10 @@ class CharacterAdapterDelegate(
 
             bind {
                 with(item.character) {
-                    picasso.load(portrait.path)
+                    picasso.load(portrait)
                         .into(PixelTargetAdapter(iconImageView))
 
-                    labelTextView.text = "${race.label} - ${role.label}"
-
-                    valueStrTextView.text = getString(R.string.asset_stats_str, role.states.str.value)
-                    valueAgiTextView.text = getString(R.string.asset_stats_agi, role.states.agi.value)
-                    valueIntTextView.text = getString(R.string.asset_stats_int, role.states.int.value)
+                    labelTextView.text = "${fraction.label} - ${role.label}"
 
                     selectedTextView.setVisibleOrGone(item.isSelected)
                 }

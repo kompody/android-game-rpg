@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/museo_sans_cyrl_700"
-            android:text="@string/screen_create_character_about_race_title" />
+            android:text="@string/screen_create_character_about_fraction_title" />
 
         <TextView
             android:id="@+id/raceDescriptionTextView"
