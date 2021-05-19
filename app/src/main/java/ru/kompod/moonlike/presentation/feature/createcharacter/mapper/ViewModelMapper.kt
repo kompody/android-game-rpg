@@ -3,16 +3,15 @@
 
 package ru.kompod.moonlike.presentation.feature.createcharacter.mapper
 
-import ru.kompod.moonlike.domain.entity.base.CharacterObject
+import ru.kompod.moonlike.domain.entity.base.NewCharacterObject
 import ru.kompod.moonlike.presentation.feature.createcharacter.model.ViewModel
-import ru.kompod.moonlike.utils.extensions.kotlin.empty
 
-fun ViewModel.toEntity(): CharacterObject =
-    CharacterObject(
+fun ViewModel.toEntity(): NewCharacterObject =
+    NewCharacterObject(
         0,
         characterItem.items[characterItem.selectedIndex].label,
         characterItem.items[characterItem.selectedIndex].description,
-        fractionItem.items[fractionItem.selectedIndex],
+        fractionItem.items[fractionItem.selectedIndex].fraction,
         characterItem.items[characterItem.selectedIndex].gender,
         portraitItem.items[portraitItem.selectedIndex],
         roleItem.items[roleItem.selectedIndex]

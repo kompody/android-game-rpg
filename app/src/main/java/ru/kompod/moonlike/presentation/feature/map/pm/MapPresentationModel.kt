@@ -4,10 +4,12 @@
 package ru.kompod.moonlike.presentation.feature.map.pm
 
 import android.os.CountDownTimer
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.reactivex.rxkotlin.subscribeBy
 import me.dmdev.rxpm.action
 import me.dmdev.rxpm.command
 import me.dmdev.rxpm.state
+import ru.kompod.moonlike.Screens
 import ru.kompod.moonlike.data.analytics.AnalyticsDelegate
 import ru.kompod.moonlike.domain.AppScreen
 import ru.kompod.moonlike.domain.entity.base.MapObject
@@ -26,6 +28,7 @@ import ru.kompod.moonlike.utils.ResourceDelegate
 import ru.kompod.moonlike.utils.extensions.rxjava.*
 import ru.kompod.moonlike.utils.extensions.rxpm.accept
 import ru.kompod.moonlike.utils.navigation.BottomTabRouter
+import timber.log.Timber
 import javax.inject.Inject
 
 class MapPresentationModel @Inject constructor(
@@ -43,6 +46,7 @@ class MapPresentationModel @Inject constructor(
     override val onTravelClickObserver = action<TravelItem>()
     override val onMonsterClickObserver = action<MonsterItem>()
 
+    val bottomSheetActions = action<Int>()
     val onPauseTimerAction = action<Unit>()
     val onStartTimerAction = action<Int>()
 
@@ -52,6 +56,7 @@ class MapPresentationModel @Inject constructor(
     val mapPathState = state<String>()
     val objectListState = state<List<IListItem>>()
     val canTravelState = state(false)
+    val isBottomSheetHideable = state(true)
 
     val loadMapByIdCommand = command<Short>()
 
@@ -92,6 +97,7 @@ class MapPresentationModel @Inject constructor(
             .observable
             .map { it.monster }
             .doOnNext {
+//                router.navigateTo(Screens.CharactersOnMap)
                 spawnDelegate.killMonster(cacheMap?.id ?: NO_ID, it)
             }
             .subscribeBy()
@@ -111,6 +117,23 @@ class MapPresentationModel @Inject constructor(
             .doOnNext { startTimer(it) }
             .retry()
             .subscribeBy()
+            .untilDestroy()
+
+        bottomSheetActions
+            .observable
+            .doOnNext { state ->
+//                mapLegendVisibility.accept(state != BottomSheetBehavior.STATE_HIDDEN)
+                when (state) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+//                        deselectComplex()
+                    }
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        isBottomSheetHideable.accept(true)
+                    }
+                }
+            }
+            .doOnError(Timber::e)
+            .subscribe()
             .untilDestroy()
     }
 
@@ -151,7 +174,7 @@ class MapPresentationModel @Inject constructor(
     }
 
     private fun initData() {
-        loadMapByIdCommand.accept(6)
+        loadMapByIdCommand.accept(1)
     }
 
     private fun startTimer(seconds: Int) {

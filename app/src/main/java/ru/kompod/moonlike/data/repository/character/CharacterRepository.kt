@@ -9,6 +9,7 @@ import io.reactivex.Single
 import ru.kompod.moonlike.data.database.dao.CharacterDao
 import ru.kompod.moonlike.data.database.mapper.CharacterMapper
 import ru.kompod.moonlike.domain.entity.base.CharacterObject
+import ru.kompod.moonlike.domain.entity.base.NewCharacterObject
 import ru.kompod.moonlike.domain.repository.character.ICharacterRepository
 import ru.kompod.moonlike.utils.extensions.rxjava.io
 import ru.kompod.moonlike.utils.extensions.rxjava.toSingle
@@ -18,7 +19,7 @@ class CharacterRepository @Inject constructor(
     private val characterDao: CharacterDao,
     private val characterMapper: CharacterMapper
 ) : ICharacterRepository {
-    override fun saveCharacter(model: CharacterObject): Single<Unit> =
+    override fun saveCharacter(model: NewCharacterObject): Single<Unit> =
         characterDao.insertCharacter(characterMapper.mapEntityToDbModel(model))
             .andThen(Unit.toSingle())
             .subscribeOn(io())

@@ -12,7 +12,7 @@
     <string name="main_navigation_inventory">Инвентарь</string>
     <string name="main_navigation_map">Карта</string>
     <string name="main_navigation_quests_list">Задания</string>
-    <string name="main_navigation_settings">Настройки</string>
+    <string name="main_navigation_library">Библиотека</string>
 
     <string name="sign_in_proceed_button">Войти</string>
 
@@ -33,14 +33,10 @@
     <string name="screen_create_character_character_title">Персонаж</string>
     <string name="screen_create_character_icon_title">Портрет</string>
     <string name="screen_create_character_role_title">Класс</string>
-    <string name="screen_create_character_about_fraction_title">Описание Фракции</string>
+    <string name="screen_create_character_about">Описание</string>
     <string name="screen_create_character_about_role_title">Описание класса</string>
     <string name="screen_create_character_about_stats_title">Характеристики</string>
     <string name="screen_create_character_apply_button">Создать</string>
-
-    <string name="asset_stats_str">str: %d</string>
-    <string name="asset_stats_agi">agi: %d</string>
-    <string name="asset_stats_int">int: %d</string>
 
     <string name="asset_race_human">Human</string>
     <string name="asset_race_human_description">asset_race_human_description</string>
@@ -88,20 +84,29 @@
     <string name="screen_map_npc_title">Персонажи</string>
     <string name="screen_map_monsters_title">Монстры</string>
 
+    <string name="asset_map_mountain_label">mountain</string>
+    <string name="asset_map_forest_label">forest</string>
+    <string name="asset_map_hills_label">hills</string>
+    <string name="asset_map_grassland_label">grassland</string>
+    <string name="asset_map_swamp_label">swamp</string>
+    <string name="asset_map_arctic_label">arctic</string>
+    <string name="asset_map_aquatic_label">aquatic</string>
+    <string name="asset_map_ship_label">ship</string>
+    <string name="asset_map_coast_label">coast</string>
+    <string name="asset_map_aloft_label">aloft</string>
+    <string name="asset_map_desert_label">desert</string>
+    <string name="asset_map_cavern_label">cavern</string>
+    <string name="asset_map_inn_label">inn</string>
+    <string name="asset_map_space_label">space</string>
+    <string name="asset_map_temple_label">temple</string>
+    <string name="asset_map_village_label">village</string>
+    <string name="asset_map_town_label">town</string>
+    <string name="asset_map_city_label">city</string>
+    <string name="asset_map_castle_label">castle</string>
+    <string name="asset_map_manor_label">manor</string>
+
     <string name="asset_map_01_label">map_01</string>
     <string name="asset_map_02_label">map_02</string>
     <string name="asset_map_03_label">map_03</string>
     <string name="asset_map_04_label">map_04</string>
-    <string name="asset_map_05_label">map_05</string>
-    <string name="asset_map_06_label">map_06</string>
-    <string name="asset_map_07_label">map_07</string>
-    <string name="asset_map_08_label">map_08</string>
-    <string name="asset_map_09_label">map_09</string>
-    <string name="asset_map_10_label">map_10</string>
-    <string name="asset_map_11_label">map_11</string>
-    <string name="asset_map_12_label">map_12</string>
-    <string name="asset_map_13_label">map_13</string>
-    <string name="asset_map_14_label">map_14</string>
-    <string name="asset_map_15_label">map_15</string>
-    <string name="asset_map_16_label">map_16</string>
 </resources>

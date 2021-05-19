@@ -4,88 +4,91 @@
 package ru.kompod.moonlike.domain.entity.base
 
 //character
-class CharacterObject(
+data class NewCharacterObject(
     val id: Short,
     val label: String,
     val description: String,
     val fraction: FractionObject,
     val gender: GenderObject,
     val portrait: String,
-    val role: RoleObject
+    val role: RoleInfoObject
 )
 
-open class FractionObject(
+data class CharacterObject(
+    val id: Short,
+    val label: String,
+    val description: String,
+    val fraction: FractionObject,
+    val gender: GenderObject,
+    val portrait: String,
+    val role: RoleObject,
+    val level: Short,
+    val exp: Long,
+    val hp: Short,
+    val sp: Short,
+    val baseFAtk: Short,
+    val baseFDef: Short,
+    val baseMAtk: Short,
+    val baseMDef: Short
+)
+
+data class FractionObject(
     val id: Short,
     val label: String,
     val description: String
 )
 
-class FractionInfoObject(
-    id: Short,
-    label: String,
-    description: String,
+data class FractionInfoObject(
+    val fraction: FractionObject,
     val characters: List<CharacterInfoObject>
-) : FractionObject(id, label, description)
+)
 
-class CharacterInfoObject(
+data class CharacterInfoObject(
     val id: Short,
     val label: String,
     val description: String,
     val gender: GenderObject,
     val portraits: List<String>,
-    val roles: List<RoleObject>
+    val roles: List<RoleInfoObject>
 )
 
-class RaceObject(
+data class RaceObject(
     val id: Short,
     val label: String,
     val description: String
 )
 
-class GenderObject(
+data class GenderObject(
     val id: Short,
     val label: String
 )
 
-class RoleObject(
+data class RoleInfoObject(
     val id: Short,
     val label: String,
     val description: String,
     val states: States
 )
 
-open class StateObject(val value: Short)
+data class RoleObject(
+    val id: Short,
+    val label: String,
+    val description: String
+)
 
-class PhysicalAttack(value: Short) : StateObject(value)
-class PhysicalDefense(value: Short) : StateObject(value)
-class MagicalAttack(value: Short) : StateObject(value)
-class MagicalDefense(value: Short) : StateObject(value)
-
-class States(
-    val fAtk: PhysicalAttack,
-    val fDef: PhysicalDefense,
-    val mAtk: MagicalAttack,
-    val mDef: MagicalDefense
-) {
-    companion object {
-        fun fromRaw(
-            fAtk: Short,
-            fDef: Short,
-            mAtk: Short,
-            mDef: Short
-        ) = States(
-            PhysicalAttack(fAtk),
-            PhysicalDefense(fDef),
-            MagicalAttack(mAtk),
-            MagicalDefense(mDef)
-        )
-    }
-}
+data class States(
+    val hp: Short,
+    val sp: Short,
+    val fAtk: Short,
+    val fDef: Short,
+    val mAtk: Short,
+    val mDef: Short
+)
 
 //loot item
 
 //map
-class MapObject(
+data class MapObject(
     val id: Short,
     val label: String,
     val path: String,
@@ -99,40 +102,40 @@ class MapObject(
     val actors: List<Short> = listOf()
 )
 
-class TravelObject(
+data class TravelObject(
     val id: Short,
     val label: String,
     val to: Short
 )
 
 //npc
-open class NPCObject(
-    open val id: Short,
-    open val label: String,
-    open val gender: GenderObject,
-    open val portrait: String,
-    open val role: RoleObject
+data class NPCObject(
+    val id: Short,
+    val label: String,
+    val gender: GenderObject,
+    val portrait: String,
+    val role: RoleInfoObject
 )
 
-class PeacefulObject(
-    id: Short,
-    label: String,
-    gender: GenderObject,
-    portrait: String,
-    role: RoleObject
-) : NPCObject(id, label, gender, portrait, role)
+data class PeacefulObject(
+    val id: Short,
+    val label: String,
+    val gender: GenderObject,
+    val portrait: String,
+    val role: RoleInfoObject
+)
 
 data class MonsterObject(
-    override val id: Short,
-    override val label: String,
-    override val gender: GenderObject,
-    override val portrait: String,
-    override val role: RoleObject,
+    val id: Short,
+    val label: String,
+    val gender: GenderObject,
+    val portrait: String,
+    val role: RoleInfoObject,
     val idOnPool: Short = id,
     val spawnRate: Float = 1f,
     val delay: Int = 20 * 1000,
     var isLife: Boolean = false,
     var timeDeath: Long = 0
-) : NPCObject(id, label, gender, portrait, role)
+)
 
 //quest

@@ -2,24 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/item_profile"
-        android:icon="@drawable/ic_account"
+        android:icon="@drawable/ic_account_outline"
         android:title="@string/main_navigation_profile" />
 
     <item
         android:id="@+id/item_inventory"
-        android:title="@string/main_navigation_inventory"/>
+        android:icon="@drawable/ic_bag_personal_outline"
+        android:title="@string/main_navigation_inventory" />
 
     <item
         android:id="@+id/item_map"
-        android:icon="@drawable/ic_map"
-        android:title="@string/main_navigation_map"/>
+        android:icon="@drawable/ic_map_outline"
+        android:title="@string/main_navigation_map" />
 
     <item
         android:id="@+id/item_quest_list"
+        android:icon="@drawable/ic_comment_alert_outline"
         android:title="@string/main_navigation_quests_list" />
 
     <item
-        android:id="@+id/item_setting"
-        android:icon="@drawable/ic_cog"
-        android:title="@string/main_navigation_settings" />
+        android:id="@+id/item_library"
+        android:icon="@drawable/ic_notebook_outline"
+        android:title="@string/main_navigation_library" />
 </menu>

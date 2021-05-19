@@ -21,7 +21,10 @@ class FractionAdapterDelegate(
     private fun createAdapterDelegate() =
         adapterDelegateLayoutContainer<FractionItem, IListItem>(R.layout.item_create_character_fraction) {
             bind {
-                labelTextView.text = item.items[item.selectedIndex].label
+                with(item.items[item.selectedIndex].fraction) {
+                    labelTextView.text = label
+                    descriptionTextView.text = description
+                }
 
                 menuLeftImageView.clicks()
                     .map { item.selectedIndex - 1 }

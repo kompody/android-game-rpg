@@ -14,6 +14,6 @@ enum class TitleType {
     MONSTERS
 }
 
-class TitleListItem(val type: TitleType, val title: String): IListItem
+class TitleListItem(val type: TitleType, val title: String, val items: List<IListItem>): IListItem
 class TravelItem(val travel: TravelObject): IListItem
 class MonsterItem(val monster: MonsterObject): IListItem

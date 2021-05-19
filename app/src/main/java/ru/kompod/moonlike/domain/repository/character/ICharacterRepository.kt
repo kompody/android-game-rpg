@@ -7,9 +7,10 @@ import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import ru.kompod.moonlike.domain.entity.base.CharacterObject
+import ru.kompod.moonlike.domain.entity.base.NewCharacterObject
 
 interface ICharacterRepository {
-    fun saveCharacter(model: CharacterObject): Single<Unit>
+    fun saveCharacter(model: NewCharacterObject): Single<Unit>
     fun removeCharacterById(id: Short): Single<Unit>
     fun loadCharacters(): Single<List<CharacterObject>>
     fun observeCharacters(): Observable<List<CharacterObject>>

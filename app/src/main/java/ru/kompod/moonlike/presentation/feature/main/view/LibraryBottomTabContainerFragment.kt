@@ -6,6 +6,6 @@ package ru.kompod.moonlike.presentation.feature.main.view
 import ru.kompod.moonlike.Screens
 import ru.kompod.moonlike.presentation.base.bottomtab.view.BaseBottomTabContainerFragment
 
-class SettingsBottomTabContainerFragment : BaseBottomTabContainerFragment() {
-    override fun getTabRootScreen() = Screens.Settings
+class LibraryBottomTabContainerFragment : BaseBottomTabContainerFragment() {
+    override fun getTabRootScreen() = Screens.Library
 }

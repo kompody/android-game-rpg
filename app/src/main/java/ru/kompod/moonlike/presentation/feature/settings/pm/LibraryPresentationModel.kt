@@ -10,7 +10,7 @@ import ru.kompod.moonlike.utils.ResourceDelegate
 import ru.kompod.moonlike.utils.navigation.BottomTabRouter
 import javax.inject.Inject
 
-class SettingsPresentationModel @Inject constructor(
+class LibraryPresentationModel @Inject constructor(
     override val router: BottomTabRouter,
     resources: ResourceDelegate,
     analytics: AnalyticsDelegate

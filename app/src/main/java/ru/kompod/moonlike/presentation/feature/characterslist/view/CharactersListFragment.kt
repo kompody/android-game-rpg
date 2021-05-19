@@ -5,7 +5,6 @@ package ru.kompod.moonlike.presentation.feature.characterslist.view
 
 import android.content.DialogInterface
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -118,8 +117,8 @@ class CharactersListFragment :
             addItemDecoration(
                 VerticalListMarginDecorator(
                     applyFor = setOf(CharacterItem::class, CreateCharacterItem::class),
-                    boundaryItemMargin = 8.dp,
-                    circleMargin = 16.dp
+                    margin = 8.dp,
+                    boundaryMargin = 16.dp
                 )
             )
         }

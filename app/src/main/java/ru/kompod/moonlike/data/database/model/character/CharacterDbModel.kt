@@ -23,5 +23,17 @@ data class CharacterDbModel(
     @ColumnInfo(name = "portrait")
     val portrait: String,
     @ColumnInfo(name = "role_id")
-    val roleId: Short
+    val roleId: Short,
+    val level: Short,
+    val exp: Long,
+    val hp: Short,
+    val sp: Short,
+    @ColumnInfo(name = "base_f_atk")
+    val baseFAtk: Short,
+    @ColumnInfo(name = "base_f_def")
+    val baseFDef: Short,
+    @ColumnInfo(name = "base_m_atk")
+    val baseMAtk: Short,
+    @ColumnInfo(name = "base_m_def")
+    val baseMDef: Short
 )

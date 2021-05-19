@@ -82,8 +82,8 @@ class ProfileFragment : BaseFragment<ProfilePresentationModel>(R.layout.fragment
             addItemDecoration(
                 VerticalListMarginDecorator(
                     applyFor = setOf(GeneralInfoItem::class),
-                    boundaryItemMargin = 8.dp,
-                    circleMargin = 16.dp
+                    margin = 8.dp,
+                    boundaryMargin = 16.dp
                 )
             )
         }

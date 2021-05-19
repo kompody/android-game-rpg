@@ -5,9 +5,7 @@ package ru.kompod.moonlike.data.network.mapper
 
 import android.content.Context
 import ru.kompod.moonlike.data.network.model.MonsterApiModel
-import ru.kompod.moonlike.domain.entity.base.GenderObject
 import ru.kompod.moonlike.domain.entity.base.MonsterObject
-import ru.kompod.moonlike.domain.entity.base.RoleObject
 import ru.kompod.moonlike.domain.factory.Assets
 import javax.inject.Inject
 

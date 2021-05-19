@@ -20,9 +20,11 @@ class CharacterMapper @Inject constructor(
     )
 
     fun mapApiModelToEntity(model: FractionInfoApiModel): FractionInfoObject = FractionInfoObject(
-        id = model.id,
-        label = model.label.getResource(context),
-        description = model.description.getResource(context),
+        fraction = FractionObject(
+            id = model.id,
+            label = model.label.getResource(context),
+            description = model.description.getResource(context)
+        ),
         characters = model.characters.map { mapCharacter(it) }
     )
 
@@ -32,7 +34,7 @@ class CharacterMapper @Inject constructor(
         description = model.description.getResource(context),
         gender = mapGender(model.gender),
         portraits = model.portraits,
-        roles = model.roles.map { mapRole(it) }
+        roles = model.roleObjects
     )
 
     fun mapGender(model: GenderApiModel): GenderObject = GenderObject(
@@ -40,11 +42,13 @@ class CharacterMapper @Inject constructor(
         label = model.label.getResource(context)
     )
 
-    fun mapRole(model: RoleApiModel): RoleObject = RoleObject(
+    fun mapRole(model: RoleApiModel): RoleInfoObject = RoleInfoObject(
         id = model.id,
         label = model.label.getResource(context),
         description = model.description.getResource(context),
-        states = States.fromRaw(
+        states = States(
+            hp = model.states.hp,
+            sp = model.states.sp,
             fAtk = model.states.fAtk,
             fDef = model.states.fDef,
             mAtk = model.states.mAtk,

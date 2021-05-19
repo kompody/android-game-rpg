@@ -12,6 +12,8 @@ enum class AppScreen {
 
     INVENTORY,
     MAP,
+    CHARACTERS_ON_MAP,
+
     QUEST_LIST,
     SETTING
 }

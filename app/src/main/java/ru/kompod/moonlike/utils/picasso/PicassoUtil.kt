@@ -28,8 +28,8 @@ class PicassoUtil @Inject constructor(
     fun resize(rc: RequestCreator, width: Int, height: Int): RequestCreator {
         val widthPixels = resources.getDisplayMetrics().widthPixels
 
-        val wk = widthPixels / 1080f
+        val wk = widthPixels / resources.getDisplayMetrics().widthPixels
 
-        return rc.resize((width * wk).toInt(), (height * wk).toInt())
+        return rc.resize(width * wk, height * wk)
     }
 }

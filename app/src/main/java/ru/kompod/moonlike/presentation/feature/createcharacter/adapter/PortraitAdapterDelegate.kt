@@ -16,14 +16,14 @@ import javax.inject.Provider
 
 class PortraitAdapterDelegate(
     private val listener: PortraitItemListener,
-    private val picasso: PicassoUtil
+    private val picassoUtil: PicassoUtil
 ) : Provider<AdapterDelegate<List<IListItem>>> {
     override fun get(): AdapterDelegate<List<IListItem>> = createAdapterDelegate()
 
     private fun createAdapterDelegate() =
         adapterDelegateLayoutContainer<PortraitItem, IListItem>(R.layout.item_create_character_icon) {
             bind {
-                picasso.load(item.items[item.selectedIndex])
+                picassoUtil.load(item.items[item.selectedIndex])
                     .resize(128, 128)
                     .into(iconImageView)
 

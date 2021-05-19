@@ -133,7 +133,6 @@ class CreateCharacterPresentationModel @Inject constructor(
             selectedIndex = 0
         }
         with(model.aboutItem) {
-            fraction = model.fractionItem.items[index]
             role = model.roleItem.items[0]
         }
         handleChangeViewModel(model)
@@ -212,6 +211,6 @@ class CreateCharacterPresentationModel @Inject constructor(
         characterItem = CharacterItem(model[0].characters, 0),
         portraitItem = PortraitItem(model[0].characters[0].portraits, 0),
         roleItem = RoleItem(model[0].characters[0].roles, 0),
-        aboutItem = AboutItem(model[0], model[0].characters[0].roles[0])
+        aboutItem = AboutItem(model[0].characters[0].roles[0])
     )
 }

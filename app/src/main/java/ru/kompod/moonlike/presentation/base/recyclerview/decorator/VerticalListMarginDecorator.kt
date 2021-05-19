@@ -16,19 +16,19 @@ class VerticalListMarginDecorator(
     private val startMargin: Int = 0,
     private val endMargin: Int = 0,
     private val bottomMargin: Int = 0,
-    private val boundaryItemMargin: Int = 0,
+    private val margin: Int = 0,
     private val applyFor: Set<KClass<*>>
 ) : RecyclerView.ItemDecoration() {
 
     private val applyForAll = applyFor.isEmpty()
 
-    constructor(circleMargin: Int = 0, boundaryItemMargin: Int = 0, applyFor: Set<KClass<*>>) : this(
+    constructor(boundaryMargin: Int = 0, margin: Int = 0, applyFor: Set<KClass<*>>) : this(
         applyFor = applyFor,
-        boundaryItemMargin = boundaryItemMargin,
-        topMargin = circleMargin,
-        startMargin = circleMargin,
-        endMargin = circleMargin,
-        bottomMargin = circleMargin
+        margin = margin,
+        topMargin = boundaryMargin,
+        startMargin = boundaryMargin,
+        endMargin = boundaryMargin,
+        bottomMargin = boundaryMargin
     )
 
     override fun getItemOffsets(
@@ -58,10 +58,10 @@ class VerticalListMarginDecorator(
 
         val itemsCount = state.itemCount
 
-        if (boundaryItemMargin > 0) {
-            outRect.top = if (position == 0) topMargin else boundaryItemMargin / 2
+        if (margin > 0) {
+            outRect.top = if (position == 0) topMargin else margin / 2
             outRect.bottom =
-                if (position == itemsCount - 1) bottomMargin else boundaryItemMargin / 2
+                if (position == itemsCount - 1) bottomMargin else margin / 2
         } else {
             outRect.top = topMargin
             outRect.bottom = bottomMargin

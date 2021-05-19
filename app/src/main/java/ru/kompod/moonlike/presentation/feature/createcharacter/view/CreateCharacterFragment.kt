@@ -3,8 +3,8 @@
 
 package ru.kompod.moonlike.presentation.feature.createcharacter.view
 
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.jakewharton.rxbinding3.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,20 +14,20 @@ import kotlinx.android.synthetic.main.fragment_create_character.*
 import me.dmdev.rxpm.bindTo
 import ru.kompod.moonlike.R
 import ru.kompod.moonlike.presentation.base.BaseFragment
-import ru.kompod.moonlike.presentation.base.recyclerview.adapter.BaseAdapter
 import ru.kompod.moonlike.presentation.base.recyclerview.adapter.DefaultDiffCallback
 import ru.kompod.moonlike.presentation.base.recyclerview.adapter.ListItemAdapter
+import ru.kompod.moonlike.presentation.base.recyclerview.decorator.DividerItemDecoration
 import ru.kompod.moonlike.presentation.base.recyclerview.decorator.VerticalListMarginDecorator
 import ru.kompod.moonlike.presentation.base.recyclerview.model.IListItem
 import ru.kompod.moonlike.presentation.feature.createcharacter.adapter.*
 import ru.kompod.moonlike.presentation.feature.createcharacter.model.*
 import ru.kompod.moonlike.presentation.feature.createcharacter.pm.CreateCharacterPresentationModel
+import ru.kompod.moonlike.utils.ResourceDelegate
 import ru.kompod.moonlike.utils.extensions.kotlin.dp
 import ru.kompod.moonlike.utils.extensions.toothpick.bind
 import ru.kompod.moonlike.utils.extensions.toothpick.getInstance
 import ru.kompod.moonlike.utils.extensions.toothpick.moduleOf
 import toothpick.config.Module
-import java.lang.reflect.Method
 import javax.inject.Inject
 
 class CreateCharacterFragment :
@@ -36,6 +36,9 @@ class CreateCharacterFragment :
 
     @Inject
     lateinit var destroyViewDisposable: CompositeDisposable
+
+    @Inject
+    lateinit var resourceDelegate: ResourceDelegate
 
     @Inject
     lateinit var creatorMenuAdapter: ListItemAdapter
@@ -97,8 +100,8 @@ class CreateCharacterFragment :
                         RoleItem::class,
                         AboutItem::class
                     ),
-                    boundaryItemMargin = 8.dp,
-                    circleMargin = 16.dp
+                    margin = 8.dp,
+                    boundaryMargin = 16.dp
                 )
             )
         }

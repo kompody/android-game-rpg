@@ -21,7 +21,10 @@ class RoleAdapterDelegate(
     private fun createAdapterDelegate() =
         adapterDelegateLayoutContainer<RoleItem, IListItem>(R.layout.item_create_character_role) {
             bind {
-                labelTextView.text = item.items[item.selectedIndex].label
+                with(item.items[item.selectedIndex]) {
+                    labelTextView.text = label
+                    descriptionTextView.text = description
+                }
 
                 menuLeftImageView.clicks()
                     .map { item.selectedIndex - 1 }

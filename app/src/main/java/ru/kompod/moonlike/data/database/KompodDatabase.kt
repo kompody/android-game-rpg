@@ -12,7 +12,7 @@ import ru.kompod.moonlike.data.database.model.character.CharacterDbModel
     entities = [
         CharacterDbModel::class
     ],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 abstract class KompodDatabase : RoomDatabase() {

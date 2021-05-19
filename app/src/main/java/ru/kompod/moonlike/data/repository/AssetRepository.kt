@@ -26,6 +26,12 @@ class AssetRepository @Inject constructor(
 
     override fun getCharacterFractionsInfo(): List<FractionInfoObject> =
         gson.fromJson<List<FractionInfoApiModel>>(assetProvider.loadJSONFromAsset(Assets.FRACTION_INFO))
+            .map {
+                it.characters.map { character ->
+                    character.roleObjects = character.roles.map { id -> getCharacterRoleById(id) }
+                }
+                it
+            }
             .map { characterMapper.mapApiModelToEntity(it) }
 
     override fun getCharacterFraction(): List<FractionObject> =
@@ -42,11 +48,11 @@ class AssetRepository @Inject constructor(
     override fun getCharacterGenderById(id: Short): GenderObject =
         getCharacterGenders().first { it.id == id }
 
-    override fun getCharacterRoles(): List<RoleObject> =
+    override fun getCharacterRoles(): List<RoleInfoObject> =
         gson.fromJson<List<RoleApiModel>>(assetProvider.loadJSONFromAsset(Assets.ROLE))
             .map { characterMapper.mapRole(it) }
 
-    override fun getCharacterRoleById(id: Short): RoleObject =
+    override fun getCharacterRoleById(id: Short): RoleInfoObject =
         getCharacterRoles().first { it.id == id }
 
     override fun getMaps(): List<MapObject> =

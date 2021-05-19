@@ -22,7 +22,7 @@
                 android:layout_weight="1"
                 android:paddingStart="@dimen/padding_default_horizontal"
                 android:paddingEnd="@dimen/padding_default_horizontal"
-                android:text="@string/main_navigation_settings"
+                android:text="@string/main_navigation_library"
                 tools:ignore="InefficientWeight" />
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>

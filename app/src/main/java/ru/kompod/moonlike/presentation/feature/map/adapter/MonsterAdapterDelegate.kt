@@ -19,7 +19,7 @@ import javax.inject.Provider
 
 class MonsterAdapterDelegate(
     private val listener: MonsterItemListener,
-    private val picasso: PicassoUtil
+    private val picassoUtil: PicassoUtil
 ) : Provider<AdapterDelegate<List<IListItem>>> {
     override fun get(): AdapterDelegate<List<IListItem>> = createAdapterDelegate(listener)
 
@@ -33,7 +33,7 @@ class MonsterAdapterDelegate(
 
             bind {
                 with(item.monster) {
-                    picasso.load(portrait)
+                    picassoUtil.load(portrait)
                         .into(PixelTargetAdapter(iconImageView))
                     travelLabelTextView.text = label
                 }

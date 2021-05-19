@@ -22,14 +22,9 @@ class MapViewModelMapper @Inject constructor(
         mapEntityToViewModel(model, listOf())
 
     fun mapEntityToViewModel(model: MapObject, monsters: List<MonsterObject>): List<IListItem> = listOf(
-        TitleListItem(TitleType.LOCATION, resources.getString(R.string.screen_map_travels_title)),
-        *model.travels.map { TravelItem(it) }.toTypedArray(),
-        TitleListItem(TitleType.MONSTERS, resources.getString(R.string.screen_map_monsters_title)),
-        *monsters.map { MonsterItem(it) }.toTypedArray(),
-        TitleListItem(TitleType.OBJECTS, resources.getString(R.string.screen_map_objects_title)),
-        TitleListItem(TitleType.NPC, resources.getString(R.string.screen_map_npc_title))
+        TitleListItem(TitleType.LOCATION, resources.getString(R.string.screen_map_travels_title), model.travels.map { TravelItem(it) }),
+        TitleListItem(TitleType.MONSTERS, resources.getString(R.string.screen_map_monsters_title), monsters.map { MonsterItem(it) }),
+        TitleListItem(TitleType.OBJECTS, resources.getString(R.string.screen_map_objects_title), listOf()),
+        TitleListItem(TitleType.NPC, resources.getString(R.string.screen_map_npc_title), listOf())
     )
-
-    fun refreshMonsters(model: List<IListItem>, monsters: List<MonsterObject>): List<IListItem> =
-        mergeLists(model.filter { it !is MonsterItem }, monsters.map { MonsterItem(it) })
 }

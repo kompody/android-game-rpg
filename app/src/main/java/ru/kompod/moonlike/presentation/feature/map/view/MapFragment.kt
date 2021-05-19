@@ -3,29 +3,33 @@
 
 package ru.kompod.moonlike.presentation.feature.map.view
 
+import androidx.core.view.marginBottom
+import androidx.core.view.marginEnd
+import androidx.core.view.marginStart
+import androidx.core.view.marginTop
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.GridLayoutManager
-import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.app_activity.*
+import kotlinx.android.synthetic.main.fragment_characters_on_map.*
+import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_map.*
 import me.dmdev.rxpm.bindTo
 import ru.kompod.moonlike.R
 import ru.kompod.moonlike.presentation.base.BaseFragment
 import ru.kompod.moonlike.presentation.base.recyclerview.adapter.BaseAdapter
 import ru.kompod.moonlike.presentation.base.recyclerview.adapter.DefaultDiffCallback
-import ru.kompod.moonlike.presentation.base.recyclerview.adapter.ListItemAdapter
-import ru.kompod.moonlike.presentation.base.recyclerview.decorator.GridListDecorator
 import ru.kompod.moonlike.presentation.base.recyclerview.decorator.VerticalListMarginDecorator
 import ru.kompod.moonlike.presentation.base.recyclerview.model.IListItem
-import ru.kompod.moonlike.presentation.feature.map.adapter.MonsterAdapterDelegate
 import ru.kompod.moonlike.presentation.feature.map.adapter.TitleAdapterDelegate
-import ru.kompod.moonlike.presentation.feature.map.adapter.TravelAdapterDelegate
 import ru.kompod.moonlike.presentation.feature.map.model.MonsterItem
 import ru.kompod.moonlike.presentation.feature.map.model.TitleListItem
 import ru.kompod.moonlike.presentation.feature.map.model.TravelItem
 import ru.kompod.moonlike.presentation.feature.map.pm.MapPresentationModel
+import ru.kompod.moonlike.utils.ResourceDelegate
+import ru.kompod.moonlike.utils.extensions.android.setCallback
 import ru.kompod.moonlike.utils.extensions.kotlin.dp
+import ru.kompod.moonlike.utils.extensions.rxpm.accept
 import ru.kompod.moonlike.utils.extensions.toothpick.bind
 import ru.kompod.moonlike.utils.extensions.toothpick.getInstance
 import ru.kompod.moonlike.utils.extensions.toothpick.moduleOf
@@ -48,7 +52,12 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
     lateinit var assetProvider: AssetProvider
 
     @Inject
-    lateinit var picasso: PicassoUtil
+    lateinit var picassoUtil: PicassoUtil
+
+    @Inject
+    lateinit var resourceDelegate: ResourceDelegate
+
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
 
     override fun providePresentationModel(): MapPresentationModel = scope.getInstance()
 
@@ -67,9 +76,11 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
             })
             bind<BaseAdapter>().toInstance(
                 BaseAdapter(
-                    TitleAdapterDelegate().get(),
-                    TravelAdapterDelegate(presentationModel).get(),
-                    MonsterAdapterDelegate(presentationModel, scope.getInstance()).get()
+                    TitleAdapterDelegate(
+                        presentationModel,
+                        presentationModel,
+                        scope.getInstance()
+                    ).get()
                 )
             )
         }
@@ -104,7 +115,13 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
             .mapPathState
             .observable
             .doOnNext { path ->
-                picasso.load(path) { rc -> picasso.resize(rc, 540, 540) }
+                picassoUtil.load(path) { rc ->
+                    picassoUtil.resize(
+                        rc,
+                        resourceDelegate.getDisplayMetrics().widthPixels,
+                        resourceDelegate.getDisplayMetrics().widthPixels
+                    )
+                }
                     .into(PixelTargetAdapter(mapImageView, false))
             }
             .subscribe()
@@ -125,39 +142,46 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
             .let(destroyViewDisposable::add)
     }
 
+    override fun onViewPreCreated() {
+        super.onViewPreCreated()
+        setupBottomSheet()
+    }
+
+    private fun setupBottomSheet() {
+        bottomSheetBehavior = BottomSheetBehavior.from(charactersOnMap).apply {
+            setCallback(
+                stateChanged = { _, state ->
+                    setBottomSheetPeekHeight()
+
+                    presentationModel.bottomSheetActions.accept(state)
+                }
+            )
+        }
+    }
+
+    private fun setBottomSheetPeekHeight() {
+        if (isRemoving.not()) {
+            bottomSheetBehavior.peekHeight =
+                root.measuredHeight -
+                        appbar.measuredHeight -
+                        progressBar.measuredHeight -
+                        mapImageView.measuredHeight -
+                        10.dp
+        }
+    }
+
     override fun setupView() {
         super.setupView()
         with(objectRecyclerView) {
             adapter = objectAdapter
 
-//            (objectRecyclerView.layoutManager as GridLayoutManager).apply {
-//                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-//                    override fun getSpanSize(position: Int): Int {
-//                        return when (objectAdapter.items[position]) {
-//                            is TitleListItem -> 2
-//                            else -> 1
-//                        }
-//                    }
-//                }
-//            }
-//            addItemDecoration(
-//                GridListDecorator(
-//                    applyFor = setOf(
-//                    ),
-//                    columnCount = 2,
-//                    margin = 16.dp,
-//                    boundaryMargin = 8.dp
-//                )
-//            )
             addItemDecoration(
                 VerticalListMarginDecorator(
                     applyFor = setOf(
-                        TitleListItem::class,
-                        TravelItem::class,
-                        MonsterItem::class
+                        TitleListItem::class
                     ),
-                    boundaryItemMargin = 8.dp,
-                    circleMargin = 8.dp
+                    startMargin = 8.dp,
+                    endMargin = 8.dp
                 )
             )
         }

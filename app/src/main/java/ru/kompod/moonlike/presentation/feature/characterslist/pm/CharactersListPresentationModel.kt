@@ -106,7 +106,5 @@ class CharactersListPresentationModel @Inject constructor(
             }
             .subscribeBy()
             .untilPause()
-
-        charactersListState.accept(listOf(CreateCharacterItem))
     }
 }

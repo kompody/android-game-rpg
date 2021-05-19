@@ -10,12 +10,12 @@ class Assets @Inject constructor(
     private val resources: ResourceDelegate
 ) {
     companion object {
-        const val FRACTION_INFO: String = "json/fraction_info.json"
-        const val FRACTION: String = "json/fraction.json"
-        const val GENDER: String = "json/gender.json"
-        const val ROLE: String = "json/role.json"
-        const val MAP: String = "json/map.json"
-        const val BIOME: String = "json/biome.json"
-        const val MONSTER: String = "json/monster.json"
+        const val FRACTION_INFO: String = "json/character/fraction_info.json"
+        const val FRACTION: String = "json/character/fraction.json"
+        const val GENDER: String = "json/character/gender.json"
+        const val ROLE: String = "json/character/role.json"
+        const val MAP: String = "json/map/map.json"
+        const val BIOME: String = "json/map/biome.json"
+        const val MONSTER: String = "json/character/monster.json"
     }
 }

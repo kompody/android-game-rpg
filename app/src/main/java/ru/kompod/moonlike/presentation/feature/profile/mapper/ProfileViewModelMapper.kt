@@ -14,11 +14,10 @@ class ProfileViewModelMapper @Inject constructor(
     private val resources: ResourceDelegate
 ) {
     fun mapEntityToViewModel(character: CharacterObject): List<IListItem> = listOf(
-        TitleListItem("общее"),
         GeneralInfoItem(character),
-        TitleListItem("общее1"),
-        TitleListItem("общее2"),
-        TitleListItem("общее3"),
-        TitleListItem("общее4")
+        TitleListItem("Заголовок"),
+        TitleListItem("Заголовок"),
+        TitleListItem("Заголовок"),
+        TitleListItem("Заголовок")
     )
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:gravity="center_horizontal"
+        android:width="@dimen/bottom_sheet_drag_line_width"
+        android:height="@dimen/bottom_sheet_drag_line_height">
+
+        <shape>
+            <solid
+                android:color="@color/dragLineColor" />
+            <corners
+                android:radius="@dimen/bottom_sheet_drag_line_corner_radius" />
+        </shape>
+    </item>
+
+</layer-list>
