@@ -9,16 +9,19 @@ import ru.kompod.moonlike.domain.usecase.characters.GetSelectedCharacterUseCase
 import ru.kompod.moonlike.domain.usecase.characters.SaveCharacterUseCase
 import ru.kompod.moonlike.utils.extensions.rxjava.combineSingle
 import ru.kompod.moonlike.utils.extensions.rxjava.toSingle
+import ru.kompod.moonlike.utils.factory.util.Action
+import ru.kompod.moonlike.utils.factory.util.EventBusDelegate
 import javax.inject.Inject
 
 class CalculateFightUseCase @Inject constructor(
     private val getCharactersUseCase: GetSelectedCharacterUseCase,
-    private val saveCharacterUseCase: SaveCharacterUseCase
+    private val saveCharacterUseCase: SaveCharacterUseCase,
+    private val eventBusDelegate: EventBusDelegate
 ) {
-    fun execute(monster: OnMapObject): Observable<Pair<CharacterObject, OnMapObject>> {
+    fun execute(mapId: Int, monster: OnMapObject): Observable<Pair<CharacterObject, OnMapObject>> {
         return getCharactersUseCase.getCharacterById()
             .flatMapSingle { character ->
-                val result = calculateFight(character, monster)
+                val result = calculateFight(mapId, character, monster)
 
                 combineSingle(
                     saveCharacterUseCase.execute(result.first),
@@ -29,10 +32,11 @@ class CalculateFightUseCase @Inject constructor(
     }
 
     private fun calculateFight(
+        mapId: Int,
         character: CharacterObject,
         monsterOnMap: OnMapObject
     ): Pair<CharacterObject, OnMapObject> {
-        hitMonster(character, monsterOnMap.monster).also { (character, monster) ->
+        hitMonster(mapId, character, monsterOnMap, monsterOnMap.monster).also { (character, monster) ->
             return character.copy(
                 level = character.level,
                 exp = character.exp,
@@ -45,7 +49,9 @@ class CalculateFightUseCase @Inject constructor(
     }
 
     private fun hitMonster(
+        mapId: Int,
         character: CharacterObject,
+        monsterOnMap: OnMapObject,
         monster: MonsterObject
     ): Pair<CharacterObject, MonsterObject> {
         if (character.hp <= 0) return character to monster
@@ -54,9 +60,11 @@ class CalculateFightUseCase @Inject constructor(
             val postHitMonster =
                 monster.copy(hp = monster.hp - ((character.atk() - monster.fDef).takeIf { it > 0 } ?: 1))
             val posHitCharacter =
-                character.copy()//(hp = character.hp - ((monster.fAtk - character.def()).takeIf { it > 0 } ?: 1))
-            return hitMonster(posHitCharacter, postHitMonster)
+                character.copy(hp = character.hp - ((monster.fAtk - character.def()).takeIf { it > 0 } ?: 1))
+            return hitMonster(mapId, posHitCharacter, monsterOnMap, postHitMonster)
         }
+
+        eventBusDelegate.action(Action.KillMonsterOnMapCommand(mapId, monsterOnMap))
 
         val tempExp = character.exp + monster.exp
         val tempLevel = calculateLevel(character.level, tempExp)

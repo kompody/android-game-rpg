@@ -13,7 +13,7 @@ import ru.kompod.moonlike.data.analytics.AnalyticsDelegate
 import ru.kompod.moonlike.domain.AppScreen
 import ru.kompod.moonlike.domain.entity.base.CharacterObject
 import ru.kompod.moonlike.domain.entity.base.MapObject
-import ru.kompod.moonlike.domain.factory.spawner.SpawnDelegate
+import ru.kompod.moonlike.utils.factory.spawner.SpawnDelegate
 import ru.kompod.moonlike.domain.usecase.characters.GetSelectedCharacterUseCase
 import ru.kompod.moonlike.domain.usecase.game.CalculateFightUseCase
 import ru.kompod.moonlike.domain.usecase.map.GetMapUseCase
@@ -119,12 +119,12 @@ class MapPresentationModel @Inject constructor(
         onMonsterClickObserver
             .observable
             .map { it.onMapObj }
-            .flatMap { calculateFightUseCase.execute(it) }
+            .flatMap { calculateFightUseCase.execute(cacheMap?.id ?: NO_ID, it) }
             .doOnNext { (character, monster) ->
 //                router.navigateTo(Screens.CharactersOnMap)
-                if (monster.monster.hp <= 0) {
-                    spawnDelegate.killMonster(cacheMap?.id ?: NO_ID, monster)
-                }
+//                if (monster.monster.hp <= 0) {
+//                    spawnDelegate.killMonster(cacheMap?.id ?: NO_ID, monster)
+//                }
             }
             .retry()
             .subscribeBy()

@@ -1,14 +1,10 @@
 // Copyright (c) 2021 Kompod. All rights reserved
 // Description: todo
 
-package ru.kompod.moonlike.domain.factory.spawner
+package ru.kompod.moonlike.utils.factory.util
 
-import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
-import ru.kompod.moonlike.utils.extensions.rxjava.io
-import ru.kompod.moonlike.utils.extensions.rxjava.ui
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class TimerDelegate {
@@ -18,8 +14,8 @@ class TimerDelegate {
     fun start() {
         disposable?.dispose()
         disposable = Flowable.interval(1, 1, TimeUnit.SECONDS)
-            .subscribe {
-                emitters.forEach { it.emmit() }
+            .subscribe { time ->
+                emitters.forEach { it.emmit(time) }
             }
     }
 
@@ -38,6 +34,6 @@ class TimerDelegate {
     }
 
     interface TickEmitter {
-        fun emmit()
+        fun emmit(time: Long)
     }
 }

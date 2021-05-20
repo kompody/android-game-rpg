@@ -1,7 +1,7 @@
 // Copyright (c) 2021 Kompod. All rights reserved
 // Description: todo
 
-package ru.kompod.moonlike.domain.factory
+package ru.kompod.moonlike.utils.factory
 
 import ru.kompod.moonlike.utils.ResourceDelegate
 import javax.inject.Inject

@@ -9,8 +9,8 @@ import me.dmdev.rxpm.command
 import ru.kompod.moonlike.R
 import ru.kompod.moonlike.Screens
 import ru.kompod.moonlike.data.analytics.AnalyticsDelegate
-import ru.kompod.moonlike.domain.factory.spawner.SpawnDelegate
-import ru.kompod.moonlike.domain.factory.spawner.TimerDelegate
+import ru.kompod.moonlike.utils.factory.spawner.SpawnDelegate
+import ru.kompod.moonlike.utils.factory.util.TimerDelegate
 import ru.kompod.moonlike.presentation.BottomTabReselectionEventBus
 import ru.kompod.moonlike.presentation.base.BasePresentationModel
 import ru.kompod.moonlike.presentation.feature.BottomTabSelectionsEventBus
@@ -18,6 +18,7 @@ import ru.kompod.moonlike.utils.ResourceDelegate
 import ru.kompod.moonlike.utils.eventbus.AppEventBus
 import ru.kompod.moonlike.utils.eventbus.Event
 import ru.kompod.moonlike.utils.extensions.kotlin.unsafeCastTo
+import ru.kompod.moonlike.utils.factory.spawner.HealerDelegate
 import ru.kompod.moonlike.utils.navigation.CustomRouter
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 import timber.log.Timber
@@ -32,7 +33,8 @@ class MainPresentationModel @Inject constructor(
     private val bottomTabReselectionEventBus: BottomTabReselectionEventBus,
     private val appEventBus: AppEventBus,
     private val timerDelegate: TimerDelegate,
-    private val spawnDelegate: SpawnDelegate
+    private val spawnDelegate: SpawnDelegate,
+    private val healerDelegate: HealerDelegate
 ) : BasePresentationModel(router, resources, analytics) {
 
     private val SWITCH_TAB_DELAY = 300L
@@ -47,12 +49,13 @@ class MainPresentationModel @Inject constructor(
     override fun onCreate() {
         super.onCreate()
         timerDelegate.subscribe(object : TimerDelegate.TickEmitter {
-            override fun emmit() {
-                Timber.d("tick")
+            override fun emmit(time: Long) {
+                Timber.d("tick $time")
             }
         })
         timerDelegate.start()
         spawnDelegate.start()
+        healerDelegate.start()
 
         bottomTabSelectionsEventBus
             .observable
@@ -82,6 +85,7 @@ class MainPresentationModel @Inject constructor(
 
         timerDelegate.stop()
         spawnDelegate.stop()
+        healerDelegate.stop()
     }
 
     private fun dispatchTabSelectionsEvent(event: Event.SelectBottomTab) {

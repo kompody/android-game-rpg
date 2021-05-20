@@ -1,7 +1,7 @@
 // Copyright (c) 2021 Kompod. All rights reserved
 // Description: todo
 
-package ru.kompod.moonlike.domain.factory.spawner
+package ru.kompod.moonlike.utils.factory.spawner
 
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -11,16 +11,20 @@ import ru.kompod.moonlike.domain.entity.base.MapObject
 import ru.kompod.moonlike.domain.entity.base.MonsterObject
 import ru.kompod.moonlike.domain.entity.base.OnMapObject
 import ru.kompod.moonlike.domain.repository.IAssetRepository
+import ru.kompod.moonlike.utils.factory.util.Action
+import ru.kompod.moonlike.utils.factory.util.Command
+import ru.kompod.moonlike.utils.factory.util.EventBusDelegate
+import ru.kompod.moonlike.utils.factory.util.TimerDelegate
 import timber.log.Timber
 import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.min
 import kotlin.math.roundToInt
 
 class SpawnDelegate @Inject constructor(
     private val timerDelegate: TimerDelegate,
-    private val assetRepository: IAssetRepository
+    private val assetRepository: IAssetRepository,
+    private val eventBusDelegate: EventBusDelegate
 ) : TimerDelegate.TickEmitter {
 
     class Spawner(
@@ -28,11 +32,6 @@ class SpawnDelegate @Inject constructor(
         val monsters: MutableList<OnMapObject>,
         val monstersPool: MutableList<OnMapObject>
     )
-
-    sealed class Command {
-        class RefreshCommand(val mapId: Int) : Command()
-        class KillMonsterCommand(val mapId: Int, val monster: OnMapObject) : Command()
-    }
 
     private var filter: (MapObject) -> Boolean = { false }
 
@@ -68,20 +67,18 @@ class SpawnDelegate @Inject constructor(
                 )
             }
 
-        commandPublisher
-            .delay(100, TimeUnit.MICROSECONDS)
+        eventBusDelegate.observeCommand()
             .doOnNext {
                 when (it) {
-                    is Command.RefreshCommand -> handleRefreshCommand(it)
-                    is Command.KillMonsterCommand -> handleKillMonsterCommand(it)
+                    is Command.RefreshMapCommand -> handleRefreshCommand(it)
+                    is Command.KillMonsterOnMapCommand -> handleKillMonsterCommand(it)
                 }
             }
-            .retry()
             .subscribe()
             .also { disposable.add(it) }
     }
 
-    private fun handleRefreshCommand(command: Command.RefreshCommand) {
+    private fun handleRefreshCommand(command: Command.RefreshMapCommand) {
         with(command) {
             val spawner = spawners.first { it.mapObject.id == mapId }
             with(spawner) {
@@ -117,7 +114,7 @@ class SpawnDelegate @Inject constructor(
         }
     }
 
-    private fun handleKillMonsterCommand(command: Command.KillMonsterCommand) {
+    private fun handleKillMonsterCommand(command: Command.KillMonsterOnMapCommand) {
         with(command) {
             spawners.firstOrNull { it.mapObject.id == mapId }?.apply {
                 val index = monsters.indexOf(monsters.first { it.idOnPool == monster.idOnPool })
@@ -183,15 +180,15 @@ class SpawnDelegate @Inject constructor(
     }
 
     fun killMonster(mapId: Int, monster: OnMapObject) {
-        commandPublisher.onNext(Command.KillMonsterCommand(mapId, monster))
+        commandPublisher.onNext(Command.KillMonsterOnMapCommand(mapId, monster))
     }
 
-    override fun emmit() {
+    override fun emmit(time: Long) {
         spawners.forEach { spawner ->
             with(spawner) {
                 if (monsters.size >= mapObject.monsterLimit) return@with
 
-                commandPublisher.onNext(Command.RefreshCommand(mapObject.id))
+                eventBusDelegate.action(Action.RefreshMapCommand(mapObject.id))
             }
         }
     }

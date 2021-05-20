@@ -9,7 +9,7 @@ import ru.kompod.moonlike.data.network.mapper.CharacterMapper
 import ru.kompod.moonlike.data.network.mapper.MonsterMapper
 import ru.kompod.moonlike.data.network.model.*
 import ru.kompod.moonlike.domain.entity.base.*
-import ru.kompod.moonlike.domain.factory.Assets
+import ru.kompod.moonlike.utils.factory.Assets
 import ru.kompod.moonlike.domain.repository.IAssetRepository
 import ru.kompod.moonlike.utils.extensions.gson.fromJson
 import ru.kompod.moonlike.utils.tools.AssetProvider
