@@ -3,7 +3,7 @@
 
 package ru.kompod.moonlike.presentation.feature.map.model
 
-import ru.kompod.moonlike.domain.entity.base.MonsterObject
+import ru.kompod.moonlike.domain.entity.base.OnMapObject
 import ru.kompod.moonlike.domain.entity.base.TravelObject
 import ru.kompod.moonlike.presentation.base.recyclerview.model.IListItem
 
@@ -14,6 +14,7 @@ enum class TitleType {
     MONSTERS
 }
 
-class TitleListItem(val type: TitleType, val title: String, val items: List<IListItem>): IListItem
-class TravelItem(val travel: TravelObject): IListItem
-class MonsterItem(val monster: MonsterObject): IListItem
+data class StateItem(val label: String, val value: String): IListItem
+data class TitleListItem(val type: TitleType, val title: String, val items: List<IListItem>): IListItem
+data class TravelItem(val travel: TravelObject): IListItem
+data class MonsterItem(val onMapObj: OnMapObject): IListItem

@@ -9,12 +9,13 @@ import io.reactivex.rxkotlin.subscribeBy
 import me.dmdev.rxpm.action
 import me.dmdev.rxpm.command
 import me.dmdev.rxpm.state
-import ru.kompod.moonlike.Screens
 import ru.kompod.moonlike.data.analytics.AnalyticsDelegate
 import ru.kompod.moonlike.domain.AppScreen
+import ru.kompod.moonlike.domain.entity.base.CharacterObject
 import ru.kompod.moonlike.domain.entity.base.MapObject
-import ru.kompod.moonlike.domain.entity.base.MonsterObject
 import ru.kompod.moonlike.domain.factory.spawner.SpawnDelegate
+import ru.kompod.moonlike.domain.usecase.characters.GetSelectedCharacterUseCase
+import ru.kompod.moonlike.domain.usecase.game.CalculateFightUseCase
 import ru.kompod.moonlike.domain.usecase.map.GetMapUseCase
 import ru.kompod.moonlike.presentation.base.BasePresentationModel
 import ru.kompod.moonlike.presentation.base.recyclerview.model.IListItem
@@ -30,11 +31,14 @@ import ru.kompod.moonlike.utils.extensions.rxpm.accept
 import ru.kompod.moonlike.utils.navigation.BottomTabRouter
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Provider
 
 class MapPresentationModel @Inject constructor(
     override val router: BottomTabRouter,
     resources: ResourceDelegate,
     analytics: AnalyticsDelegate,
+    private val getSelectedCharacterUseCase: GetSelectedCharacterUseCase,
+    private val calculateFightUseCase: CalculateFightUseCase,
     private val mapper: MapViewModelMapper,
     private val getMapUseCase: GetMapUseCase,
     private val spawnDelegate: SpawnDelegate
@@ -50,6 +54,7 @@ class MapPresentationModel @Inject constructor(
     val onPauseTimerAction = action<Unit>()
     val onStartTimerAction = action<Int>()
 
+    val characterState = state<CharacterObject>()
     val mapLabelState = state<String>()
     val mapDelayState = state<Int>()
     val progressState = state(0)
@@ -58,7 +63,7 @@ class MapPresentationModel @Inject constructor(
     val canTravelState = state(false)
     val isBottomSheetHideable = state(true)
 
-    val loadMapByIdCommand = command<Short>()
+    val loadMapByIdCommand = command<Int>()
 
     var cacheMap: MapObject? = null
     lateinit var timer: CountDownTimer
@@ -76,6 +81,24 @@ class MapPresentationModel @Inject constructor(
         cacheMap?.let { map ->
             onStartTimerAction.accept(map.delay - progressState.value)
         }
+
+        getSelectedCharacterUseCase.observeHasSelected()
+            .flatMap { hasSelected ->
+                if (hasSelected) {
+                    getSelectedCharacterUseCase.observeCharacterById()
+                        .map { Provider<CharacterObject?> { it } }
+                } else {
+                    Provider<CharacterObject?> { null }
+                        .toObservable()
+                }
+            }
+            .doOnNext {
+                if (it.get() != null)
+                    characterState.accept(it.get()!!)
+            }
+            .retry()
+            .subscribeBy()
+            .untilPause()
     }
 
     override fun onPause() {
@@ -95,11 +118,15 @@ class MapPresentationModel @Inject constructor(
 
         onMonsterClickObserver
             .observable
-            .map { it.monster }
-            .doOnNext {
+            .map { it.onMapObj }
+            .flatMap { calculateFightUseCase.execute(it) }
+            .doOnNext { (character, monster) ->
 //                router.navigateTo(Screens.CharactersOnMap)
-                spawnDelegate.killMonster(cacheMap?.id ?: NO_ID, it)
+                if (monster.monster.hp <= 0) {
+                    spawnDelegate.killMonster(cacheMap?.id ?: NO_ID, monster)
+                }
             }
+            .retry()
             .subscribeBy()
             .untilDestroy()
 
@@ -122,10 +149,8 @@ class MapPresentationModel @Inject constructor(
         bottomSheetActions
             .observable
             .doOnNext { state ->
-//                mapLegendVisibility.accept(state != BottomSheetBehavior.STATE_HIDDEN)
                 when (state) {
                     BottomSheetBehavior.STATE_HIDDEN -> {
-//                        deselectComplex()
                     }
                     BottomSheetBehavior.STATE_EXPANDED -> {
                         isBottomSheetHideable.accept(true)

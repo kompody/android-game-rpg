@@ -38,21 +38,21 @@ class AssetRepository @Inject constructor(
         gson.fromJson<List<FractionApiModel>>(assetProvider.loadJSONFromAsset(Assets.FRACTION))
             .map { characterMapper.mapApiModelToEntity(it) }
 
-    override fun getCharacterFractionById(id: Short): FractionObject =
+    override fun getCharacterFractionById(id: Int): FractionObject =
         getCharacterFraction().first { it.id == id }
 
     override fun getCharacterGenders(): List<GenderObject> =
         gson.fromJson<List<GenderApiModel>>(assetProvider.loadJSONFromAsset(Assets.GENDER))
             .map { characterMapper.mapGender(it) }
 
-    override fun getCharacterGenderById(id: Short): GenderObject =
+    override fun getCharacterGenderById(id: Int): GenderObject =
         getCharacterGenders().first { it.id == id }
 
     override fun getCharacterRoles(): List<RoleInfoObject> =
         gson.fromJson<List<RoleApiModel>>(assetProvider.loadJSONFromAsset(Assets.ROLE))
             .map { characterMapper.mapRole(it) }
 
-    override fun getCharacterRoleById(id: Short): RoleInfoObject =
+    override fun getCharacterRoleById(id: Int): RoleInfoObject =
         getCharacterRoles().first { it.id == id }
 
     override fun getMaps(): List<MapObject> =
@@ -64,20 +64,14 @@ class AssetRepository @Inject constructor(
             }
             .map { (model, monsters) -> mapMapper.mapMapApiModelToEntity(model, monsters) }
 
-    override fun getMapById(id: Short): MapObject =
+    override fun getMapById(id: Int): MapObject =
         getMaps().first { it.id == id }
 
     override fun getMonsters(): List<MonsterObject> =
         gson.fromJson<List<MonsterApiModel>>(assetProvider.loadJSONFromAsset(Assets.MONSTER))
             .map { monsterMapper.mapApiModelToEntity(it) }
 
-    override fun getMonsterById(id: Short): MonsterObject =
+    override fun getMonsterById(id: Int): MonsterObject =
         getMonsters()
             .first { it.id == id }
-
-    //    override fun getMonstersByBiomeId(id: Short): List<MonsterObject> =
-//        gson.fromJson<List<BiomeApiModel>>(assetProvider.loadJSONFromAsset(Assets.BIOME))
-//            .map {  }
-
-//    override fun getBossesByBiomeId(id: Short): List<MonsterObject> = assets.fieldMonsters
 }

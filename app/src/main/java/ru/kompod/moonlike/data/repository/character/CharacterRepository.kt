@@ -24,7 +24,12 @@ class CharacterRepository @Inject constructor(
             .andThen(Unit.toSingle())
             .subscribeOn(io())
 
-    override fun removeCharacterById(id: Short): Single<Unit> =
+    override fun saveCharacter(model: CharacterObject): Single<Unit> =
+        characterDao.updateCharacter(characterMapper.mapEntityToDbModel(model))
+            .andThen(Unit.toSingle())
+            .subscribeOn(io())
+
+    override fun removeCharacterById(id: Int): Single<Unit> =
         characterDao.deleteCharacterById(id)
             .andThen(Unit.toSingle())
             .subscribeOn(io())
@@ -39,8 +44,13 @@ class CharacterRepository @Inject constructor(
             .map { list -> list.map(characterMapper::mapDbModelToEntity) }
             .subscribeOn(io())
 
-    override fun loadCharacterById(id: Short): Maybe<CharacterObject> =
+    override fun loadCharacterById(id: Int): Maybe<CharacterObject> =
         characterDao.getCharacterById(id)
+            .map(characterMapper::mapDbModelToEntity)
+            .subscribeOn(io())
+
+    override fun observeCharacterById(id: Int): Observable<CharacterObject> =
+        characterDao.observeCharacterById(id)
             .map(characterMapper::mapDbModelToEntity)
             .subscribeOn(io())
 }

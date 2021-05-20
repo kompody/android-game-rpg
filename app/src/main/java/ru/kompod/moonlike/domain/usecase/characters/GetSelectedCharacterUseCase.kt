@@ -15,12 +15,15 @@ class GetSelectedCharacterUseCase @Inject constructor(
     private val characterRepository: ICharacterRepository,
     private val preferencesRepository: IPreferencesRepository
 ) {
-    fun observeId(): Observable<Short> = preferencesRepository.getSelectedCharacter()
+    fun observeId(): Observable<Int> = preferencesRepository.getSelectedCharacter()
         .retry()
 
-    fun observeHasSelected(): Observable<Boolean> = preferencesRepository.getSelectedCharacter()
+    fun observeHasSelected(): Observable<Boolean> = observeId()
         .map { id -> id != NO_ID }
 
-    fun observe(): Observable<CharacterObject> = preferencesRepository.getSelectedCharacter()
+    fun getCharacterById(): Observable<CharacterObject> = observeId()
         .flatMapMaybe { characterRepository.loadCharacterById(it) }
+
+    fun observeCharacterById(): Observable<CharacterObject> = observeId()
+            .flatMap { characterRepository.observeCharacterById(it) }
 }

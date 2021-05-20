@@ -11,8 +11,10 @@ import ru.kompod.moonlike.domain.entity.base.NewCharacterObject
 
 interface ICharacterRepository {
     fun saveCharacter(model: NewCharacterObject): Single<Unit>
-    fun removeCharacterById(id: Short): Single<Unit>
+    fun saveCharacter(model: CharacterObject): Single<Unit>
+    fun removeCharacterById(id: Int): Single<Unit>
     fun loadCharacters(): Single<List<CharacterObject>>
     fun observeCharacters(): Observable<List<CharacterObject>>
-    fun loadCharacterById(id: Short): Maybe<CharacterObject>
+    fun loadCharacterById(id: Int): Maybe<CharacterObject>
+    fun observeCharacterById(id: Int): Observable<CharacterObject>
 }

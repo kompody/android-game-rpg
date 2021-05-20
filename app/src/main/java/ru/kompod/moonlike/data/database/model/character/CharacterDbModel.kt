@@ -13,27 +13,29 @@ import ru.kompod.moonlike.data.database.Tables
 )
 data class CharacterDbModel(
     @PrimaryKey(autoGenerate = true)
-    val id: Short,
+    val id: Int,
     val label: String,
     val description: String,
     @ColumnInfo(name = "fraction_id")
-    val fractionId: Short,
+    val fractionId: Int,
     @ColumnInfo(name = "gender_id")
-    val genderId: Short,
+    val genderId: Int,
     @ColumnInfo(name = "portrait")
     val portrait: String,
     @ColumnInfo(name = "role_id")
-    val roleId: Short,
-    val level: Short,
+    val roleId: Int,
+    val level: Int,
     val exp: Long,
-    val hp: Short,
-    val sp: Short,
+    @ColumnInfo(name = "base_hp")
+    val baseHp: Int,
+    val hp: Int,
+    val sp: Int,
     @ColumnInfo(name = "base_f_atk")
-    val baseFAtk: Short,
+    val baseFAtk: Int,
     @ColumnInfo(name = "base_f_def")
-    val baseFDef: Short,
+    val baseFDef: Int,
     @ColumnInfo(name = "base_m_atk")
-    val baseMAtk: Short,
+    val baseMAtk: Int,
     @ColumnInfo(name = "base_m_def")
-    val baseMDef: Short
+    val baseMDef: Int
 )

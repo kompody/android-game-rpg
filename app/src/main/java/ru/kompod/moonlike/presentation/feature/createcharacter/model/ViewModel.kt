@@ -21,4 +21,4 @@ data class CharacterItem(var items: List<CharacterInfoObject>, var selectedIndex
 data class PortraitItem(var items: List<String>, var selectedIndex: Int): IListItem
 data class RoleItem(var items: List<RoleInfoObject>, var selectedIndex: Int): IListItem
 data class AboutItem(var role: RoleInfoObject): IListItem
-data class StateItem(val label: String, val value: Short): IListItem
+data class StateItem(val label: String, val value: Int): IListItem

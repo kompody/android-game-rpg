@@ -12,3 +12,5 @@ fun Int.shortenMillionsFloat() = this / 1e6
 fun Int.toMillions() = (this * 1e6).toInt()
 
 fun Int.toBoolean(): Boolean = this != 0
+
+fun Int.rem(): Int = this.rem(1)

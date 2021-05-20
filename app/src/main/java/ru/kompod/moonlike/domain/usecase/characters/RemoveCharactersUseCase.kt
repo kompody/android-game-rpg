@@ -14,6 +14,6 @@ class RemoveCharactersUseCase @Inject constructor(
     private val characterRepository: ICharacterRepository,
     private val preferencesRepository: IPreferencesRepository
 ) {
-    fun execute(id: Short): Single<Unit> = characterRepository.removeCharacterById(id)
+    fun execute(id: Int): Single<Unit> = characterRepository.removeCharacterById(id)
         .flatMap { preferencesRepository.putSelectedCharacter(NO_ID) }
 }

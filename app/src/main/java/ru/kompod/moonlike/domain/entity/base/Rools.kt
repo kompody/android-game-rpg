@@ -5,7 +5,7 @@ package ru.kompod.moonlike.domain.entity.base
 
 //character
 data class NewCharacterObject(
-    val id: Short,
+    val id: Int,
     val label: String,
     val description: String,
     val fraction: FractionObject,
@@ -15,25 +15,26 @@ data class NewCharacterObject(
 )
 
 data class CharacterObject(
-    val id: Short,
+    val id: Int,
     val label: String,
     val description: String,
     val fraction: FractionObject,
     val gender: GenderObject,
     val portrait: String,
     val role: RoleObject,
-    val level: Short,
+    val level: Int,
     val exp: Long,
-    val hp: Short,
-    val sp: Short,
-    val baseFAtk: Short,
-    val baseFDef: Short,
-    val baseMAtk: Short,
-    val baseMDef: Short
+    val baseHp: Int,
+    val hp: Int,
+    val sp: Int,
+    val baseFAtk: Int,
+    val baseFDef: Int,
+    val baseMAtk: Int,
+    val baseMDef: Int
 )
 
 data class FractionObject(
-    val id: Short,
+    val id: Int,
     val label: String,
     val description: String
 )
@@ -44,7 +45,7 @@ data class FractionInfoObject(
 )
 
 data class CharacterInfoObject(
-    val id: Short,
+    val id: Int,
     val label: String,
     val description: String,
     val gender: GenderObject,
@@ -53,64 +54,64 @@ data class CharacterInfoObject(
 )
 
 data class RaceObject(
-    val id: Short,
+    val id: Int,
     val label: String,
     val description: String
 )
 
 data class GenderObject(
-    val id: Short,
+    val id: Int,
     val label: String
 )
 
 data class RoleInfoObject(
-    val id: Short,
+    val id: Int,
     val label: String,
     val description: String,
     val states: States
 )
 
 data class RoleObject(
-    val id: Short,
+    val id: Int,
     val label: String,
     val description: String
 )
 
 data class States(
-    val hp: Short,
-    val sp: Short,
-    val fAtk: Short,
-    val fDef: Short,
-    val mAtk: Short,
-    val mDef: Short
+    val hp: Int,
+    val sp: Int,
+    val fAtk: Int,
+    val fDef: Int,
+    val mAtk: Int,
+    val mDef: Int
 )
 
 //loot item
 
 //map
 data class MapObject(
-    val id: Short,
+    val id: Int,
     val label: String,
     val path: String,
-    val biome: Short,
+    val biome: Int,
     val monsterLimit: Int = 5,
     val bossesLimit: Int = 1,
     val delay: Int = 15 * 1000,
     val travels: List<TravelObject> = listOf(),
     val monsters: List<MonsterObject> = listOf(),
-    val objects: List<Short> = listOf(),
-    val actors: List<Short> = listOf()
+    val objects: List<Int> = listOf(),
+    val actors: List<Int> = listOf()
 )
 
 data class TravelObject(
-    val id: Short,
+    val id: Int,
     val label: String,
-    val to: Short
+    val to: Int
 )
 
 //npc
 data class NPCObject(
-    val id: Short,
+    val id: Int,
     val label: String,
     val gender: GenderObject,
     val portrait: String,
@@ -118,7 +119,7 @@ data class NPCObject(
 )
 
 data class PeacefulObject(
-    val id: Short,
+    val id: Int,
     val label: String,
     val gender: GenderObject,
     val portrait: String,
@@ -126,14 +127,26 @@ data class PeacefulObject(
 )
 
 data class MonsterObject(
-    val id: Short,
+    val id: Int,
     val label: String,
     val gender: GenderObject,
     val portrait: String,
-    val role: RoleInfoObject,
-    val idOnPool: Short = id,
+    val level: Int,
+    val exp: Int,
+    val baseHp: Int,
+    val hp: Int,
+    val sp: Int,
+    val fAtk: Int,
+    val fDef: Int,
+    val mAtk: Int,
+    val mDef: Int,
     val spawnRate: Float = 1f,
-    val delay: Int = 20 * 1000,
+    val delay: Int = 20 * 1000
+)
+
+data class OnMapObject(
+    val monster: MonsterObject,
+    val idOnPool: Int = monster.id,
     var isLife: Boolean = false,
     var timeDeath: Long = 0
 )

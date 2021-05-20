@@ -9,18 +9,18 @@ interface IAssetRepository {
     fun getCharacterFractionsInfo(): List<FractionInfoObject>
 
     fun getCharacterFraction(): List<FractionObject>
-    fun getCharacterFractionById(id: Short): FractionObject
+    fun getCharacterFractionById(id: Int): FractionObject
 
     fun getCharacterGenders(): List<GenderObject>
-    fun getCharacterGenderById(id: Short): GenderObject
+    fun getCharacterGenderById(id: Int): GenderObject
 
     fun getCharacterRoles(): List<RoleInfoObject>
-    fun getCharacterRoleById(id: Short): RoleInfoObject
+    fun getCharacterRoleById(id: Int): RoleInfoObject
 
     fun getMaps(): List<MapObject>
-    fun getMapById(id: Short): MapObject
+    fun getMapById(id: Int): MapObject
 
     fun getMonsters(): List<MonsterObject>
-    fun getMonsterById(id: Short): MonsterObject
-//    fun getBossesByBiomeId(id: Short): List<MonsterObject>
+    fun getMonsterById(id: Int): MonsterObject
+//    fun getBossesByBiomeId(id: Int): List<MonsterObject>
 }

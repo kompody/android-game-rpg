@@ -38,15 +38,15 @@ class PreferencesRepository @Inject constructor(
             }
         }
 
-    override fun putSelectedCharacter(id: Short): Single<Unit> =
+    override fun putSelectedCharacter(id: Int): Single<Unit> =
         putParams(
             mapOf(
                 SELECTED_CHARACTER_ID to id
             )
         )
 
-    override fun getSelectedCharacter(): Observable<Short> =
-        observableSharedPreferences.observeShort(SELECTED_CHARACTER_ID)
+    override fun getSelectedCharacter(): Observable<Int> =
+        observableSharedPreferences.observeInt(SELECTED_CHARACTER_ID)
             .onErrorReturnItem(NO_ID)
             .subscribeOn(io())
 }

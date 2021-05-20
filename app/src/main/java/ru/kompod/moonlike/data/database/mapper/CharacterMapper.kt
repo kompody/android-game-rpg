@@ -26,6 +26,7 @@ class CharacterMapper @Inject constructor(
             role = assetRepository.getCharacterRoleById(model.roleId).toRoleObject(),
             level = model.level,
             exp = model.exp,
+            baseHp = model.hp,
             hp = model.hp,
             sp = model.sp,
             baseFAtk = model.baseFAtk,
@@ -45,11 +46,32 @@ class CharacterMapper @Inject constructor(
             roleId = model.role.id,
             level = 1,
             exp = 0,
+            baseHp = model.role.states.hp,
             hp = model.role.states.hp,
             sp = model.role.states.sp,
             baseFAtk = model.role.states.fAtk,
             baseFDef = model.role.states.fDef,
             baseMAtk = model.role.states.mAtk,
             baseMDef = model.role.states.mDef
+        )
+
+    fun mapEntityToDbModel(model: CharacterObject): CharacterDbModel =
+        CharacterDbModel(
+            id = model.id,
+            label = model.label,
+            description = model.description,
+            fractionId = model.fraction.id,
+            genderId = model.gender.id,
+            portrait = model.portrait,
+            roleId = model.role.id,
+            level = model.level,
+            exp = model.exp,
+            baseHp = model.hp,
+            hp = model.hp,
+            sp = model.sp,
+            baseFAtk = model.baseFAtk,
+            baseFDef = model.baseFDef,
+            baseMAtk = model.baseMAtk,
+            baseMDef = model.baseMDef
         )
 }

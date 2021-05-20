@@ -10,5 +10,5 @@ import javax.inject.Inject
 class SelectCharacterUseCase @Inject constructor(
     private val preferencesRepository: IPreferencesRepository
 ) {
-    fun execute(id: Short): Single<Unit> = preferencesRepository.putSelectedCharacter(id)
+    fun execute(id: Int): Single<Unit> = preferencesRepository.putSelectedCharacter(id)
 }

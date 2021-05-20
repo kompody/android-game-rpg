@@ -8,7 +8,7 @@ import ru.kompod.moonlike.utils.NO_ID
 import ru.kompod.moonlike.utils.extensions.kotlin.empty
 
 data class MapApiModel(
-    val id: Short = NO_ID,
+    val id: Int = NO_ID,
     val label: String = String.empty,
     val path: String = String.empty,
     val biome: String = String.empty,
@@ -16,13 +16,13 @@ data class MapApiModel(
     @SerializedName("bosses_limit") val bossesLimit: Int = 0,
     val delay: Int = 0,
     val travels: List<TravelApiModel> = listOf(),
-    val monsters: List<Short> = listOf(),
-    val objects: List<Short> = listOf(),
-    val actors: List<Short> = listOf()
+    val monsters: List<Int> = listOf(),
+    val objects: List<Int> = listOf(),
+    val actors: List<Int> = listOf()
 )
 
 data class TravelApiModel(
-    val id: Short = NO_ID,
+    val id: Int = NO_ID,
     val label: String = String.empty,
-    val to: Short = NO_ID
+    val to: Int = NO_ID
 )

@@ -16,6 +16,6 @@ class GetMapUseCase @Inject constructor(
     fun execute(): Single<MapObject> = assetRepository.getMapById(6).toSingle()
         .subscribeOn(io())
 
-    fun execute(id: Short): Single<MapObject> = assetRepository.getMapById(id).toSingle()
+    fun execute(id: Int): Single<MapObject> = assetRepository.getMapById(id).toSingle()
         .subscribeOn(io())
 }

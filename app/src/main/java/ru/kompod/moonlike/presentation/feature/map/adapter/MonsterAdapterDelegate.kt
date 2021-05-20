@@ -7,7 +7,6 @@ import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateLayoutContainer
 import com.jakewharton.rxbinding3.view.clicks
 import kotlinx.android.synthetic.main.item_map_object_monster.*
-import kotlinx.android.synthetic.main.item_map_object_travel.*
 import kotlinx.android.synthetic.main.item_map_object_travel.travelLabelTextView
 import me.dmdev.rxpm.Action
 import ru.kompod.moonlike.R
@@ -32,7 +31,7 @@ class MonsterAdapterDelegate(
                 .subscribe(listener.onMonsterClickObserver.consumer)
 
             bind {
-                with(item.monster) {
+                with(item.onMapObj.monster) {
                     picassoUtil.load(portrait)
                         .into(PixelTargetAdapter(iconImageView))
                     travelLabelTextView.text = label

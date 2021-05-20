@@ -42,17 +42,6 @@ class ObservableSharedPreferences @Inject constructor(
         )
     }
 
-    fun observeShort(key: String): Observable<Short> {
-        return Observable.concat(
-            Observable.just(sharedPreferences.getInt(key, 0))
-                .map { it.toShort() },
-            observable
-                .filter { it == key }
-                .map { sharedPreferences.getInt(key, 0) }
-                .map { it.toShort() }
-        )
-    }
-
     fun observeBoolean(key: String, default: Boolean): Observable<Boolean> {
         return Observable.concat(
             Observable.just(sharedPreferences.getBoolean(key, default)),

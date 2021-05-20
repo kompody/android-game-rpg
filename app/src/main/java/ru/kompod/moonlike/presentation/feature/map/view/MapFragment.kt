@@ -3,32 +3,32 @@
 
 package ru.kompod.moonlike.presentation.feature.map.view
 
-import androidx.core.view.marginBottom
-import androidx.core.view.marginEnd
-import androidx.core.view.marginStart
-import androidx.core.view.marginTop
 import androidx.recyclerview.widget.DiffUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.app_activity.*
 import kotlinx.android.synthetic.main.fragment_characters_on_map.*
-import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_map.*
 import me.dmdev.rxpm.bindTo
 import ru.kompod.moonlike.R
 import ru.kompod.moonlike.presentation.base.BaseFragment
 import ru.kompod.moonlike.presentation.base.recyclerview.adapter.BaseAdapter
 import ru.kompod.moonlike.presentation.base.recyclerview.adapter.DefaultDiffCallback
+import ru.kompod.moonlike.presentation.base.recyclerview.adapter.ListItemAdapter
+import ru.kompod.moonlike.presentation.base.recyclerview.decorator.GridListDecorator
 import ru.kompod.moonlike.presentation.base.recyclerview.decorator.VerticalListMarginDecorator
 import ru.kompod.moonlike.presentation.base.recyclerview.model.IListItem
+import ru.kompod.moonlike.presentation.feature.map.adapter.StateAdapterDelegate
 import ru.kompod.moonlike.presentation.feature.map.adapter.TitleAdapterDelegate
 import ru.kompod.moonlike.presentation.feature.map.model.MonsterItem
+import ru.kompod.moonlike.presentation.feature.map.model.StateItem
 import ru.kompod.moonlike.presentation.feature.map.model.TitleListItem
 import ru.kompod.moonlike.presentation.feature.map.model.TravelItem
 import ru.kompod.moonlike.presentation.feature.map.pm.MapPresentationModel
 import ru.kompod.moonlike.utils.ResourceDelegate
 import ru.kompod.moonlike.utils.extensions.android.setCallback
 import ru.kompod.moonlike.utils.extensions.kotlin.dp
+import ru.kompod.moonlike.utils.extensions.rxjava.ui
 import ru.kompod.moonlike.utils.extensions.rxpm.accept
 import ru.kompod.moonlike.utils.extensions.toothpick.bind
 import ru.kompod.moonlike.utils.extensions.toothpick.getInstance
@@ -46,7 +46,10 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
     lateinit var destroyViewDisposable: CompositeDisposable
 
     @Inject
-    lateinit var objectAdapter: BaseAdapter
+    lateinit var characterStatesAdapter: BaseAdapter
+
+    @Inject
+    lateinit var objectAdapter: ListItemAdapter
 
     @Inject
     lateinit var assetProvider: AssetProvider
@@ -69,13 +72,21 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
                         return oldItem.travel.id == newItem.travel.id
                     }
                     if (oldItem is MonsterItem && newItem is MonsterItem) {
-                        return oldItem.monster.idOnPool == newItem.monster.idOnPool
+                        return oldItem.onMapObj == newItem.onMapObj
+                    }
+                    if (oldItem is StateItem && newItem is StateItem) {
+                        return oldItem.label == newItem.label && oldItem.value == newItem.value
                     }
                     return true
                 }
             })
             bind<BaseAdapter>().toInstance(
                 BaseAdapter(
+                    StateAdapterDelegate().get()
+                )
+            )
+            bind<Set<AdapterDelegate<List<IListItem>>>>().toInstance(
+                setOf(
                     TitleAdapterDelegate(
                         presentationModel,
                         presentationModel,
@@ -96,9 +107,40 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
 
     override fun bindStates(presentationModel: MapPresentationModel) {
         presentationModel
+            .characterState
+            .observable
+            .map {
+                it to listOf(
+                    StateItem("level", it.level.toString()),
+                    StateItem("exp", it.exp.toString()),
+                    StateItem("hp", it.hp.toString()),
+                    StateItem("sp", it.sp.toString()),
+                    StateItem("fAtk", it.baseFAtk.toString()),
+                    StateItem("fDef", it.baseFDef.toString()),
+                    StateItem("mAtk", it.baseMAtk.toString()),
+                    StateItem("mDef", it.baseMDef.toString())
+                )
+            }
+            .observeOn(ui())
+            .doOnNext { (character, states) ->
+                with(character) {
+                    picassoUtil.load(portrait)
+                        .into(PixelTargetAdapter(iconImageView))
+
+                    labelTextView.text = "${fraction.label} - ${role.label}"
+                }
+
+                characterStatesAdapter.items = states
+            }
+            .subscribe()
+            .let(destroyViewDisposable::add)
+
+        presentationModel
             .mapLabelState
             .observable
-            .doOnNext { titleTextView.text = it }
+            .doOnNext {
+//                titleTextView.text = it
+            }
             .subscribe()
             .let(destroyViewDisposable::add)
 
@@ -119,7 +161,7 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
                     picassoUtil.resize(
                         rc,
                         resourceDelegate.getDisplayMetrics().widthPixels,
-                        resourceDelegate.getDisplayMetrics().widthPixels
+                        (resourceDelegate.getDisplayMetrics().widthPixels / 16f * 12).toInt()
                     )
                 }
                     .into(PixelTargetAdapter(mapImageView, false))
@@ -163,15 +205,28 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
         if (isRemoving.not()) {
             bottomSheetBehavior.peekHeight =
                 root.measuredHeight -
-                        appbar.measuredHeight -
+                        characterInfoContainer.measuredHeight -
                         progressBar.measuredHeight -
                         mapImageView.measuredHeight -
-                        10.dp
+                        32.dp
         }
     }
 
     override fun setupView() {
         super.setupView()
+        with(statesRecyclerView) {
+            adapter = characterStatesAdapter
+            addItemDecoration(
+                GridListDecorator(
+                    applyFor = setOf(
+                        StateItem::class
+                    ),
+                    columnCount = 4,
+                    margin = 6.dp,
+                    boundaryMargin = 8.dp
+                )
+            )
+        }
         with(objectRecyclerView) {
             adapter = objectAdapter
 

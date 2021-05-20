@@ -7,6 +7,6 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 interface IPreferencesRepository {
-    fun putSelectedCharacter(id: Short): Single<Unit>
-    fun getSelectedCharacter(): Observable<Short>
+    fun putSelectedCharacter(id: Int): Single<Unit>
+    fun getSelectedCharacter(): Observable<Int>
 }

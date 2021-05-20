@@ -9,8 +9,8 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import ru.kompod.moonlike.domain.entity.base.MapObject
 import ru.kompod.moonlike.domain.entity.base.MonsterObject
+import ru.kompod.moonlike.domain.entity.base.OnMapObject
 import ru.kompod.moonlike.domain.repository.IAssetRepository
-import ru.kompod.moonlike.utils.NO_ID
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -25,13 +25,13 @@ class SpawnDelegate @Inject constructor(
 
     class Spawner(
         val mapObject: MapObject,
-        val monsters: MutableList<MonsterObject>,
-        val monstersPool: MutableList<MonsterObject>
+        val monsters: MutableList<OnMapObject>,
+        val monstersPool: MutableList<OnMapObject>
     )
 
     sealed class Command {
-        class RefreshCommand(val mapId: Short) : Command()
-        class KillMonsterCommand(val mapId: Short, val monster: MonsterObject) : Command()
+        class RefreshCommand(val mapId: Int) : Command()
+        class KillMonsterCommand(val mapId: Int, val monster: OnMapObject) : Command()
     }
 
     private var filter: (MapObject) -> Boolean = { false }
@@ -46,15 +46,15 @@ class SpawnDelegate @Inject constructor(
     init {
         spawners = assetRepository.getMaps()
             .map { map ->
-                val monsterPool: MutableList<MonsterObject> = generateMonsterPool(
+                val monsterPool: MutableList<OnMapObject> = generateMonsterPool(
                     map.monsterLimit * 2,
                     map.monsters
                 )
                 monsterPool.shuffle()
 
-                val monsters: MutableList<MonsterObject> =
+                val monsters: MutableList<OnMapObject> =
                     monsterPool.subList(0, min(map.monsters.size, map.monsterLimit))
-                        .sortedBy { it.id }
+                        .sortedBy { it.monster.id }
                         .map {
                             it.apply { isLife = true }
                         }
@@ -91,19 +91,22 @@ class SpawnDelegate @Inject constructor(
                     val endIndex = if (monstersPool.size < limit) monstersPool.size else limit
 
                     val pool = monstersPool.subList(0, endIndex).filter {
-                        it.timeDeath < Calendar.getInstance().timeInMillis - it.delay
+                        it.timeDeath < Calendar.getInstance().timeInMillis - it.monster.delay
                     }
                     if (pool.isNotEmpty()) {
                         monstersPool.removeAll(pool)
 
-                        pool.forEach {
-                            it.isLife = true
+                        pool.map {
+                            it.copy(
+                                monster = it.monster.copy(hp = it.monster.baseHp),
+                                isLife = true
+                            )
 
-                            Timber.d("${it.label} is alive")
+                            Timber.d("${it.monster.label} is alive")
                         }
 
                         monsters.addAll(pool)
-                        monsters.sortBy { it.id }
+                        monsters.sortBy { it.monster.id }
 
                         if (filter.invoke(mapObject)) {
                             publisher.onNext(this)
@@ -117,7 +120,7 @@ class SpawnDelegate @Inject constructor(
     private fun handleKillMonsterCommand(command: Command.KillMonsterCommand) {
         with(command) {
             spawners.firstOrNull { it.mapObject.id == mapId }?.apply {
-                val index = monsters.indexOf(monster)
+                val index = monsters.indexOf(monsters.first { it.idOnPool == monster.idOnPool })
 
                 if (index >= 0) {
                     val oldMonster = monsters.removeAt(index)
@@ -131,7 +134,7 @@ class SpawnDelegate @Inject constructor(
 
                     monstersPool.subList(0, endIndex).forEach {
                         val isNeedRefreshTimeDeath =
-                            it.timeDeath < Calendar.getInstance().timeInMillis - it.delay
+                            it.timeDeath < Calendar.getInstance().timeInMillis - it.monster.delay
                         if (isNeedRefreshTimeDeath) {
                             it.timeDeath = Calendar.getInstance().timeInMillis
                         }
@@ -148,14 +151,14 @@ class SpawnDelegate @Inject constructor(
     private fun generateMonsterPool(
         poolSize: Int,
         original: List<MonsterObject>
-    ): MutableList<MonsterObject> {
-        val monstersPool = mutableListOf<MonsterObject>()
+    ): MutableList<OnMapObject> {
+        val monstersPool = mutableListOf<OnMapObject>()
 
-        original.forEach { obj ->
+        original.map { OnMapObject(it) }.forEach { obj ->
             monstersPool.addAll(
                 arrayOf(
-                    *Array((poolSize * obj.spawnRate).roundToInt()) {
-                        obj.copy(idOnPool = it.toShort())
+                    *Array((poolSize * obj.monster.spawnRate).roundToInt()) {
+                        obj.copy(idOnPool = it)
                     })
             )
         }
@@ -179,7 +182,7 @@ class SpawnDelegate @Inject constructor(
         return publisher
     }
 
-    fun killMonster(mapId: Short, monster: MonsterObject) {
+    fun killMonster(mapId: Int, monster: OnMapObject) {
         commandPublisher.onNext(Command.KillMonsterCommand(mapId, monster))
     }
 

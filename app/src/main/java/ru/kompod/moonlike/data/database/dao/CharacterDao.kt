@@ -3,10 +3,7 @@
 
 package ru.kompod.moonlike.data.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Observable
@@ -19,8 +16,11 @@ interface CharacterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCharacter(vararg model: CharacterDbModel): Completable
 
+    @Update(entity = CharacterDbModel::class)
+    fun updateCharacter(complex: CharacterDbModel): Completable
+
     @Query("DELETE FROM ${Tables.CHARACTER_TABLE} WHERE id = :id")
-    fun deleteCharacterById(id: Short): Completable
+    fun deleteCharacterById(id: Int): Completable
 
     @Query("SELECT * FROM ${Tables.CHARACTER_TABLE}")
     fun getCharacters(): Single<List<CharacterDbModel>>
@@ -29,5 +29,8 @@ interface CharacterDao {
     fun observeCharacters(): Observable<List<CharacterDbModel>>
 
     @Query("SELECT * FROM ${Tables.CHARACTER_TABLE} WHERE id = :id")
-    fun getCharacterById(id: Short): Maybe<CharacterDbModel>
+    fun getCharacterById(id: Int): Maybe<CharacterDbModel>
+
+    @Query("SELECT * FROM ${Tables.CHARACTER_TABLE} WHERE id = :id")
+    fun observeCharacterById(id: Int): Observable<CharacterDbModel>
 }

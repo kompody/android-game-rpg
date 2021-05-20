@@ -6,12 +6,10 @@ package ru.kompod.moonlike.data.network.mapper
 import android.content.Context
 import ru.kompod.moonlike.data.network.model.MonsterApiModel
 import ru.kompod.moonlike.domain.entity.base.MonsterObject
-import ru.kompod.moonlike.domain.factory.Assets
 import javax.inject.Inject
 
 class MonsterMapper @Inject constructor(
     private val context: Context,
-    private val assets: Assets,
     private val characterMapper: CharacterMapper
 ) {
     fun mapApiModelToEntity(model: MonsterApiModel): MonsterObject = MonsterObject(
@@ -19,7 +17,15 @@ class MonsterMapper @Inject constructor(
         label = model.label,
         gender = characterMapper.mapGender(model.gender),
         portrait = model.portrait,
-        role = characterMapper.mapRole(model.role),
+        level = model.level,
+        exp = model.exp,
+        baseHp = model.hp,
+        hp = model.hp,
+        sp = model.sp,
+        fAtk = model.fAtk,
+        fDef = model.fDef,
+        mAtk = model.mAtk,
+        mDef = model.mDef,
         spawnRate = model.spawnRate,
         delay = model.delay
     )
