@@ -17,13 +17,12 @@ class EventBusDelegate {
 
     fun action(action: Action) {
         when (action) {
-            is Action.RecoveryHealCharacterCommand -> Command.RecoveryHealCharacterCommand
-            is Action.RecoverySpellPointCharacterCommand -> Command.RecoverySpellPointCharacterCommand
-            is Action.RefreshMapCommand -> Command.RefreshMapCommand(action.mapId)
-            is Action.KillMonsterOnMapCommand -> Command.KillMonsterOnMapCommand(
-                action.mapId,
-                action.monster
-            )
+            is Action.RecoveryHealCharacterCommand ->
+                Command.RecoveryHealCharacterCommand(action.hp, action.sp)
+            is Action.RefreshMapCommand ->
+                Command.RefreshMapCommand(action.mapId)
+            is Action.KillMonsterOnMapCommand ->
+                Command.KillMonsterOnMapCommand(action.mapId, action.monster)
             else -> null
         }?.also { commandPublisher.onNext(it) }
     }

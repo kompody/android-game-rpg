@@ -12,6 +12,7 @@ import ru.kompod.moonlike.utils.extensions.rxjava.toSingle
 import ru.kompod.moonlike.utils.factory.util.Action
 import ru.kompod.moonlike.utils.factory.util.EventBusDelegate
 import javax.inject.Inject
+import kotlin.math.max
 
 class CalculateFightUseCase @Inject constructor(
     private val getCharactersUseCase: GetSelectedCharacterUseCase,
@@ -60,7 +61,7 @@ class CalculateFightUseCase @Inject constructor(
             val postHitMonster =
                 monster.copy(hp = monster.hp - ((character.atk() - monster.fDef).takeIf { it > 0 } ?: 1))
             val posHitCharacter =
-                character.copy(hp = character.hp - ((monster.fAtk - character.def()).takeIf { it > 0 } ?: 1))
+                character.copy(hp = max(character.hp - ((monster.fAtk - character.def()).takeIf { it > 0 } ?: 1), 0))
             return hitMonster(mapId, posHitCharacter, monsterOnMap, postHitMonster)
         }
 

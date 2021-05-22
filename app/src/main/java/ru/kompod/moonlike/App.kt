@@ -13,7 +13,6 @@ import com.facebook.flipper.plugins.navigation.NavigationFlipperPlugin
 import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.facebook.flipper.plugins.sharedpreferences.SharedPreferencesFlipperPlugin
 import com.facebook.soloader.SoLoader
-import io.reactivex.plugins.RxJavaPlugins
 import ru.kompod.moonlike.di.DI
 import ru.kompod.moonlike.di.module.*
 import ru.kompod.moonlike.utils.extensions.toothpick.lazyInjection
@@ -39,9 +38,6 @@ class App : Application() {
             .let { scope ->
                 initFlipper(scope)
             }
-        RxJavaPlugins.setErrorHandler {
-            Timber.e(it)
-        }
     }
 
     private fun initTimber() {

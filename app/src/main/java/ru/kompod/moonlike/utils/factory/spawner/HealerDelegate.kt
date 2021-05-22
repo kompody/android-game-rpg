@@ -7,10 +7,14 @@ import io.reactivex.disposables.CompositeDisposable
 import ru.kompod.moonlike.domain.usecase.characters.GetCharactersUseCase
 import ru.kompod.moonlike.domain.usecase.characters.GetSelectedCharacterUseCase
 import ru.kompod.moonlike.domain.usecase.characters.SaveCharacterUseCase
+import ru.kompod.moonlike.utils.RECOVERY_HEAL_POINT_INTERVAL
+import ru.kompod.moonlike.utils.RECOVERY_SPELL_POINT_INTERVAL
+import ru.kompod.moonlike.utils.extensions.rxjava.io
 import ru.kompod.moonlike.utils.factory.util.Action
 import ru.kompod.moonlike.utils.factory.util.Command
 import ru.kompod.moonlike.utils.factory.util.EventBusDelegate
 import ru.kompod.moonlike.utils.factory.util.TimerDelegate
+import timber.log.Timber
 import javax.inject.Inject
 
 class HealerDelegate @Inject constructor(
@@ -24,10 +28,11 @@ class HealerDelegate @Inject constructor(
 
     init {
         eventBusDelegate.observeCommand()
-            .doOnNext {
-                when (it) {
-                    is Command.RecoveryHealCharacterCommand -> handleRecoveryHealCharacterCommand()
-                    is Command.RecoverySpellPointCharacterCommand -> handleRecoverySpellPointCharacterCommand()
+            .observeOn(io())
+            .doOnNext { command  ->
+                when (command) {
+                    is Command.RecoveryHealCharacterCommand ->
+                        handleRecoveryHealCharacterCommand(command.hp, command.sp)
                 }
             }
             .subscribe()
@@ -45,33 +50,29 @@ class HealerDelegate @Inject constructor(
     }
 
     override fun emmit(time: Long) {
-        when {
-            time % 4 == 0L -> eventBusDelegate.action(Action.RecoveryHealCharacterCommand)
-            time % 6 == 0L -> eventBusDelegate.action(Action.RecoveryHealCharacterCommand)
+        var healHp = 0
+        var healSp = 0
+        if (time % RECOVERY_HEAL_POINT_INTERVAL == 0L)
+            healHp = 1
+        if (time % RECOVERY_SPELL_POINT_INTERVAL == 0L)
+            healSp = 1
+
+        if (healHp == 1 || healSp == 1) {
+            eventBusDelegate.action(Action.RecoveryHealCharacterCommand(healHp, healSp))
         }
     }
 
-    private fun handleRecoveryHealCharacterCommand() {
+    private fun handleRecoveryHealCharacterCommand(healHp: Int, healSp: Int) {
         getSelectedCharacterUseCase.getCharacterById()
             .map {
                 it.copy(
-                    hp = (it.hp + 1).coerceAtMost(it.baseHp)
+                    hp = (it.hp + healHp).coerceAtMost(it.baseHp)
+//                    sp = (it.sp + healSp).coerceAtMost(it.baseSp)
                 )
             }
             .flatMapSingle { saveCharacterUseCase.execute(it) }
+            .doOnNext { Timber.d("Recovery hp:$healHp sp:$healSp") }
             .subscribe()
             .also { disposable.add(it) }
-    }
-
-    private fun handleRecoverySpellPointCharacterCommand() {
-//        getSelectedCharacterUseCase.getCharacterById()
-//            .map {
-//                it.copy(
-//                    sp = (it.sp + 1).coerceAtMost(it.baseHp)
-//                )
-//            }
-//            .flatMapSingle { saveCharacterUseCase.execute(it) }
-//            .subscribe()
-//            .also { disposable.add(it) }
     }
 }

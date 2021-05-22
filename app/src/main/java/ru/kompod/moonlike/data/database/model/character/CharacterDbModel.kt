@@ -28,6 +28,8 @@ data class CharacterDbModel(
     val exp: Long,
     @ColumnInfo(name = "base_hp")
     val baseHp: Int,
+    @ColumnInfo(name = "base_sp")
+    val baseSp: Int,
     val hp: Int,
     val sp: Int,
     @ColumnInfo(name = "base_f_atk")

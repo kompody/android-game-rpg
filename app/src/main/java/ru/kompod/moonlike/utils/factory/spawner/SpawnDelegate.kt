@@ -11,6 +11,7 @@ import ru.kompod.moonlike.domain.entity.base.MapObject
 import ru.kompod.moonlike.domain.entity.base.MonsterObject
 import ru.kompod.moonlike.domain.entity.base.OnMapObject
 import ru.kompod.moonlike.domain.repository.IAssetRepository
+import ru.kompod.moonlike.utils.extensions.rxjava.io
 import ru.kompod.moonlike.utils.factory.util.Action
 import ru.kompod.moonlike.utils.factory.util.Command
 import ru.kompod.moonlike.utils.factory.util.EventBusDelegate
@@ -68,6 +69,7 @@ class SpawnDelegate @Inject constructor(
             }
 
         eventBusDelegate.observeCommand()
+            .observeOn(io())
             .doOnNext {
                 when (it) {
                     is Command.RefreshMapCommand -> handleRefreshCommand(it)

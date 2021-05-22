@@ -25,6 +25,7 @@ data class CharacterObject(
     val level: Int,
     val exp: Long,
     val baseHp: Int,
+    val baseSp: Int,
     val hp: Int,
     val sp: Int,
     val baseFAtk: Int,
