@@ -5,8 +5,6 @@ package ru.kompod.moonlike.data.database.mapper
 
 import ru.kompod.moonlike.data.database.model.character.CharacterDbModel
 import ru.kompod.moonlike.domain.entity.base.CharacterObject
-import ru.kompod.moonlike.domain.entity.base.FractionObject
-import ru.kompod.moonlike.domain.entity.base.GenderObject
 import ru.kompod.moonlike.domain.entity.base.NewCharacterObject
 import ru.kompod.moonlike.domain.entity.mapper.toRoleObject
 import ru.kompod.moonlike.domain.repository.IAssetRepository
@@ -47,14 +45,14 @@ class CharacterMapper @Inject constructor(
             roleId = model.role.id,
             level = 1,
             exp = 0,
-            baseHp = model.role.states.hp,
-            baseSp = model.role.states.sp,
-            hp = model.role.states.hp,
-            sp = model.role.states.sp,
-            baseFAtk = model.role.states.fAtk,
-            baseFDef = model.role.states.fDef,
-            baseMAtk = model.role.states.mAtk,
-            baseMDef = model.role.states.mDef
+            baseHp = model.role.levelStates[0].states.hp,
+            baseSp = model.role.levelStates[0].states.sp,
+            hp = model.role.levelStates[0].states.hp,
+            sp = model.role.levelStates[0].states.sp,
+            baseFAtk = model.role.levelStates[0].states.fAtk,
+            baseFDef = model.role.levelStates[0].states.fDef,
+            baseMAtk = model.role.levelStates[0].states.mAtk,
+            baseMDef = model.role.levelStates[0].states.mDef
         )
 
     fun mapEntityToDbModel(model: CharacterObject): CharacterDbModel =

@@ -190,7 +190,7 @@ class SpawnDelegate @Inject constructor(
             with(spawner) {
                 if (monsters.size >= mapObject.monsterLimit) return@with
 
-                eventBusDelegate.action(Action.RefreshMapCommand(mapObject.id))
+                eventBusDelegate.action(Action.RefreshMapAction(mapObject.id))
             }
         }
     }

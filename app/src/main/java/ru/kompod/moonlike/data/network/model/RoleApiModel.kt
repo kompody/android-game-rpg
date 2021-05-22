@@ -11,6 +11,11 @@ data class RoleApiModel(
     val id: Int = NO_ID,
     val label: String = String.empty,
     val description: String = String.empty,
+    val states: List<LevelStatesApiModel>
+)
+
+data class LevelStatesApiModel(
+    val level: Int = 1,
     val states: States = States()
 )
 

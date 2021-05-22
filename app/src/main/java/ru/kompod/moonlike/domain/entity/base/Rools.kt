@@ -69,13 +69,18 @@ data class RoleInfoObject(
     val id: Int,
     val label: String,
     val description: String,
-    val states: States
+    val levelStates: List<LevelStates>
 )
 
 data class RoleObject(
     val id: Int,
     val label: String,
     val description: String
+)
+
+data class LevelStates(
+    val level: Int,
+    val states: States
 )
 
 data class States(

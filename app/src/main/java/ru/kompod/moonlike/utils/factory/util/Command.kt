@@ -3,10 +3,13 @@
 
 package ru.kompod.moonlike.utils.factory.util
 
+import ru.kompod.moonlike.domain.entity.base.CharacterObject
 import ru.kompod.moonlike.domain.entity.base.OnMapObject
 
 sealed class Command {
     class RecoveryHealCharacterCommand(val hp: Int, val sp: Int) : Command()
+
+    class LevelUpCommand(val character: CharacterObject, val newLevel: Int) : Command()
 
     class RefreshMapCommand(val mapId: Int) : Command()
     class KillMonsterOnMapCommand(val mapId: Int, val monster: OnMapObject) : Command()

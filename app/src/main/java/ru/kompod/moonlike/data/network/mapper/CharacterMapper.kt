@@ -46,6 +46,11 @@ class CharacterMapper @Inject constructor(
         id = model.id,
         label = model.label.getResource(context),
         description = model.description.getResource(context),
+        levelStates = model.states.map { mapLevelStates(it) }
+    )
+
+    private fun mapLevelStates(model: LevelStatesApiModel): LevelStates = LevelStates(
+        level = model.level,
         states = States(
             hp = model.states.hp,
             sp = model.states.sp,

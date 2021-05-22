@@ -5,6 +5,7 @@ package ru.kompod.moonlike.domain.usecase.game
 
 import io.reactivex.Observable
 import ru.kompod.moonlike.domain.entity.base.*
+import ru.kompod.moonlike.domain.repository.IAssetRepository
 import ru.kompod.moonlike.domain.usecase.characters.GetSelectedCharacterUseCase
 import ru.kompod.moonlike.domain.usecase.characters.SaveCharacterUseCase
 import ru.kompod.moonlike.utils.extensions.rxjava.combineSingle
@@ -17,7 +18,8 @@ import kotlin.math.max
 class CalculateFightUseCase @Inject constructor(
     private val getCharactersUseCase: GetSelectedCharacterUseCase,
     private val saveCharacterUseCase: SaveCharacterUseCase,
-    private val eventBusDelegate: EventBusDelegate
+    private val eventBusDelegate: EventBusDelegate,
+    private val assetRepository: IAssetRepository
 ) {
     fun execute(mapId: Int, monster: OnMapObject): Observable<Pair<CharacterObject, OnMapObject>> {
         return getCharactersUseCase.getCharacterById()
@@ -65,15 +67,33 @@ class CalculateFightUseCase @Inject constructor(
             return hitMonster(mapId, posHitCharacter, monsterOnMap, postHitMonster)
         }
 
-        eventBusDelegate.action(Action.KillMonsterOnMapCommand(mapId, monsterOnMap))
+        eventBusDelegate.action(Action.KillMonsterOnMapAction(mapId, monsterOnMap))
 
         val tempExp = character.exp + monster.exp
         val tempLevel = calculateLevel(character.level, tempExp)
 
+        val isNeedLevelUp = character.level != tempLevel
+
+        if (isNeedLevelUp) {
+            val role = assetRepository.getCharacterRoleById(character.id)
+            val newStates = role.levelStates[tempLevel - 1].states
+            return character.copy(
+                level = tempLevel,
+                exp = 0,
+                baseHp = newStates.hp,
+                hp =  newStates.hp,
+                baseSp = newStates.sp,
+                sp = newStates.sp,
+                baseFAtk = newStates.fAtk,
+                baseFDef = newStates.fDef,
+                baseMAtk = newStates.mAtk,
+                baseMDef = newStates.mDef
+            ) to monster
+        }
+
         return character.copy(
-            hp = if (character.level == tempLevel) character.hp else character.baseHp,
-            exp = if (character.level == tempLevel) tempExp else 0,
-            level = tempLevel
+            hp = character.hp,
+            exp = tempExp
         ) to monster
     }
 
@@ -88,6 +108,6 @@ class CalculateFightUseCase @Inject constructor(
             7 -> if (exp >= 1912) 8 else 7
             8 -> if (exp >= 4586) 9 else 8
             9 -> if (exp >= 11008) 10 else 9
-            else -> 0
+            else -> level
         }
 }

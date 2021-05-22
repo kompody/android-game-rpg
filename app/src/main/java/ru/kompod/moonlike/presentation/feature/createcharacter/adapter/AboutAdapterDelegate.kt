@@ -41,7 +41,7 @@ class AboutAdapterDelegate(
             }
 
             bind {
-                with(item.role.states) {
+                with(item.role.levelStates[0].states) {
                     listOf(
                         StateItem("hp", hp),
                         StateItem("sp", sp),

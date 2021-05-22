@@ -58,7 +58,7 @@ class HealerDelegate @Inject constructor(
             healSp = 1
 
         if (healHp == 1 || healSp == 1) {
-            eventBusDelegate.action(Action.RecoveryHealCharacterCommand(healHp, healSp))
+            eventBusDelegate.action(Action.RecoveryHealCharacterAction(healHp, healSp))
         }
     }
 
