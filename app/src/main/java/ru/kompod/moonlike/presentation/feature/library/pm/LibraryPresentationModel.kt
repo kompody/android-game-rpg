@@ -43,7 +43,7 @@ class LibraryPresentationModel @Inject constructor(
         onLibraryMenuItemClickObserver
             .observable
             .doOnNext {
-                makeLibraryMenuDelegate.
+//                makeLibraryMenuDelegate.
             }
             .subscribeBy()
             .untilDestroy()
