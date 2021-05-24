@@ -21,6 +21,7 @@ import ru.kompod.moonlike.presentation.feature.createcharacter.adapter.RoleAdapt
 import ru.kompod.moonlike.presentation.feature.createcharacter.mapper.toEntity
 import ru.kompod.moonlike.presentation.feature.createcharacter.model.*
 import ru.kompod.moonlike.utils.ResourceDelegate
+import ru.kompod.moonlike.utils.extensions.rxjava.ui
 import ru.kompod.moonlike.utils.navigation.BottomTabRouter
 import javax.inject.Inject
 
@@ -62,7 +63,7 @@ class CreateCharacterPresentationModel @Inject constructor(
             .flatMapSingle { model ->
                 createCharacterUseCase.execute(model)
             }
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(ui())
             .doOnNext { router.exit() }
             .subscribeBy()
             .untilDestroy()

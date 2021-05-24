@@ -13,6 +13,7 @@ import ru.kompod.moonlike.R
 import ru.kompod.moonlike.presentation.base.BaseFragment
 import ru.kompod.moonlike.presentation.feature.splash.pm.SplashPresentationModel
 import ru.kompod.moonlike.utils.ResourceDelegate
+import ru.kompod.moonlike.utils.extensions.rxjava.ui
 import ru.kompod.moonlike.utils.extensions.rxpm.accept
 import ru.kompod.moonlike.utils.extensions.toothpick.getInstance
 import java.util.concurrent.TimeUnit
@@ -38,7 +39,7 @@ class SplashFragment : BaseFragment<SplashPresentationModel>(R.layout.fragment_s
             .splashState
             .observable
             .delay(1, TimeUnit.SECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(ui())
             .doOnNext {
                 presentationModel.onAnimationFinish.accept(true)
             }

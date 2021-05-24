@@ -24,6 +24,7 @@ import ru.kompod.moonlike.presentation.feature.createcharacter.model.*
 import ru.kompod.moonlike.presentation.feature.createcharacter.pm.CreateCharacterPresentationModel
 import ru.kompod.moonlike.utils.ResourceDelegate
 import ru.kompod.moonlike.utils.extensions.kotlin.dp
+import ru.kompod.moonlike.utils.extensions.rxjava.ui
 import ru.kompod.moonlike.utils.extensions.toothpick.bind
 import ru.kompod.moonlike.utils.extensions.toothpick.getInstance
 import ru.kompod.moonlike.utils.extensions.toothpick.moduleOf
@@ -69,7 +70,7 @@ class CreateCharacterFragment :
             .menuListState
             .observable
             .doOnNext(creatorMenuAdapter::setItems)
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(ui())
             .doOnNext {
                 creatorMenuRecyclerView?.let {
                     consumePendingUpdateOperationsMethod.invoke(

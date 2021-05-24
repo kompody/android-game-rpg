@@ -46,9 +46,9 @@ abstract class BaseFragment<PresentationModel : BasePresentationModel>(
     protected val layoutResource: Int
 ) : PmFragment<PresentationModel>(), IScopeHolder, IBackDispatcher {
     protected open val activityOrientation =
-        if (BuildConfig.DEBUG)
-            ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
-        else
+//        if (BuildConfig.DEBUG)
+//            ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
+//        else
             ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
     protected var toolbarView: View? = null

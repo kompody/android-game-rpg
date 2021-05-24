@@ -157,13 +157,7 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
             .mapPathState
             .observable
             .doOnNext { path ->
-                picassoUtil.load(path) { rc ->
-                    picassoUtil.resize(
-                        rc,
-                        resourceDelegate.getDisplayMetrics().widthPixels,
-                        (resourceDelegate.getDisplayMetrics().widthPixels / 16f * 12).toInt()
-                    )
-                }
+                picassoUtil.load(path)
                     .into(PixelTargetAdapter(mapImageView, false))
             }
             .subscribe()
@@ -190,15 +184,15 @@ class MapFragment : BaseFragment<MapPresentationModel>(R.layout.fragment_map) {
     }
 
     private fun setupBottomSheet() {
-        bottomSheetBehavior = BottomSheetBehavior.from(charactersOnMap).apply {
-            setCallback(
-                stateChanged = { _, state ->
-                    setBottomSheetPeekHeight()
-
-                    presentationModel.bottomSheetActions.accept(state)
-                }
-            )
-        }
+//        bottomSheetBehavior = BottomSheetBehavior.from(charactersOnMap).apply {
+//            setCallback(
+//                stateChanged = { _, state ->
+//                    setBottomSheetPeekHeight()
+//
+//                    presentationModel.bottomSheetActions.accept(state)
+//                }
+//            )
+//        }
     }
 
     private fun setBottomSheetPeekHeight() {

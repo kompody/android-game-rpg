@@ -15,5 +15,5 @@ enum class AppScreen {
     CHARACTERS_ON_MAP,
 
     QUEST_LIST,
-    SETTING
+    LIBRARY
 }

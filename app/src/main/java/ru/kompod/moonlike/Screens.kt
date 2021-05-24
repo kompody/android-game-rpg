@@ -10,10 +10,9 @@ import ru.kompod.moonlike.presentation.feature.createcharacter.view.CreateCharac
 import ru.kompod.moonlike.presentation.feature.inventory.view.InventoryFragment
 import ru.kompod.moonlike.presentation.feature.main.view.*
 import ru.kompod.moonlike.presentation.feature.map.view.MapFragment
-import ru.kompod.moonlike.presentation.feature.mapcharacters.view.CharacterOnMapFragment
 import ru.kompod.moonlike.presentation.feature.profile.view.ProfileFragment
 import ru.kompod.moonlike.presentation.feature.questslist.view.QuestsListFragment
-import ru.kompod.moonlike.presentation.feature.settings.view.LibraryFragment
+import ru.kompod.moonlike.presentation.feature.library.view.LibraryFragment
 import ru.kompod.moonlike.presentation.feature.splash.view.SplashFragment
 import ru.kompod.moonlike.utils.navigation.BottomSheetSupportAppScreen
 import ru.terrakok.cicerone.android.support.SupportAppScreen
@@ -79,12 +78,6 @@ object Screens {
     object Map : SupportAppScreen() {
         override fun getFragment(): Fragment {
             return MapFragment()
-        }
-    }
-
-    object CharactersOnMap : BottomSheetSupportAppScreen() {
-        override fun getFragment(): BottomSheetDialogFragment {
-            return CharacterOnMapFragment()
         }
     }
 

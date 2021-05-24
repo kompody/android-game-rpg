@@ -109,4 +109,10 @@
     <string name="asset_map_02_label">map_02</string>
     <string name="asset_map_03_label">map_03</string>
     <string name="asset_map_04_label">map_04</string>
+
+    <!--library-->
+    <string name="library_main_menu_characters">Персонаж</string>
+    <string name="library_main_menu_items">Предметы</string>
+    <string name="library_main_menu_locations">Локации</string>
+    <string name="library_main_menu_monsters">Монстры</string>
 </resources>

@@ -13,6 +13,7 @@ import ru.kompod.moonlike.presentation.base.recyclerview.decorator.GridListDecor
 import ru.kompod.moonlike.presentation.base.recyclerview.decorator.VerticalListMarginDecorator
 import ru.kompod.moonlike.presentation.base.recyclerview.model.IListItem
 import ru.kompod.moonlike.presentation.feature.map.model.MonsterItem
+import ru.kompod.moonlike.presentation.feature.map.model.StateItem
 import ru.kompod.moonlike.presentation.feature.map.model.TitleListItem
 import ru.kompod.moonlike.presentation.feature.map.model.TravelItem
 import ru.kompod.moonlike.utils.extensions.kotlin.dp
@@ -28,7 +29,8 @@ class TitleAdapterDelegate(
     override fun get(): AdapterDelegate<List<IListItem>> = createAdapterDelegate()
 
     private fun createAdapterDelegate() = adapterDelegateLayoutContainer<TitleListItem, IListItem>(
-        R.layout.item_map_object_title) {
+        R.layout.item_map_object_title
+    ) {
 
         val innerAdapter = BaseAdapter(
             TravelAdapterDelegate(travelItemListener).get(),

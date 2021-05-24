@@ -23,6 +23,7 @@ import ru.kompod.moonlike.presentation.feature.characterslist.model.CreateCharac
 import ru.kompod.moonlike.presentation.feature.characterslist.pm.CharactersListPresentationModel
 import ru.kompod.moonlike.utils.extensions.android.buildSupportAlertDialog
 import ru.kompod.moonlike.utils.extensions.kotlin.dp
+import ru.kompod.moonlike.utils.extensions.rxjava.ui
 import ru.kompod.moonlike.utils.extensions.rxpm.accept
 import ru.kompod.moonlike.utils.extensions.toothpick.bind
 import ru.kompod.moonlike.utils.extensions.toothpick.getInstance
@@ -92,7 +93,7 @@ class CharactersListFragment :
             .charactersListState
             .observable
             .doOnNext(charactersAdapter::setItems)
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(ui())
             .doOnNext {
                 charactersRecyclerView?.let {
                     consumePendingUpdateOperationsMethod.invoke(
